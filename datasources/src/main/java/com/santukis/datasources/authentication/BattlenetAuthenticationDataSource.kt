@@ -15,7 +15,7 @@ class BattlenetAuthenticationDataSource(private val client: HttpClient) : Authen
                 onSuccess = { successDto ->
                     Token(
                         accessToken = successDto.accessToken.orEmpty(),
-                        expires = successDto.expiresIn?.let { System.currentTimeMillis() + it } ?: 0L
+                        expires = successDto.expiresIn?.toLong() ?: 0L
                     )
                 },
                 onError = { errorDTO -> Exception(errorDTO.description) }

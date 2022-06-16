@@ -34,7 +34,7 @@ fun httpClient() = DI.Module(
     name = "httpClient",
     allowSilentOverride = true
 ) {
-    bind<Environment>() with singleton { Environment.Pro("eu") }
+    bind<Environment>() with singleton { Environment.Pro() }
 
     bind<Interceptor>(tag = "loggingInterceptor") with singleton {
         HttpLoggingInterceptor().apply {

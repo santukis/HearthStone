@@ -1,14 +1,12 @@
 package com.santukis.datasources.remote
 
 import com.santukis.datasources.entities.dto.ServerResponse
-import com.santukis.datasources.BuildConfig
 import com.santukis.datasources.authentication.AuthenticationService
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 
 class HttpClient(
     environment: Environment,
@@ -20,20 +18,29 @@ class HttpClient(
         const val AUTHORIZATION = "Authorization"
     }
 
-    private val retrofit: Retrofit = Retrofit.Builder()
+    private val authRetrofit: Retrofit = Retrofit.Builder()
         .client(client)
-        .baseUrl(environment.baseUrl)
+        .baseUrl(environment.authApi)
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
 
-    val authenticationService: AuthenticationService = retrofit.create()
+    private val blizzardRetrofit: Retrofit = Retrofit.Builder()
+        .client(client)
+        .baseUrl(environment.blizzardApi)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .build()
+
+    val authenticationService: AuthenticationService = authRetrofit.create(AuthenticationService::class.java)
 }
 
-sealed class Environment(val baseUrl: String) {
+sealed class Environment(
+    val authApi: String,
+    val blizzardApi: String
+    ) {
 
-    class Pro(region: String): Environment("$region.api.blizzard.com/")
+    class Pro: Environment(authApi = "us.battle.net/", blizzardApi = "eu.api.blizzard.com/")
 
-    class Testing(baseUrl: String): Environment(baseUrl)
+    class Testing(baseUrl: String): Environment(baseUrl, baseUrl)
 }
 
 inline fun <reified ErrorDTO, reified SuccessDTO, SuccessResult> Call<SuccessDTO>.unwrapCall(

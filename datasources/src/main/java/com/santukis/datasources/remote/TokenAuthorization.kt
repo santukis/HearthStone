@@ -12,9 +12,9 @@ class TokenAuthorization(
 ) : Interceptor, Authenticator {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = when (chain.request().headers[BASIC_AUTHORIZATION] != null) {
-            true -> chain.request()
-            else -> addBearerTokenToRequest(chain.request())
+        val request = when (chain.request().headers[BASIC_AUTHORIZATION] == null) {
+            true -> addBearerTokenToRequest(chain.request())
+            else -> chain.request()
         }
 
         return chain.proceed(request)

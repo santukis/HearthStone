@@ -24,6 +24,7 @@ dependencies {
     implementation project(Modules.Repositories)
 
     implementation Dependencies.Squareup.moshi
+    kapt Dependencies.Squareup.moshiCodegen
     implementation Dependencies.Squareup.moshiConverter
     implementation Dependencies.Squareup.retrofit
     implementation Dependencies.Squareup.okhttp
