@@ -39,6 +39,9 @@ dependencies {
     implementation Dependencies.Kodein.kodeinAndroidFramework
     implementation Dependencies.Kodein.kodeinConfJvm
 
+    implementation Dependencies.Squareup.okhttp
+    implementation Dependencies.Squareup.loggingInterceptor
+
     implementation project(Modules.ViewModels)
     implementation project(Modules.UseCases)
     implementation project(Modules.Entities)

@@ -27,7 +27,6 @@ dependencies {
     implementation Dependencies.Squareup.moshiConverter
     implementation Dependencies.Squareup.retrofit
     implementation Dependencies.Squareup.okhttp
-    implementation Dependencies.Squareup.loggingInterceptor
 
     implementation Dependencies.Androidx.encryptedPreferences
 
