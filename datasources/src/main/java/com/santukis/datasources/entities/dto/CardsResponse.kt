@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class CardsResponseDTO(
+data class CardsResponse(
     @Json(name = "cards")
     val cards: List<CardDTO>? = null,
 
