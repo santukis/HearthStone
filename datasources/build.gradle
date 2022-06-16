@@ -7,6 +7,18 @@ plugins {
 
 apply from: "$rootDir/base_android_module.gradle"
 
+def battlenetProperties = new Properties()
+file("battlenet.properties").withInputStream { stream ->
+    battlenetProperties.load(stream)
+}
+
+android {
+    defaultConfig {
+        buildConfigField("String", "BATTLENET_CLIENT_ID", battlenetProperties.getProperty("client_id"))
+        buildConfigField("String", "BATTLENET_CLIENT_SECRET", battlenetProperties.getProperty("client_secret"))
+    }
+}
+
 dependencies {
     implementation project(Modules.Entities)
     implementation project(Modules.Repositories)
