@@ -7,4 +7,5 @@ object Modules {
     const val Entities = ":entities"
     const val Repositories = ":repositories"
     const val DataSources = ":datasources"
+    const val DataEntities = ":dataEntities"
 }

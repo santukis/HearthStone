@@ -7,6 +7,7 @@ class Dependencies {
         const val junit5 = "org.junit.jupiter:junit-jupiter:${Versions.Test.junit5}"
         const val mockK = "io.mockk:mockk:${Versions.Test.mockk}"
         const val mockKJvm = "io.mockk:mockk-agent-jvm:${Versions.Test.mockk}"
+        const val mockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.Squareup.okhttp}"
     }
 
     object AndroidTest {
@@ -39,10 +40,10 @@ class Dependencies {
     }
 
     object Squareup {
-        const val moshi = "com.squareup.moshi:moshi:${Versions.Okhttp.moshi}"
-        const val moshiConverter = "com.squareup.retrofit2:converter-moshi:${Versions.Okhttp.retrofit}"
-        const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.Okhttp.retrofit}"
-        const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.Okhttp.okhttp}"
-        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.Okhttp.okhttp}"
+        const val moshi = "com.squareup.moshi:moshi:${Versions.Squareup.moshi}"
+        const val moshiConverter = "com.squareup.retrofit2:converter-moshi:${Versions.Squareup.retrofit}"
+        const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.Squareup.retrofit}"
+        const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.Squareup.okhttp}"
+        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.Squareup.okhttp}"
     }
 }

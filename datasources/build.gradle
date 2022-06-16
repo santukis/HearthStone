@@ -28,4 +28,7 @@ dependencies {
     implementation Dependencies.Squareup.retrofit
     implementation Dependencies.Squareup.okhttp
     implementation Dependencies.Squareup.loggingInterceptor
+
+    testImplementation Dependencies.Test.junit5
+    testImplementation Dependencies.Test.mockWebServer
 }
