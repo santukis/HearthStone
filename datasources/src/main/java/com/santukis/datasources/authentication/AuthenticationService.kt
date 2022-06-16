@@ -2,6 +2,8 @@ package com.santukis.datasources.authentication
 
 import com.santukis.datasources.entities.dto.AuthenticationSuccessDTO
 import com.santukis.datasources.remote.HttpClient
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
@@ -15,6 +17,6 @@ interface AuthenticationService {
     @POST("oauth/token")
     fun refreshToken(
         @Part(value = "grant_type")
-        grantType: String = "client_credentials"
+        grantType: RequestBody = "client_credentials".toRequestBody()
     ): Call<AuthenticationSuccessDTO>
 }

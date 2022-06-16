@@ -38,7 +38,7 @@ sealed class Environment(
     val blizzardApi: String
     ) {
 
-    class Pro: Environment(authApi = "us.battle.net/", blizzardApi = "eu.api.blizzard.com/")
+    class Pro: Environment(authApi = "https://us.battle.net/", blizzardApi = "https://eu.api.blizzard.com/")
 
     class Testing(baseUrl: String): Environment(baseUrl, baseUrl)
 }

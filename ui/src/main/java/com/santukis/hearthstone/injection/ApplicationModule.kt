@@ -9,8 +9,8 @@ fun appModule(application: Application) = DI.Module(
     allowSilentOverride = true
 ) {
     import(androidXModule(application))
-    import(viewModels())
-    import(useCases())
-    import(repositories())
-    import(dataSources())
+    import(viewModels(), allowOverride = true)
+    import(useCases(), allowOverride = true)
+    import(repositories(), allowOverride = true)
+    import(dataSources(), allowOverride = true)
 }
