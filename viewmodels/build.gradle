@@ -1,0 +1,12 @@
+import com.santukis.buildsrc.Modules
+
+plugins {
+    id 'com.android.library'
+}
+
+apply from: "$rootDir/base_android_module.gradle"
+
+dependencies {
+    implementation project(Modules.UseCases)
+    implementation project(Modules.Entities)
+}

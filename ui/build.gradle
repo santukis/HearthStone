@@ -1,0 +1,49 @@
+import com.santukis.buildsrc.Dependencies
+import com.santukis.buildsrc.Modules
+import com.santukis.buildsrc.Versions
+
+plugins {
+    id 'com.android.application'
+}
+
+apply from: "$rootDir/base_android_module.gradle"
+
+android {
+    defaultConfig {
+        applicationId "com.santukis.hearthstone"
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion Versions.Androidx.compose
+    }
+}
+
+dependencies {
+    implementation Dependencies.Androidx.core
+    implementation Dependencies.Androidx.activityCompose
+    implementation Dependencies.Androidx.composeRuntime
+    implementation Dependencies.Androidx.composeUi
+    implementation Dependencies.Androidx.composeUiTooling
+    implementation Dependencies.Androidx.composeFoundation
+    implementation Dependencies.Androidx.composeMaterial
+    implementation Dependencies.Androidx.composeMaterialIcons
+    implementation Dependencies.Androidx.composeMaterialIconsExtended
+
+    implementation Dependencies.Kotlin.coroutinesCore
+
+    implementation Dependencies.Kodein.kodein
+    implementation Dependencies.Kodein.kodeinAndroidFramework
+    implementation Dependencies.Kodein.kodeinConfJvm
+
+    implementation project(Modules.ViewModels)
+    implementation project(Modules.UseCases)
+    implementation project(Modules.Entities)
+    implementation project(Modules.Repositories)
+    implementation project(Modules.DataSources)
+
+    androidTestImplementation Dependencies.AndroidTest.composeUi
+}

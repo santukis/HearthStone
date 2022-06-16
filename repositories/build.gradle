@@ -1,0 +1,15 @@
+import com.santukis.buildsrc.Dependencies
+import com.santukis.buildsrc.Modules
+
+apply from: "$rootDir/base_kotlin_module.gradle"
+
+dependencies {
+    implementation project(Modules.UseCases)
+    implementation project(Modules.Entities)
+
+    implementation Dependencies.Kotlin.coroutinesCore
+
+    testImplementation Dependencies.Test.junit5
+    testImplementation Dependencies.Test.mockK
+    testImplementation Dependencies.Test.mockKJvm
+}

@@ -1,0 +1,10 @@
+import com.santukis.buildsrc.Dependencies
+import com.santukis.buildsrc.Modules
+
+apply from: "$rootDir/base_kotlin_module.gradle"
+
+dependencies {
+    implementation Dependencies.Kotlin.coroutinesCore
+
+    implementation project(Modules.Entities)
+}
