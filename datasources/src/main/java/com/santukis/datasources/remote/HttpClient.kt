@@ -30,6 +30,6 @@ class HttpClient(environment: Environment) {
 sealed class Environment(val baseUrl: String) {
 
     class Pro(region: String): Environment("$region.api.blizzard.com/")
-    
+
     class Testing(baseUrl: String): Environment(baseUrl)
 }
