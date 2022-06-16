@@ -1,3 +1,4 @@
+import com.santukis.buildsrc.Dependencies
 import com.santukis.buildsrc.Modules
 
 plugins {
@@ -9,4 +10,6 @@ apply from: "$rootDir/base_android_module.gradle"
 dependencies {
     implementation project(Modules.Entities)
     implementation project(Modules.Repositories)
+
+    implementation Dependencies.Moshi.moshi
 }

@@ -37,4 +37,8 @@ class Dependencies {
     object Kotlin {
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Kotlin.coroutinesCore}"
     }
+
+    object Moshi {
+        const val moshi = "com.squareup.moshi:moshi:${Versions.Moshi.moshi}"
+    }
 }

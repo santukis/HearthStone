@@ -26,4 +26,8 @@ object Versions {
     object Kodein {
         const val kodein = "7.5.0"
     }
+
+    object Moshi {
+        const val moshi = "1.13.0"
+    }
 }
