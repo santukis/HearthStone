@@ -24,4 +24,7 @@ dependencies {
     implementation project(Modules.Repositories)
 
     implementation Dependencies.Moshi.moshi
+    implementation Dependencies.Okhttp.retrofit
+    implementation Dependencies.Okhttp.okhttp
+    implementation Dependencies.Okhttp.loggingInterceptor
 }

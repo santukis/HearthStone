@@ -30,4 +30,9 @@ object Versions {
     object Moshi {
         const val moshi = "1.13.0"
     }
+
+    object Okhttp {
+        const val retrofit = "2.9.0"
+        const val okhttp = "4.9.3"
+    }
 }

@@ -41,4 +41,10 @@ class Dependencies {
     object Moshi {
         const val moshi = "com.squareup.moshi:moshi:${Versions.Moshi.moshi}"
     }
+
+    object Okhttp {
+        const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.Okhttp.retrofit}"
+        const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.Okhttp.okhttp}"
+        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.Okhttp.okhttp}"
+    }
 }
