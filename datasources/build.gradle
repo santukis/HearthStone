@@ -29,6 +29,8 @@ dependencies {
     implementation Dependencies.Squareup.okhttp
     implementation Dependencies.Squareup.loggingInterceptor
 
+    implementation Dependencies.Androidx.encryptedPreferences
+
     testImplementation Dependencies.Test.junit5
     testImplementation Dependencies.Test.mockWebServer
 }

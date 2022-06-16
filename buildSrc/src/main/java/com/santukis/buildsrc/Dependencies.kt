@@ -27,6 +27,7 @@ class Dependencies {
         const val composeMaterial = "androidx.compose.material:material:${Versions.Androidx.compose}"
         const val composeMaterialIcons = "androidx.compose.material:material-icons-core:${Versions.Androidx.compose}"
         const val composeMaterialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.Androidx.compose}"
+        const val encryptedPreferences = "androidx.security:security-crypto:${Versions.Androidx.encryptedPreferences}"
     }
 
     object Kodein {

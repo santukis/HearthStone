@@ -48,9 +48,9 @@ class TokenAuthenticator(
     override fun authenticate(route: Route?, response: Response): Request? {
         val result = remoteAuthenticationDataSource.getToken()
 
-        return when {
-            result.isSuccess -> addBearerTokenToRequest(response.request)
-            else -> null
+        return result.takeIf { it.isSuccess }?.let {
+            localAuthenticationDataSource.saveToken(it.getOrThrow())
+            addBearerTokenToRequest(response.request)
         }
     }
 }
