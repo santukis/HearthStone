@@ -1,4 +1,4 @@
-package com.santukis.datasources.entities.dto
+package com.santukis.datasources.entities.remote.dto
 
 
 import com.squareup.moshi.Json
