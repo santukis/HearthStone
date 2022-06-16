@@ -27,11 +27,8 @@ object Versions {
         const val kodein = "7.5.0"
     }
 
-    object Moshi {
-        const val moshi = "1.13.0"
-    }
-
     object Okhttp {
+        const val moshi = "1.13.0"
         const val retrofit = "2.9.0"
         const val okhttp = "4.9.3"
     }

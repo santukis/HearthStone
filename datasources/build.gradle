@@ -23,8 +23,9 @@ dependencies {
     implementation project(Modules.Entities)
     implementation project(Modules.Repositories)
 
-    implementation Dependencies.Moshi.moshi
-    implementation Dependencies.Okhttp.retrofit
-    implementation Dependencies.Okhttp.okhttp
-    implementation Dependencies.Okhttp.loggingInterceptor
+    implementation Dependencies.Squareup.moshi
+    implementation Dependencies.Squareup.moshiConverter
+    implementation Dependencies.Squareup.retrofit
+    implementation Dependencies.Squareup.okhttp
+    implementation Dependencies.Squareup.loggingInterceptor
 }

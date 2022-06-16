@@ -38,11 +38,9 @@ class Dependencies {
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Kotlin.coroutinesCore}"
     }
 
-    object Moshi {
-        const val moshi = "com.squareup.moshi:moshi:${Versions.Moshi.moshi}"
-    }
-
-    object Okhttp {
+    object Squareup {
+        const val moshi = "com.squareup.moshi:moshi:${Versions.Okhttp.moshi}"
+        const val moshiConverter = "com.squareup.retrofit2:converter-moshi:${Versions.Okhttp.retrofit}"
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.Okhttp.retrofit}"
         const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.Okhttp.okhttp}"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.Okhttp.okhttp}"
