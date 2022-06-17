@@ -17,19 +17,14 @@ class HttpClient(
         const val AUTHORIZATION = "Authorization"
     }
 
-    private val authRetrofit: Retrofit = Retrofit.Builder()
+    private val retrofitBuilder: Retrofit.Builder = Retrofit.Builder()
         .client(client)
+        .addConverterFactory(MoshiConverterFactory.create())
+
+    val authenticationService: AuthenticationService = retrofitBuilder
         .baseUrl(environment.authApi)
-        .addConverterFactory(MoshiConverterFactory.create())
         .build()
-
-    private val blizzardRetrofit: Retrofit = Retrofit.Builder()
-        .client(client)
-        .baseUrl(environment.blizzardApi)
-        .addConverterFactory(MoshiConverterFactory.create())
-        .build()
-
-    val authenticationService: AuthenticationService = authRetrofit.create(AuthenticationService::class.java)
+        .create(AuthenticationService::class.java)
 }
 
 sealed class Environment(
