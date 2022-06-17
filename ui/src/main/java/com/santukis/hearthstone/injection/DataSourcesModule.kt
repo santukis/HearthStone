@@ -42,17 +42,20 @@ fun httpClient() = DI.Module(
         }
     }
 
+    bind<Interceptor>(tag = "tokenAuthorization") with provider { TokenAuthorization(instance("battlenet"), instance("encrypted")) }
+
     bind<OkHttpClient>(tag = "authenticationClient") with singleton {
         OkHttpClient.Builder()
-            .addInterceptor(interceptor = BasicAuthorization())
             .addInterceptor(interceptor = instance(tag = "loggingInterceptor"))
+            .addInterceptor(interceptor = BasicAuthorization())
             .build()
     }
 
     bind<OkHttpClient>(tag = "hearthstoneApiClient") with singleton {
         OkHttpClient.Builder()
-            .addInterceptor(interceptor = TokenAuthorization(instance("battlenet"), instance("encrypted")))
             .addInterceptor(interceptor = instance(tag = "loggingInterceptor"))
+            .addInterceptor(interceptor = instance(tag = "tokenAuthorization"))
+            .authenticator(instance(tag = "tokenAuthorization"))
             .build()
     }
 

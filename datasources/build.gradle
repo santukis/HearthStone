@@ -33,4 +33,5 @@ dependencies {
 
     testImplementation Dependencies.Test.junit5
     testImplementation Dependencies.Test.mockWebServer
+    testImplementation Dependencies.Test.mockK
 }

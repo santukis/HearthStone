@@ -22,6 +22,7 @@ class TokenAuthorization(
         return when {
             result.isSuccess -> request
                 .newBuilder()
+                .removeHeader(AUTHORIZATION)
                 .addHeader(AUTHORIZATION, "Bearer ${result.getOrNull()?.accessToken}")
                 .build()
 
