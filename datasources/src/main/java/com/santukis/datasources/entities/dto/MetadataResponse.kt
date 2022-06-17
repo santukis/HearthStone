@@ -25,7 +25,7 @@ data class MetadataResponse(
     val rarities: List<RarityDTO>? = null,
 
     @Json(name = "classes")
-    val classes: List<ClassDTO>? = null,
+    val classes: List<HeroClassDTO>? = null,
 
     @Json(name = "minionTypes")
     val minionTypes: List<MinionTypeDTO>? = null,
