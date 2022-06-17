@@ -3,7 +3,6 @@ package com.santukis.datasources.remote
 
 import com.santukis.datasources.authentication.AuthenticationDataSource
 import com.santukis.datasources.remote.HttpClient.Companion.AUTHORIZATION
-import com.santukis.datasources.remote.HttpClient.Companion.BASIC_AUTHORIZATION
 import okhttp3.*
 
 class TokenAuthorization(
@@ -12,10 +11,7 @@ class TokenAuthorization(
 ) : Interceptor, Authenticator {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = when (chain.request().headers[BASIC_AUTHORIZATION] == null) {
-            true -> addBearerTokenToRequest(chain.request())
-            else -> chain.request()
-        }
+        val request = addBearerTokenToRequest(chain.request())
 
         return chain.proceed(request)
     }

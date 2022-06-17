@@ -3,16 +3,12 @@ package com.santukis.datasources.remote
 import android.util.Base64
 import com.santukis.datasources.BuildConfig
 import com.santukis.datasources.remote.HttpClient.Companion.AUTHORIZATION
-import com.santukis.datasources.remote.HttpClient.Companion.BASIC_AUTHORIZATION
 import okhttp3.*
 
 class BasicAuthorization : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = when (chain.request().headers[BASIC_AUTHORIZATION] != null) {
-            true -> addBasicAuthorizationToRequest(chain.request())
-            else -> chain.request()
-        }
+        val request = addBasicAuthorizationToRequest(chain.request())
 
         return chain.proceed(request)
     }
@@ -23,7 +19,6 @@ class BasicAuthorization : Interceptor {
 
         return request
             .newBuilder()
-            .removeHeader(BASIC_AUTHORIZATION)
             .addHeader(AUTHORIZATION, "Basic $encodedCredentials")
             .build()
     }

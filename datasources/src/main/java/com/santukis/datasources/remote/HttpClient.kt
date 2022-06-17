@@ -14,7 +14,6 @@ class HttpClient(
 ) {
 
     companion object {
-        const val BASIC_AUTHORIZATION = "Add_Basic_Authorization"
         const val AUTHORIZATION = "Authorization"
     }
 
@@ -36,7 +35,7 @@ class HttpClient(
 sealed class Environment(
     val authApi: String,
     val blizzardApi: String
-    ) {
+) {
 
     class Pro: Environment(authApi = "https://us.battle.net/", blizzardApi = "https://eu.api.blizzard.com/")
 
