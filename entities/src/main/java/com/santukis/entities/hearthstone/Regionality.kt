@@ -8,6 +8,7 @@ sealed class Regionality(
     class Europe(locale: EuropeLocale) : Regionality(Region.EU(), locale)
     class Korea: Regionality(Region.KR(), Korean())
     class Taiwan: Regionality(Region.TW(), Mandarin())
+    class China: Regionality(Region.CN(), Chinesse())
 }
 
 sealed class Region(val value: String) {
@@ -15,6 +16,7 @@ sealed class Region(val value: String) {
     class EU: Region("eu")
     class KR: Region("kr")
     class TW: Region("tw")
+    class CN: Region("cn")
 }
 
 sealed class Locale(val value: String)
@@ -22,6 +24,8 @@ sealed class Locale(val value: String)
 class Korean: Locale("ko_KR")
 
 class Mandarin: Locale("zh_TW")
+
+class Chinesse: Locale("zh_CN")
 
 sealed class NorthAmericaLocale(value: String): Locale(value) {
     class English: NorthAmericaLocale("en_US")

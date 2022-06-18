@@ -22,5 +22,8 @@ sealed class Environment(
 
     fun metadata(region: Region): String = "${getBlizzardBaseUrl(region)}hearthstone/metadata"
 
-    private fun getBlizzardBaseUrl(region: Region) = blizzardApi.replace("{region}", region.value)
+    private fun getBlizzardBaseUrl(region: Region) = when (region) {
+        is Region.CN -> "https://gateway.battlenet.com.cn/"
+        else -> blizzardApi.replace("{region}", region.value)
+    }
 }
