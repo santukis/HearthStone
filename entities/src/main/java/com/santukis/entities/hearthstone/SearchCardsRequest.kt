@@ -13,7 +13,7 @@ data class SearchCardsRequest(
     /**
      * The card's class.
      */
-    val heroClass: HeroClass? = null,
+    val cardClass: CardClass? = null,
 
     /**
      * The mana cost required to play the card.

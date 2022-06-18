@@ -1,0 +1,6047 @@
+{
+  "cards": [
+    {
+      "id": 64590,
+      "collectible": 0,
+      "slug": "64590-alexstrasza",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 24,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 76,
+      "attack": 7,
+      "manaCost": 5,
+      "name": "Alexstrasza",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/67a15d4bf6524e67431b7aaaa0177efdb878a7b7790587d40277f3551d7522ed.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/48b6b4caaf73d5e7763031a37e5b7ab1aaf342b5c798ff473cbee97275894592.png",
+      "mercenaryHero": {
+        "mercId": 23,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 8
+          },
+          "2": {
+            "attack": 1,
+            "health": 10
+          },
+          "3": {
+            "attack": 1,
+            "health": 12
+          },
+          "4": {
+            "attack": 1,
+            "health": 15
+          },
+          "5": {
+            "attack": 1,
+            "health": 17
+          },
+          "6": {
+            "attack": 2,
+            "health": 19
+          },
+          "7": {
+            "attack": 2,
+            "health": 22
+          },
+          "8": {
+            "attack": 2,
+            "health": 24
+          },
+          "9": {
+            "attack": 2,
+            "health": 26
+          },
+          "10": {
+            "attack": 2,
+            "health": 29
+          },
+          "11": {
+            "attack": 3,
+            "health": 31
+          },
+          "12": {
+            "attack": 3,
+            "health": 33
+          },
+          "13": {
+            "attack": 3,
+            "health": 36
+          },
+          "14": {
+            "attack": 3,
+            "health": 38
+          },
+          "15": {
+            "attack": 3,
+            "health": 40
+          },
+          "16": {
+            "attack": 4,
+            "health": 43
+          },
+          "17": {
+            "attack": 4,
+            "health": 45
+          },
+          "18": {
+            "attack": 4,
+            "health": 47
+          },
+          "19": {
+            "attack": 4,
+            "health": 50
+          },
+          "20": {
+            "attack": 4,
+            "health": 52
+          },
+          "21": {
+            "attack": 5,
+            "health": 54
+          },
+          "22": {
+            "attack": 5,
+            "health": 57
+          },
+          "23": {
+            "attack": 5,
+            "health": 59
+          },
+          "24": {
+            "attack": 5,
+            "health": 61
+          },
+          "25": {
+            "attack": 5,
+            "health": 64
+          },
+          "26": {
+            "attack": 6,
+            "health": 66
+          },
+          "27": {
+            "attack": 6,
+            "health": 68
+          },
+          "28": {
+            "attack": 6,
+            "health": 71
+          },
+          "29": {
+            "attack": 6,
+            "health": 73
+          },
+          "30": {
+            "attack": 7,
+            "health": 76
+          }
+        },
+        "roleId": 3,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 72863,
+      "collectible": 0,
+      "slug": "72863-anduin-wrynn",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 6,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 67,
+      "attack": 8,
+      "manaCost": 5,
+      "name": "Anduin Wrynn",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/c7843d8c7493b4653002778d8f3b1289457f40472c539568d3fc158a0b3bc4cc.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/96b557a6837b24ae9d7b738bfea633e0e8cd20875cbca9a86469fd75a38dfc2d.png",
+      "mercenaryHero": {
+        "mercId": 93,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 13
+          },
+          "2": {
+            "attack": 3,
+            "health": 14
+          },
+          "3": {
+            "attack": 3,
+            "health": 16
+          },
+          "4": {
+            "attack": 3,
+            "health": 18
+          },
+          "5": {
+            "attack": 3,
+            "health": 20
+          },
+          "6": {
+            "attack": 3,
+            "health": 22
+          },
+          "7": {
+            "attack": 4,
+            "health": 24
+          },
+          "8": {
+            "attack": 4,
+            "health": 26
+          },
+          "9": {
+            "attack": 4,
+            "health": 27
+          },
+          "10": {
+            "attack": 4,
+            "health": 29
+          },
+          "11": {
+            "attack": 4,
+            "health": 31
+          },
+          "12": {
+            "attack": 4,
+            "health": 33
+          },
+          "13": {
+            "attack": 5,
+            "health": 35
+          },
+          "14": {
+            "attack": 5,
+            "health": 37
+          },
+          "15": {
+            "attack": 5,
+            "health": 39
+          },
+          "16": {
+            "attack": 5,
+            "health": 40
+          },
+          "17": {
+            "attack": 5,
+            "health": 42
+          },
+          "18": {
+            "attack": 5,
+            "health": 44
+          },
+          "19": {
+            "attack": 6,
+            "health": 46
+          },
+          "20": {
+            "attack": 6,
+            "health": 48
+          },
+          "21": {
+            "attack": 6,
+            "health": 50
+          },
+          "22": {
+            "attack": 6,
+            "health": 52
+          },
+          "23": {
+            "attack": 6,
+            "health": 53
+          },
+          "24": {
+            "attack": 6,
+            "health": 55
+          },
+          "25": {
+            "attack": 7,
+            "health": 57
+          },
+          "26": {
+            "attack": 7,
+            "health": 59
+          },
+          "27": {
+            "attack": 7,
+            "health": 61
+          },
+          "28": {
+            "attack": 7,
+            "health": 63
+          },
+          "29": {
+            "attack": 7,
+            "health": 65
+          },
+          "30": {
+            "attack": 8,
+            "health": 67
+          }
+        },
+        "roleId": 1,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 73505,
+      "collectible": 0,
+      "slug": "73505-antonidas",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 6,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 68,
+      "attack": 5,
+      "manaCost": 4,
+      "name": "Antonidas",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/5dffbfcfc894089ef7295e18df0020a8cb6d5ce637186d5dfc1b1ae914c8df32.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/0fa47a7588198f150ec83dc91f9f231b9bc4795ec89bfcd25b23d1dd82b23c12.png",
+      "mercenaryHero": {
+        "mercId": 98,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 13
+          },
+          "2": {
+            "attack": 3,
+            "health": 14
+          },
+          "3": {
+            "attack": 3,
+            "health": 16
+          },
+          "4": {
+            "attack": 3,
+            "health": 18
+          },
+          "5": {
+            "attack": 3,
+            "health": 20
+          },
+          "6": {
+            "attack": 3,
+            "health": 22
+          },
+          "7": {
+            "attack": 3,
+            "health": 24
+          },
+          "8": {
+            "attack": 3,
+            "health": 26
+          },
+          "9": {
+            "attack": 3,
+            "health": 28
+          },
+          "10": {
+            "attack": 3,
+            "health": 30
+          },
+          "11": {
+            "attack": 3,
+            "health": 31
+          },
+          "12": {
+            "attack": 3,
+            "health": 33
+          },
+          "13": {
+            "attack": 3,
+            "health": 35
+          },
+          "14": {
+            "attack": 3,
+            "health": 37
+          },
+          "15": {
+            "attack": 3,
+            "health": 39
+          },
+          "16": {
+            "attack": 4,
+            "health": 41
+          },
+          "17": {
+            "attack": 4,
+            "health": 43
+          },
+          "18": {
+            "attack": 4,
+            "health": 45
+          },
+          "19": {
+            "attack": 4,
+            "health": 47
+          },
+          "20": {
+            "attack": 4,
+            "health": 49
+          },
+          "21": {
+            "attack": 4,
+            "health": 50
+          },
+          "22": {
+            "attack": 4,
+            "health": 52
+          },
+          "23": {
+            "attack": 4,
+            "health": 54
+          },
+          "24": {
+            "attack": 4,
+            "health": 56
+          },
+          "25": {
+            "attack": 4,
+            "health": 58
+          },
+          "26": {
+            "attack": 4,
+            "health": 60
+          },
+          "27": {
+            "attack": 4,
+            "health": 62
+          },
+          "28": {
+            "attack": 4,
+            "health": 64
+          },
+          "29": {
+            "attack": 4,
+            "health": 66
+          },
+          "30": {
+            "attack": 5,
+            "health": 68
+          }
+        },
+        "roleId": 1,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 89587,
+      "collectible": 0,
+      "slug": "89587-baine-bloodhoof",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 9,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 79,
+      "attack": 11,
+      "manaCost": 5,
+      "name": "Baine Bloodhoof",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/c4c282cd06b4c89cad2603a74876b191a86fb01229368005e3d42403ecb8f0d7.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 371,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 4,
+            "health": 10
+          },
+          "2": {
+            "attack": 4,
+            "health": 11
+          },
+          "3": {
+            "attack": 4,
+            "health": 14
+          },
+          "4": {
+            "attack": 4,
+            "health": 16
+          },
+          "5": {
+            "attack": 5,
+            "health": 19
+          },
+          "6": {
+            "attack": 5,
+            "health": 22
+          },
+          "7": {
+            "attack": 5,
+            "health": 25
+          },
+          "8": {
+            "attack": 5,
+            "health": 27
+          },
+          "9": {
+            "attack": 6,
+            "health": 29
+          },
+          "10": {
+            "attack": 6,
+            "health": 31
+          },
+          "11": {
+            "attack": 6,
+            "health": 35
+          },
+          "12": {
+            "attack": 6,
+            "health": 39
+          },
+          "13": {
+            "attack": 7,
+            "health": 42
+          },
+          "14": {
+            "attack": 7,
+            "health": 44
+          },
+          "15": {
+            "attack": 7,
+            "health": 47
+          },
+          "16": {
+            "attack": 7,
+            "health": 50
+          },
+          "17": {
+            "attack": 8,
+            "health": 53
+          },
+          "18": {
+            "attack": 8,
+            "health": 55
+          },
+          "19": {
+            "attack": 8,
+            "health": 58
+          },
+          "20": {
+            "attack": 9,
+            "health": 60
+          },
+          "21": {
+            "attack": 9,
+            "health": 63
+          },
+          "22": {
+            "attack": 9,
+            "health": 64
+          },
+          "23": {
+            "attack": 9,
+            "health": 68
+          },
+          "24": {
+            "attack": 10,
+            "health": 70
+          },
+          "25": {
+            "attack": 10,
+            "health": 72
+          },
+          "26": {
+            "attack": 10,
+            "health": 75
+          },
+          "27": {
+            "attack": 10,
+            "health": 76
+          },
+          "28": {
+            "attack": 10,
+            "health": 77
+          },
+          "29": {
+            "attack": 11,
+            "health": 79
+          },
+          "30": {
+            "attack": 11,
+            "health": 79
+          }
+        },
+        "roleId": 3,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 82209,
+      "collectible": 0,
+      "slug": "82209-balinda-stonehearth",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 6,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 68,
+      "attack": 9,
+      "manaCost": 0,
+      "name": "Balinda Stonehearth",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/f810883685e46092f6c0d133dba1b6b51bf5649de3869b3c257406976821530a.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 249,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 9
+          },
+          "2": {
+            "attack": 2,
+            "health": 11
+          },
+          "3": {
+            "attack": 2,
+            "health": 13
+          },
+          "4": {
+            "attack": 2,
+            "health": 15
+          },
+          "5": {
+            "attack": 2,
+            "health": 17
+          },
+          "6": {
+            "attack": 3,
+            "health": 19
+          },
+          "7": {
+            "attack": 3,
+            "health": 21
+          },
+          "8": {
+            "attack": 3,
+            "health": 23
+          },
+          "9": {
+            "attack": 3,
+            "health": 25
+          },
+          "10": {
+            "attack": 4,
+            "health": 27
+          },
+          "11": {
+            "attack": 4,
+            "health": 29
+          },
+          "12": {
+            "attack": 4,
+            "health": 31
+          },
+          "13": {
+            "attack": 4,
+            "health": 33
+          },
+          "14": {
+            "attack": 5,
+            "health": 35
+          },
+          "15": {
+            "attack": 5,
+            "health": 37
+          },
+          "16": {
+            "attack": 5,
+            "health": 39
+          },
+          "17": {
+            "attack": 5,
+            "health": 41
+          },
+          "18": {
+            "attack": 6,
+            "health": 43
+          },
+          "19": {
+            "attack": 6,
+            "health": 45
+          },
+          "20": {
+            "attack": 6,
+            "health": 47
+          },
+          "21": {
+            "attack": 6,
+            "health": 49
+          },
+          "22": {
+            "attack": 7,
+            "health": 51
+          },
+          "23": {
+            "attack": 7,
+            "health": 53
+          },
+          "24": {
+            "attack": 7,
+            "health": 55
+          },
+          "25": {
+            "attack": 7,
+            "health": 57
+          },
+          "26": {
+            "attack": 8,
+            "health": 59
+          },
+          "27": {
+            "attack": 8,
+            "health": 61
+          },
+          "28": {
+            "attack": 8,
+            "health": 63
+          },
+          "29": {
+            "attack": 8,
+            "health": 65
+          },
+          "30": {
+            "attack": 9,
+            "health": 68
+          }
+        },
+        "roleId": 2,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 64579,
+      "collectible": 0,
+      "slug": "64579-baron-geddon",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 18,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 81,
+      "attack": 9,
+      "manaCost": 3,
+      "name": "Baron Geddon",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/c36b26a49037a427656c4ab12a1db3db72b4ab8fc7e6ae400e980d3a990cb1cd.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/b2bace905296aacc59fac944180c453a855c07912dd122d29acee46df4b157c3.png",
+      "mercenaryHero": {
+        "mercId": 22,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 9
+          },
+          "2": {
+            "attack": 1,
+            "health": 11
+          },
+          "3": {
+            "attack": 1,
+            "health": 13
+          },
+          "4": {
+            "attack": 1,
+            "health": 16
+          },
+          "5": {
+            "attack": 2,
+            "health": 18
+          },
+          "6": {
+            "attack": 2,
+            "health": 21
+          },
+          "7": {
+            "attack": 2,
+            "health": 23
+          },
+          "8": {
+            "attack": 2,
+            "health": 26
+          },
+          "9": {
+            "attack": 3,
+            "health": 28
+          },
+          "10": {
+            "attack": 3,
+            "health": 31
+          },
+          "11": {
+            "attack": 3,
+            "health": 33
+          },
+          "12": {
+            "attack": 4,
+            "health": 36
+          },
+          "13": {
+            "attack": 4,
+            "health": 38
+          },
+          "14": {
+            "attack": 4,
+            "health": 41
+          },
+          "15": {
+            "attack": 4,
+            "health": 43
+          },
+          "16": {
+            "attack": 5,
+            "health": 46
+          },
+          "17": {
+            "attack": 5,
+            "health": 48
+          },
+          "18": {
+            "attack": 5,
+            "health": 51
+          },
+          "19": {
+            "attack": 5,
+            "health": 53
+          },
+          "20": {
+            "attack": 6,
+            "health": 56
+          },
+          "21": {
+            "attack": 6,
+            "health": 58
+          },
+          "22": {
+            "attack": 6,
+            "health": 61
+          },
+          "23": {
+            "attack": 7,
+            "health": 63
+          },
+          "24": {
+            "attack": 7,
+            "health": 66
+          },
+          "25": {
+            "attack": 7,
+            "health": 68
+          },
+          "26": {
+            "attack": 7,
+            "health": 71
+          },
+          "27": {
+            "attack": 8,
+            "health": 73
+          },
+          "28": {
+            "attack": 8,
+            "health": 76
+          },
+          "29": {
+            "attack": 8,
+            "health": 78
+          },
+          "30": {
+            "attack": 9,
+            "health": 81
+          }
+        },
+        "roleId": 1,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 70613,
+      "collectible": 0,
+      "slug": "70613-blademaster-samuro",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 8,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 66,
+      "attack": 10,
+      "manaCost": 4,
+      "name": "Blademaster Samuro",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/80e1aa635864d08cb24fec63343d671144e1c83223f2782e42f80840c5cb185e.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/97e1ac2f1440d55f098a97969766acce6712493f0c81ee01baa7f842119ad97c.png",
+      "mercenaryHero": {
+        "mercId": 53,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 12
+          },
+          "2": {
+            "attack": 2,
+            "health": 13
+          },
+          "3": {
+            "attack": 2,
+            "health": 15
+          },
+          "4": {
+            "attack": 2,
+            "health": 17
+          },
+          "5": {
+            "attack": 3,
+            "health": 19
+          },
+          "6": {
+            "attack": 3,
+            "health": 21
+          },
+          "7": {
+            "attack": 3,
+            "health": 23
+          },
+          "8": {
+            "attack": 3,
+            "health": 25
+          },
+          "9": {
+            "attack": 4,
+            "health": 26
+          },
+          "10": {
+            "attack": 4,
+            "health": 28
+          },
+          "11": {
+            "attack": 4,
+            "health": 30
+          },
+          "12": {
+            "attack": 5,
+            "health": 32
+          },
+          "13": {
+            "attack": 5,
+            "health": 34
+          },
+          "14": {
+            "attack": 5,
+            "health": 36
+          },
+          "15": {
+            "attack": 5,
+            "health": 38
+          },
+          "16": {
+            "attack": 6,
+            "health": 39
+          },
+          "17": {
+            "attack": 6,
+            "health": 41
+          },
+          "18": {
+            "attack": 6,
+            "health": 43
+          },
+          "19": {
+            "attack": 6,
+            "health": 45
+          },
+          "20": {
+            "attack": 7,
+            "health": 47
+          },
+          "21": {
+            "attack": 7,
+            "health": 49
+          },
+          "22": {
+            "attack": 7,
+            "health": 51
+          },
+          "23": {
+            "attack": 8,
+            "health": 52
+          },
+          "24": {
+            "attack": 8,
+            "health": 54
+          },
+          "25": {
+            "attack": 8,
+            "health": 56
+          },
+          "26": {
+            "attack": 8,
+            "health": 58
+          },
+          "27": {
+            "attack": 9,
+            "health": 60
+          },
+          "28": {
+            "attack": 9,
+            "health": 62
+          },
+          "29": {
+            "attack": 9,
+            "health": 64
+          },
+          "30": {
+            "attack": 10,
+            "health": 66
+          }
+        },
+        "roleId": 2,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 73540,
+      "collectible": 0,
+      "slug": "73540-blink-fox",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 20,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 79,
+      "attack": 10,
+      "manaCost": 5,
+      "name": "Blink Fox",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/bf85abaf0e44e7d6ed10e3a2338ec9b7f28cfc69b7432f2fbcd17f98f7663bf2.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/56296ef8090c73f027806e29ac6b1e71838b5c7e6e19fdd4918a660680836a3d.png",
+      "mercenaryHero": {
+        "mercId": 100,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 13
+          },
+          "2": {
+            "attack": 3,
+            "health": 15
+          },
+          "3": {
+            "attack": 3,
+            "health": 17
+          },
+          "4": {
+            "attack": 3,
+            "health": 19
+          },
+          "5": {
+            "attack": 3,
+            "health": 22
+          },
+          "6": {
+            "attack": 4,
+            "health": 24
+          },
+          "7": {
+            "attack": 4,
+            "health": 26
+          },
+          "8": {
+            "attack": 4,
+            "health": 28
+          },
+          "9": {
+            "attack": 4,
+            "health": 31
+          },
+          "10": {
+            "attack": 5,
+            "health": 33
+          },
+          "11": {
+            "attack": 5,
+            "health": 35
+          },
+          "12": {
+            "attack": 5,
+            "health": 38
+          },
+          "13": {
+            "attack": 5,
+            "health": 40
+          },
+          "14": {
+            "attack": 6,
+            "health": 42
+          },
+          "15": {
+            "attack": 6,
+            "health": 44
+          },
+          "16": {
+            "attack": 6,
+            "health": 47
+          },
+          "17": {
+            "attack": 6,
+            "health": 49
+          },
+          "18": {
+            "attack": 7,
+            "health": 51
+          },
+          "19": {
+            "attack": 7,
+            "health": 53
+          },
+          "20": {
+            "attack": 7,
+            "health": 56
+          },
+          "21": {
+            "attack": 7,
+            "health": 58
+          },
+          "22": {
+            "attack": 8,
+            "health": 60
+          },
+          "23": {
+            "attack": 8,
+            "health": 63
+          },
+          "24": {
+            "attack": 8,
+            "health": 65
+          },
+          "25": {
+            "attack": 8,
+            "health": 67
+          },
+          "26": {
+            "attack": 9,
+            "health": 69
+          },
+          "27": {
+            "attack": 9,
+            "health": 72
+          },
+          "28": {
+            "attack": 9,
+            "health": 74
+          },
+          "29": {
+            "attack": 9,
+            "health": 76
+          },
+          "30": {
+            "attack": 10,
+            "health": 79
+          }
+        },
+        "roleId": 1,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 90025,
+      "collectible": 0,
+      "slug": "90025-brann-bronzebeard",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 3,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 79,
+      "attack": 7,
+      "manaCost": 4,
+      "name": "Brann Bronzebeard",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/efc61b0378467d7b349d64058d35ffb09af6a3f67ba1741a36c6eab3dc182402.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 373,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 8
+          },
+          "2": {
+            "attack": 1,
+            "health": 10
+          },
+          "3": {
+            "attack": 1,
+            "health": 12
+          },
+          "4": {
+            "attack": 1,
+            "health": 15
+          },
+          "5": {
+            "attack": 1,
+            "health": 17
+          },
+          "6": {
+            "attack": 1,
+            "health": 20
+          },
+          "7": {
+            "attack": 1,
+            "health": 22
+          },
+          "8": {
+            "attack": 1,
+            "health": 25
+          },
+          "9": {
+            "attack": 1,
+            "health": 27
+          },
+          "10": {
+            "attack": 2,
+            "health": 30
+          },
+          "11": {
+            "attack": 2,
+            "health": 32
+          },
+          "12": {
+            "attack": 2,
+            "health": 34
+          },
+          "13": {
+            "attack": 2,
+            "health": 37
+          },
+          "14": {
+            "attack": 3,
+            "health": 39
+          },
+          "15": {
+            "attack": 3,
+            "health": 42
+          },
+          "16": {
+            "attack": 3,
+            "health": 44
+          },
+          "17": {
+            "attack": 3,
+            "health": 47
+          },
+          "18": {
+            "attack": 4,
+            "health": 49
+          },
+          "19": {
+            "attack": 4,
+            "health": 52
+          },
+          "20": {
+            "attack": 4,
+            "health": 54
+          },
+          "21": {
+            "attack": 4,
+            "health": 56
+          },
+          "22": {
+            "attack": 5,
+            "health": 59
+          },
+          "23": {
+            "attack": 5,
+            "health": 61
+          },
+          "24": {
+            "attack": 5,
+            "health": 64
+          },
+          "25": {
+            "attack": 5,
+            "health": 66
+          },
+          "26": {
+            "attack": 6,
+            "health": 69
+          },
+          "27": {
+            "attack": 6,
+            "health": 71
+          },
+          "28": {
+            "attack": 6,
+            "health": 74
+          },
+          "29": {
+            "attack": 6,
+            "health": 76
+          },
+          "30": {
+            "attack": 7,
+            "health": 79
+          }
+        },
+        "roleId": 3,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 64594,
+      "collectible": 0,
+      "slug": "64594-brightwing",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 24,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 72,
+      "attack": 6,
+      "manaCost": 5,
+      "name": "Brightwing",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/4f1746ff7a0c91aa2df146919b01476475bfb059041c21760b10b5a7dc4ca3f2.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/605428c28e8b46a05167684e9e00b538070214f0cf3b5fab6aec70f0d68379f9.png",
+      "mercenaryHero": {
+        "mercId": 24,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 10
+          },
+          "2": {
+            "attack": 1,
+            "health": 12
+          },
+          "3": {
+            "attack": 1,
+            "health": 14
+          },
+          "4": {
+            "attack": 1,
+            "health": 16
+          },
+          "5": {
+            "attack": 1,
+            "health": 18
+          },
+          "6": {
+            "attack": 1,
+            "health": 20
+          },
+          "7": {
+            "attack": 2,
+            "health": 22
+          },
+          "8": {
+            "attack": 2,
+            "health": 24
+          },
+          "9": {
+            "attack": 2,
+            "health": 27
+          },
+          "10": {
+            "attack": 2,
+            "health": 29
+          },
+          "11": {
+            "attack": 2,
+            "health": 31
+          },
+          "12": {
+            "attack": 2,
+            "health": 33
+          },
+          "13": {
+            "attack": 3,
+            "health": 35
+          },
+          "14": {
+            "attack": 3,
+            "health": 37
+          },
+          "15": {
+            "attack": 3,
+            "health": 39
+          },
+          "16": {
+            "attack": 3,
+            "health": 42
+          },
+          "17": {
+            "attack": 3,
+            "health": 44
+          },
+          "18": {
+            "attack": 3,
+            "health": 46
+          },
+          "19": {
+            "attack": 4,
+            "health": 48
+          },
+          "20": {
+            "attack": 4,
+            "health": 50
+          },
+          "21": {
+            "attack": 4,
+            "health": 52
+          },
+          "22": {
+            "attack": 4,
+            "health": 54
+          },
+          "23": {
+            "attack": 4,
+            "health": 57
+          },
+          "24": {
+            "attack": 4,
+            "health": 59
+          },
+          "25": {
+            "attack": 5,
+            "health": 61
+          },
+          "26": {
+            "attack": 5,
+            "health": 63
+          },
+          "27": {
+            "attack": 5,
+            "health": 65
+          },
+          "28": {
+            "attack": 5,
+            "health": 67
+          },
+          "29": {
+            "attack": 5,
+            "health": 69
+          },
+          "30": {
+            "attack": 6,
+            "health": 72
+          }
+        },
+        "roleId": 1,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 64588,
+      "collectible": 0,
+      "slug": "64588-brukan",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 10,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 76,
+      "attack": 7,
+      "manaCost": 6,
+      "name": "Bru'kan",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/08dc91726aaac77e6c6702d46316f6d7477ca4c6ef1a52e45824c72566c22475.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/17feae9ac48146bda6b6a667b1b321eac43c06686ec8ac6e98fed2175d5f8750.png",
+      "mercenaryHero": {
+        "mercId": 21,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 8
+          },
+          "2": {
+            "attack": 1,
+            "health": 10
+          },
+          "3": {
+            "attack": 1,
+            "health": 12
+          },
+          "4": {
+            "attack": 1,
+            "health": 15
+          },
+          "5": {
+            "attack": 1,
+            "health": 17
+          },
+          "6": {
+            "attack": 2,
+            "health": 19
+          },
+          "7": {
+            "attack": 2,
+            "health": 22
+          },
+          "8": {
+            "attack": 2,
+            "health": 24
+          },
+          "9": {
+            "attack": 2,
+            "health": 26
+          },
+          "10": {
+            "attack": 2,
+            "health": 29
+          },
+          "11": {
+            "attack": 3,
+            "health": 31
+          },
+          "12": {
+            "attack": 3,
+            "health": 33
+          },
+          "13": {
+            "attack": 3,
+            "health": 36
+          },
+          "14": {
+            "attack": 3,
+            "health": 38
+          },
+          "15": {
+            "attack": 3,
+            "health": 40
+          },
+          "16": {
+            "attack": 4,
+            "health": 43
+          },
+          "17": {
+            "attack": 4,
+            "health": 45
+          },
+          "18": {
+            "attack": 4,
+            "health": 47
+          },
+          "19": {
+            "attack": 4,
+            "health": 50
+          },
+          "20": {
+            "attack": 4,
+            "health": 52
+          },
+          "21": {
+            "attack": 5,
+            "health": 54
+          },
+          "22": {
+            "attack": 5,
+            "health": 57
+          },
+          "23": {
+            "attack": 5,
+            "health": 59
+          },
+          "24": {
+            "attack": 5,
+            "health": 61
+          },
+          "25": {
+            "attack": 5,
+            "health": 64
+          },
+          "26": {
+            "attack": 6,
+            "health": 66
+          },
+          "27": {
+            "attack": 6,
+            "health": 68
+          },
+          "28": {
+            "attack": 6,
+            "health": 71
+          },
+          "29": {
+            "attack": 6,
+            "health": 73
+          },
+          "30": {
+            "attack": 7,
+            "health": 76
+          }
+        },
+        "roleId": 1,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 64600,
+      "collectible": 0,
+      "slug": "64600-cairne-bloodhoof",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 9,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 77,
+      "attack": 12,
+      "manaCost": 5,
+      "name": "Cairne Bloodhoof",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/651e777ec7fc888b22bad7a5587a2b0350c3101eb67477faa3e3d9025ed1a55b.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/e9d2b2ea22a1c4f89ca4b1b6ba401dc96f4830a95a5239321eb1f49ca172f6bd.png",
+      "mercenaryHero": {
+        "mercId": 26,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 4,
+            "health": 8
+          },
+          "2": {
+            "attack": 4,
+            "health": 10
+          },
+          "3": {
+            "attack": 4,
+            "health": 12
+          },
+          "4": {
+            "attack": 4,
+            "health": 15
+          },
+          "5": {
+            "attack": 5,
+            "health": 17
+          },
+          "6": {
+            "attack": 5,
+            "health": 19
+          },
+          "7": {
+            "attack": 5,
+            "health": 22
+          },
+          "8": {
+            "attack": 5,
+            "health": 24
+          },
+          "9": {
+            "attack": 6,
+            "health": 27
+          },
+          "10": {
+            "attack": 6,
+            "health": 29
+          },
+          "11": {
+            "attack": 6,
+            "health": 31
+          },
+          "12": {
+            "attack": 7,
+            "health": 34
+          },
+          "13": {
+            "attack": 7,
+            "health": 36
+          },
+          "14": {
+            "attack": 7,
+            "health": 38
+          },
+          "15": {
+            "attack": 7,
+            "health": 41
+          },
+          "16": {
+            "attack": 8,
+            "health": 43
+          },
+          "17": {
+            "attack": 8,
+            "health": 46
+          },
+          "18": {
+            "attack": 8,
+            "health": 48
+          },
+          "19": {
+            "attack": 8,
+            "health": 50
+          },
+          "20": {
+            "attack": 9,
+            "health": 53
+          },
+          "21": {
+            "attack": 9,
+            "health": 55
+          },
+          "22": {
+            "attack": 9,
+            "health": 57
+          },
+          "23": {
+            "attack": 10,
+            "health": 60
+          },
+          "24": {
+            "attack": 10,
+            "health": 62
+          },
+          "25": {
+            "attack": 10,
+            "health": 65
+          },
+          "26": {
+            "attack": 10,
+            "health": 67
+          },
+          "27": {
+            "attack": 11,
+            "health": 69
+          },
+          "28": {
+            "attack": 11,
+            "health": 72
+          },
+          "29": {
+            "attack": 11,
+            "health": 74
+          },
+          "30": {
+            "attack": 12,
+            "health": 77
+          }
+        },
+        "roleId": 3,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 82210,
+      "collectible": 0,
+      "slug": "82210-captain-galvangar",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 8,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 74,
+      "attack": 10,
+      "manaCost": 0,
+      "name": "Captain Galvangar",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/08e3d06da9fc4991def9dc60ece6f36e9d2881da2824065cc77fe45541f87dfa.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 250,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 12
+          },
+          "2": {
+            "attack": 2,
+            "health": 14
+          },
+          "3": {
+            "attack": 2,
+            "health": 16
+          },
+          "4": {
+            "attack": 2,
+            "health": 18
+          },
+          "5": {
+            "attack": 3,
+            "health": 20
+          },
+          "6": {
+            "attack": 3,
+            "health": 22
+          },
+          "7": {
+            "attack": 3,
+            "health": 24
+          },
+          "8": {
+            "attack": 3,
+            "health": 26
+          },
+          "9": {
+            "attack": 4,
+            "health": 29
+          },
+          "10": {
+            "attack": 4,
+            "health": 31
+          },
+          "11": {
+            "attack": 4,
+            "health": 33
+          },
+          "12": {
+            "attack": 5,
+            "health": 35
+          },
+          "13": {
+            "attack": 5,
+            "health": 37
+          },
+          "14": {
+            "attack": 5,
+            "health": 39
+          },
+          "15": {
+            "attack": 5,
+            "health": 41
+          },
+          "16": {
+            "attack": 6,
+            "health": 44
+          },
+          "17": {
+            "attack": 6,
+            "health": 46
+          },
+          "18": {
+            "attack": 6,
+            "health": 48
+          },
+          "19": {
+            "attack": 6,
+            "health": 50
+          },
+          "20": {
+            "attack": 7,
+            "health": 52
+          },
+          "21": {
+            "attack": 7,
+            "health": 54
+          },
+          "22": {
+            "attack": 7,
+            "health": 56
+          },
+          "23": {
+            "attack": 8,
+            "health": 59
+          },
+          "24": {
+            "attack": 8,
+            "health": 61
+          },
+          "25": {
+            "attack": 8,
+            "health": 63
+          },
+          "26": {
+            "attack": 8,
+            "health": 65
+          },
+          "27": {
+            "attack": 9,
+            "health": 67
+          },
+          "28": {
+            "attack": 9,
+            "health": 69
+          },
+          "29": {
+            "attack": 9,
+            "health": 71
+          },
+          "30": {
+            "attack": 10,
+            "health": 74
+          }
+        },
+        "roleId": 2,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 86078,
+      "collectible": 0,
+      "slug": "86078-captain-hooktusk",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 23,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 70,
+      "attack": 9,
+      "manaCost": 4,
+      "name": "Captain Hooktusk",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/06c66903c37831e0a63e64b2889f1c6234cec6492eb779fcd13ff8548bee204c.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 309,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 12
+          },
+          "2": {
+            "attack": 2,
+            "health": 14
+          },
+          "3": {
+            "attack": 2,
+            "health": 16
+          },
+          "4": {
+            "attack": 2,
+            "health": 18
+          },
+          "5": {
+            "attack": 2,
+            "health": 20
+          },
+          "6": {
+            "attack": 3,
+            "health": 22
+          },
+          "7": {
+            "attack": 3,
+            "health": 24
+          },
+          "8": {
+            "attack": 3,
+            "health": 26
+          },
+          "9": {
+            "attack": 3,
+            "health": 28
+          },
+          "10": {
+            "attack": 4,
+            "health": 30
+          },
+          "11": {
+            "attack": 4,
+            "health": 32
+          },
+          "12": {
+            "attack": 4,
+            "health": 34
+          },
+          "13": {
+            "attack": 4,
+            "health": 36
+          },
+          "14": {
+            "attack": 5,
+            "health": 38
+          },
+          "15": {
+            "attack": 5,
+            "health": 40
+          },
+          "16": {
+            "attack": 5,
+            "health": 42
+          },
+          "17": {
+            "attack": 5,
+            "health": 44
+          },
+          "18": {
+            "attack": 6,
+            "health": 46
+          },
+          "19": {
+            "attack": 6,
+            "health": 48
+          },
+          "20": {
+            "attack": 6,
+            "health": 50
+          },
+          "21": {
+            "attack": 6,
+            "health": 52
+          },
+          "22": {
+            "attack": 7,
+            "health": 54
+          },
+          "23": {
+            "attack": 7,
+            "health": 56
+          },
+          "24": {
+            "attack": 7,
+            "health": 58
+          },
+          "25": {
+            "attack": 7,
+            "health": 60
+          },
+          "26": {
+            "attack": 8,
+            "health": 62
+          },
+          "27": {
+            "attack": 8,
+            "health": 64
+          },
+          "28": {
+            "attack": 8,
+            "health": 66
+          },
+          "29": {
+            "attack": 8,
+            "health": 68
+          },
+          "30": {
+            "attack": 9,
+            "health": 70
+          }
+        },
+        "roleId": 1,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 64560,
+      "collectible": 0,
+      "slug": "64560-cariel-roame",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 6,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 73,
+      "attack": 11,
+      "manaCost": 5,
+      "name": "Cariel Roame",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/9b1ea77df51954cff46c04025aad20b002d621a7d497ea5cfc38fc07a434f909.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/2c9a633fbf077be9d07fc74d530c09768cef231f96441ea3e03ab62cc4503831.png",
+      "mercenaryHero": {
+        "mercId": 18,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 11
+          },
+          "2": {
+            "attack": 3,
+            "health": 13
+          },
+          "3": {
+            "attack": 3,
+            "health": 14
+          },
+          "4": {
+            "attack": 3,
+            "health": 16
+          },
+          "5": {
+            "attack": 3,
+            "health": 18
+          },
+          "6": {
+            "attack": 4,
+            "health": 21
+          },
+          "7": {
+            "attack": 4,
+            "health": 23
+          },
+          "8": {
+            "attack": 4,
+            "health": 25
+          },
+          "9": {
+            "attack": 4,
+            "health": 28
+          },
+          "10": {
+            "attack": 5,
+            "health": 30
+          },
+          "11": {
+            "attack": 5,
+            "health": 32
+          },
+          "12": {
+            "attack": 5,
+            "health": 34
+          },
+          "13": {
+            "attack": 5,
+            "health": 36
+          },
+          "14": {
+            "attack": 6,
+            "health": 38
+          },
+          "15": {
+            "attack": 6,
+            "health": 40
+          },
+          "16": {
+            "attack": 6,
+            "health": 43
+          },
+          "17": {
+            "attack": 6,
+            "health": 45
+          },
+          "18": {
+            "attack": 7,
+            "health": 47
+          },
+          "19": {
+            "attack": 7,
+            "health": 49
+          },
+          "20": {
+            "attack": 7,
+            "health": 51
+          },
+          "21": {
+            "attack": 7,
+            "health": 53
+          },
+          "22": {
+            "attack": 8,
+            "health": 55
+          },
+          "23": {
+            "attack": 8,
+            "health": 58
+          },
+          "24": {
+            "attack": 8,
+            "health": 60
+          },
+          "25": {
+            "attack": 8,
+            "health": 62
+          },
+          "26": {
+            "attack": 9,
+            "health": 64
+          },
+          "27": {
+            "attack": 9,
+            "health": 66
+          },
+          "28": {
+            "attack": 10,
+            "health": 68
+          },
+          "29": {
+            "attack": 10,
+            "health": 70
+          },
+          "30": {
+            "attack": 11,
+            "health": 73
+          }
+        },
+        "roleId": 3,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 84125,
+      "collectible": 0,
+      "slug": "84125-chi-ji",
+      "classId": 12,
+      "multiClassIds": [],
+      "minionTypeId": 20,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 74,
+      "attack": 6,
+      "manaCost": 5,
+      "name": "Chi-Ji",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/4815a029550719c96095d953f88ed939760fcf8054bc7773d63f27e1422d451d.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 286,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 9
+          },
+          "2": {
+            "attack": 2,
+            "health": 11
+          },
+          "3": {
+            "attack": 2,
+            "health": 13
+          },
+          "4": {
+            "attack": 2,
+            "health": 15
+          },
+          "5": {
+            "attack": 2,
+            "health": 17
+          },
+          "6": {
+            "attack": 2,
+            "health": 20
+          },
+          "7": {
+            "attack": 2,
+            "health": 22
+          },
+          "8": {
+            "attack": 2,
+            "health": 24
+          },
+          "9": {
+            "attack": 3,
+            "health": 26
+          },
+          "10": {
+            "attack": 3,
+            "health": 29
+          },
+          "11": {
+            "attack": 3,
+            "health": 31
+          },
+          "12": {
+            "attack": 3,
+            "health": 33
+          },
+          "13": {
+            "attack": 3,
+            "health": 35
+          },
+          "14": {
+            "attack": 3,
+            "health": 38
+          },
+          "15": {
+            "attack": 3,
+            "health": 40
+          },
+          "16": {
+            "attack": 4,
+            "health": 42
+          },
+          "17": {
+            "attack": 4,
+            "health": 44
+          },
+          "18": {
+            "attack": 4,
+            "health": 47
+          },
+          "19": {
+            "attack": 4,
+            "health": 49
+          },
+          "20": {
+            "attack": 4,
+            "health": 51
+          },
+          "21": {
+            "attack": 4,
+            "health": 53
+          },
+          "22": {
+            "attack": 4,
+            "health": 56
+          },
+          "23": {
+            "attack": 5,
+            "health": 58
+          },
+          "24": {
+            "attack": 5,
+            "health": 60
+          },
+          "25": {
+            "attack": 5,
+            "health": 62
+          },
+          "26": {
+            "attack": 5,
+            "health": 65
+          },
+          "27": {
+            "attack": 5,
+            "health": 67
+          },
+          "28": {
+            "attack": 5,
+            "health": 69
+          },
+          "29": {
+            "attack": 5,
+            "health": 71
+          },
+          "30": {
+            "attack": 6,
+            "health": 74
+          }
+        },
+        "roleId": 1,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 72791,
+      "collectible": 0,
+      "slug": "72791-cookie-the-cook",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 14,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 65,
+      "attack": 5,
+      "manaCost": 0,
+      "name": "Cookie, the Cook",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/f676ddac53c268027ece1fe84a90a8dc645296c01ff7beac64fb856c78cd02f7.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 149,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 8
+          },
+          "2": {
+            "attack": 1,
+            "health": 9
+          },
+          "3": {
+            "attack": 1,
+            "health": 11
+          },
+          "4": {
+            "attack": 1,
+            "health": 13
+          },
+          "5": {
+            "attack": 1,
+            "health": 15
+          },
+          "6": {
+            "attack": 1,
+            "health": 17
+          },
+          "7": {
+            "attack": 1,
+            "health": 19
+          },
+          "8": {
+            "attack": 1,
+            "health": 21
+          },
+          "9": {
+            "attack": 2,
+            "health": 23
+          },
+          "10": {
+            "attack": 2,
+            "health": 25
+          },
+          "11": {
+            "attack": 2,
+            "health": 27
+          },
+          "12": {
+            "attack": 2,
+            "health": 29
+          },
+          "13": {
+            "attack": 2,
+            "health": 31
+          },
+          "14": {
+            "attack": 2,
+            "health": 33
+          },
+          "15": {
+            "attack": 2,
+            "health": 35
+          },
+          "16": {
+            "attack": 3,
+            "health": 37
+          },
+          "17": {
+            "attack": 3,
+            "health": 39
+          },
+          "18": {
+            "attack": 3,
+            "health": 41
+          },
+          "19": {
+            "attack": 3,
+            "health": 43
+          },
+          "20": {
+            "attack": 3,
+            "health": 45
+          },
+          "21": {
+            "attack": 3,
+            "health": 47
+          },
+          "22": {
+            "attack": 3,
+            "health": 49
+          },
+          "23": {
+            "attack": 4,
+            "health": 51
+          },
+          "24": {
+            "attack": 4,
+            "health": 53
+          },
+          "25": {
+            "attack": 4,
+            "health": 55
+          },
+          "26": {
+            "attack": 4,
+            "health": 57
+          },
+          "27": {
+            "attack": 4,
+            "health": 59
+          },
+          "28": {
+            "attack": 4,
+            "health": 61
+          },
+          "29": {
+            "attack": 4,
+            "health": 63
+          },
+          "30": {
+            "attack": 5,
+            "health": 65
+          }
+        },
+        "roleId": 1,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 72859,
+      "collectible": 0,
+      "slug": "72859-cornelius-roame",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 6,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 74,
+      "attack": 11,
+      "manaCost": 8,
+      "name": "Cornelius Roame",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/469bc565181cc452cbc805c9aeefe2835539020b51afdfdfe8dabd21dbd519f9.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/135db8b8b89bcd8178e3af639d7e39dbc290bebcc5b8da82643545d0485745de.png",
+      "mercenaryHero": {
+        "mercId": 95,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 13
+          },
+          "2": {
+            "attack": 3,
+            "health": 15
+          },
+          "3": {
+            "attack": 3,
+            "health": 17
+          },
+          "4": {
+            "attack": 3,
+            "health": 19
+          },
+          "5": {
+            "attack": 4,
+            "health": 21
+          },
+          "6": {
+            "attack": 4,
+            "health": 23
+          },
+          "7": {
+            "attack": 4,
+            "health": 25
+          },
+          "8": {
+            "attack": 4,
+            "health": 27
+          },
+          "9": {
+            "attack": 5,
+            "health": 29
+          },
+          "10": {
+            "attack": 5,
+            "health": 31
+          },
+          "11": {
+            "attack": 5,
+            "health": 34
+          },
+          "12": {
+            "attack": 6,
+            "health": 36
+          },
+          "13": {
+            "attack": 6,
+            "health": 38
+          },
+          "14": {
+            "attack": 6,
+            "health": 40
+          },
+          "15": {
+            "attack": 6,
+            "health": 42
+          },
+          "16": {
+            "attack": 7,
+            "health": 44
+          },
+          "17": {
+            "attack": 7,
+            "health": 46
+          },
+          "18": {
+            "attack": 7,
+            "health": 48
+          },
+          "19": {
+            "attack": 7,
+            "health": 50
+          },
+          "20": {
+            "attack": 8,
+            "health": 52
+          },
+          "21": {
+            "attack": 8,
+            "health": 55
+          },
+          "22": {
+            "attack": 8,
+            "health": 57
+          },
+          "23": {
+            "attack": 9,
+            "health": 59
+          },
+          "24": {
+            "attack": 9,
+            "health": 61
+          },
+          "25": {
+            "attack": 9,
+            "health": 63
+          },
+          "26": {
+            "attack": 9,
+            "health": 65
+          },
+          "27": {
+            "attack": 10,
+            "health": 67
+          },
+          "28": {
+            "attack": 10,
+            "health": 69
+          },
+          "29": {
+            "attack": 10,
+            "health": 71
+          },
+          "30": {
+            "attack": 11,
+            "health": 74
+          }
+        },
+        "roleId": 3,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 84774,
+      "collectible": 0,
+      "slug": "84774-deathwing",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 24,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 85,
+      "attack": 11,
+      "manaCost": 4,
+      "name": "Deathwing",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/87b56bb77dea4446220a1c62527d202694cab4bbd4d3f6b823a5b13fb1434789.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 298,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 14
+          },
+          "2": {
+            "attack": 2,
+            "health": 16
+          },
+          "3": {
+            "attack": 2,
+            "health": 18
+          },
+          "4": {
+            "attack": 2,
+            "health": 21
+          },
+          "5": {
+            "attack": 3,
+            "health": 23
+          },
+          "6": {
+            "attack": 3,
+            "health": 26
+          },
+          "7": {
+            "attack": 3,
+            "health": 28
+          },
+          "8": {
+            "attack": 4,
+            "health": 31
+          },
+          "9": {
+            "attack": 4,
+            "health": 33
+          },
+          "10": {
+            "attack": 4,
+            "health": 36
+          },
+          "11": {
+            "attack": 5,
+            "health": 38
+          },
+          "12": {
+            "attack": 5,
+            "health": 40
+          },
+          "13": {
+            "attack": 5,
+            "health": 43
+          },
+          "14": {
+            "attack": 6,
+            "health": 45
+          },
+          "15": {
+            "attack": 6,
+            "health": 48
+          },
+          "16": {
+            "attack": 6,
+            "health": 50
+          },
+          "17": {
+            "attack": 6,
+            "health": 53
+          },
+          "18": {
+            "attack": 7,
+            "health": 55
+          },
+          "19": {
+            "attack": 7,
+            "health": 58
+          },
+          "20": {
+            "attack": 7,
+            "health": 60
+          },
+          "21": {
+            "attack": 8,
+            "health": 62
+          },
+          "22": {
+            "attack": 8,
+            "health": 65
+          },
+          "23": {
+            "attack": 8,
+            "health": 67
+          },
+          "24": {
+            "attack": 9,
+            "health": 70
+          },
+          "25": {
+            "attack": 9,
+            "health": 72
+          },
+          "26": {
+            "attack": 9,
+            "health": 75
+          },
+          "27": {
+            "attack": 10,
+            "health": 77
+          },
+          "28": {
+            "attack": 10,
+            "health": 80
+          },
+          "29": {
+            "attack": 10,
+            "health": 82
+          },
+          "30": {
+            "attack": 11,
+            "health": 85
+          }
+        },
+        "roleId": 3,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 74681,
+      "collectible": 0,
+      "slug": "74681-diablo",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 15,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 70,
+      "attack": 11,
+      "manaCost": 7,
+      "name": "Diablo",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/c79bdfdc35d0ff3fc5ab3eca286a6838919d6c21fa4dd895440b5aa014de2631.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/68c4f90fd5ea9adee60466494ab14a788d947d42af01946ca496bb0a89ed2354.png",
+      "mercenaryHero": {
+        "mercId": 102,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 13
+          },
+          "2": {
+            "attack": 3,
+            "health": 14
+          },
+          "3": {
+            "attack": 3,
+            "health": 16
+          },
+          "4": {
+            "attack": 3,
+            "health": 18
+          },
+          "5": {
+            "attack": 4,
+            "health": 20
+          },
+          "6": {
+            "attack": 4,
+            "health": 22
+          },
+          "7": {
+            "attack": 4,
+            "health": 24
+          },
+          "8": {
+            "attack": 4,
+            "health": 26
+          },
+          "9": {
+            "attack": 5,
+            "health": 28
+          },
+          "10": {
+            "attack": 5,
+            "health": 30
+          },
+          "11": {
+            "attack": 5,
+            "health": 32
+          },
+          "12": {
+            "attack": 6,
+            "health": 34
+          },
+          "13": {
+            "attack": 6,
+            "health": 36
+          },
+          "14": {
+            "attack": 6,
+            "health": 38
+          },
+          "15": {
+            "attack": 6,
+            "health": 40
+          },
+          "16": {
+            "attack": 7,
+            "health": 42
+          },
+          "17": {
+            "attack": 7,
+            "health": 44
+          },
+          "18": {
+            "attack": 7,
+            "health": 46
+          },
+          "19": {
+            "attack": 7,
+            "health": 48
+          },
+          "20": {
+            "attack": 8,
+            "health": 50
+          },
+          "21": {
+            "attack": 8,
+            "health": 52
+          },
+          "22": {
+            "attack": 8,
+            "health": 54
+          },
+          "23": {
+            "attack": 9,
+            "health": 56
+          },
+          "24": {
+            "attack": 9,
+            "health": 58
+          },
+          "25": {
+            "attack": 9,
+            "health": 60
+          },
+          "26": {
+            "attack": 9,
+            "health": 62
+          },
+          "27": {
+            "attack": 10,
+            "health": 64
+          },
+          "28": {
+            "attack": 10,
+            "health": 66
+          },
+          "29": {
+            "attack": 10,
+            "health": 68
+          },
+          "30": {
+            "attack": 11,
+            "health": 70
+          }
+        },
+        "roleId": 2,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 84771,
+      "collectible": 0,
+      "slug": "84771-drekthar",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 8,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 68,
+      "attack": 9,
+      "manaCost": 4,
+      "name": "Drek'Thar",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/86e819ba0912bc94630d7244cfb5b4394d0083a1d251132c257d1a0d7ac28d3c.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 293,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 12
+          },
+          "2": {
+            "attack": 2,
+            "health": 13
+          },
+          "3": {
+            "attack": 2,
+            "health": 15
+          },
+          "4": {
+            "attack": 2,
+            "health": 17
+          },
+          "5": {
+            "attack": 2,
+            "health": 19
+          },
+          "6": {
+            "attack": 3,
+            "health": 21
+          },
+          "7": {
+            "attack": 3,
+            "health": 23
+          },
+          "8": {
+            "attack": 3,
+            "health": 25
+          },
+          "9": {
+            "attack": 3,
+            "health": 27
+          },
+          "10": {
+            "attack": 4,
+            "health": 29
+          },
+          "11": {
+            "attack": 4,
+            "health": 31
+          },
+          "12": {
+            "attack": 4,
+            "health": 33
+          },
+          "13": {
+            "attack": 4,
+            "health": 35
+          },
+          "14": {
+            "attack": 5,
+            "health": 37
+          },
+          "15": {
+            "attack": 5,
+            "health": 39
+          },
+          "16": {
+            "attack": 5,
+            "health": 40
+          },
+          "17": {
+            "attack": 5,
+            "health": 42
+          },
+          "18": {
+            "attack": 6,
+            "health": 44
+          },
+          "19": {
+            "attack": 6,
+            "health": 46
+          },
+          "20": {
+            "attack": 6,
+            "health": 48
+          },
+          "21": {
+            "attack": 6,
+            "health": 50
+          },
+          "22": {
+            "attack": 7,
+            "health": 52
+          },
+          "23": {
+            "attack": 7,
+            "health": 54
+          },
+          "24": {
+            "attack": 7,
+            "health": 56
+          },
+          "25": {
+            "attack": 7,
+            "health": 58
+          },
+          "26": {
+            "attack": 8,
+            "health": 60
+          },
+          "27": {
+            "attack": 8,
+            "health": 62
+          },
+          "28": {
+            "attack": 8,
+            "health": 64
+          },
+          "29": {
+            "attack": 8,
+            "health": 66
+          },
+          "30": {
+            "attack": 9,
+            "health": 68
+          }
+        },
+        "roleId": 1,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 77645,
+      "collectible": 0,
+      "slug": "77645-edwin-defias-kingpin",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 23,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 75,
+      "attack": 12,
+      "manaCost": 0,
+      "name": "Edwin, Defias Kingpin",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/07044adfe2a2325681dbc82cec640492d60b16c129f26c713f132b3d336ca91c.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 159,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 4,
+            "health": 10
+          },
+          "2": {
+            "attack": 4,
+            "health": 12
+          },
+          "3": {
+            "attack": 4,
+            "health": 14
+          },
+          "4": {
+            "attack": 4,
+            "health": 16
+          },
+          "5": {
+            "attack": 5,
+            "health": 18
+          },
+          "6": {
+            "attack": 5,
+            "health": 21
+          },
+          "7": {
+            "attack": 5,
+            "health": 23
+          },
+          "8": {
+            "attack": 5,
+            "health": 25
+          },
+          "9": {
+            "attack": 6,
+            "health": 27
+          },
+          "10": {
+            "attack": 6,
+            "health": 30
+          },
+          "11": {
+            "attack": 6,
+            "health": 32
+          },
+          "12": {
+            "attack": 7,
+            "health": 34
+          },
+          "13": {
+            "attack": 7,
+            "health": 36
+          },
+          "14": {
+            "attack": 7,
+            "health": 39
+          },
+          "15": {
+            "attack": 7,
+            "health": 41
+          },
+          "16": {
+            "attack": 8,
+            "health": 43
+          },
+          "17": {
+            "attack": 8,
+            "health": 45
+          },
+          "18": {
+            "attack": 8,
+            "health": 48
+          },
+          "19": {
+            "attack": 8,
+            "health": 50
+          },
+          "20": {
+            "attack": 9,
+            "health": 52
+          },
+          "21": {
+            "attack": 9,
+            "health": 54
+          },
+          "22": {
+            "attack": 9,
+            "health": 57
+          },
+          "23": {
+            "attack": 10,
+            "health": 59
+          },
+          "24": {
+            "attack": 10,
+            "health": 61
+          },
+          "25": {
+            "attack": 10,
+            "health": 63
+          },
+          "26": {
+            "attack": 10,
+            "health": 66
+          },
+          "27": {
+            "attack": 11,
+            "health": 68
+          },
+          "28": {
+            "attack": 11,
+            "health": 70
+          },
+          "29": {
+            "attack": 11,
+            "health": 72
+          },
+          "30": {
+            "attack": 12,
+            "health": 75
+          }
+        },
+        "roleId": 2,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 90742,
+      "collectible": 0,
+      "slug": "90742-elise-starseeker",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 7,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 81,
+      "attack": 6,
+      "manaCost": 4,
+      "name": "Elise Starseeker",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/e0d38d7c0f05dfa491575231d7a6441b84a8e6ef51537929b34121e4fe90e163.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 383,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 8
+          },
+          "2": {
+            "attack": 1,
+            "health": 10
+          },
+          "3": {
+            "attack": 1,
+            "health": 13
+          },
+          "4": {
+            "attack": 1,
+            "health": 15
+          },
+          "5": {
+            "attack": 1,
+            "health": 18
+          },
+          "6": {
+            "attack": 1,
+            "health": 20
+          },
+          "7": {
+            "attack": 1,
+            "health": 23
+          },
+          "8": {
+            "attack": 1,
+            "health": 25
+          },
+          "9": {
+            "attack": 1,
+            "health": 28
+          },
+          "10": {
+            "attack": 1,
+            "health": 30
+          },
+          "11": {
+            "attack": 2,
+            "health": 33
+          },
+          "12": {
+            "attack": 2,
+            "health": 35
+          },
+          "13": {
+            "attack": 2,
+            "health": 38
+          },
+          "14": {
+            "attack": 2,
+            "health": 40
+          },
+          "15": {
+            "attack": 2,
+            "health": 43
+          },
+          "16": {
+            "attack": 3,
+            "health": 45
+          },
+          "17": {
+            "attack": 3,
+            "health": 48
+          },
+          "18": {
+            "attack": 3,
+            "health": 50
+          },
+          "19": {
+            "attack": 3,
+            "health": 53
+          },
+          "20": {
+            "attack": 3,
+            "health": 55
+          },
+          "21": {
+            "attack": 4,
+            "health": 58
+          },
+          "22": {
+            "attack": 4,
+            "health": 60
+          },
+          "23": {
+            "attack": 4,
+            "health": 63
+          },
+          "24": {
+            "attack": 4,
+            "health": 65
+          },
+          "25": {
+            "attack": 4,
+            "health": 68
+          },
+          "26": {
+            "attack": 5,
+            "health": 70
+          },
+          "27": {
+            "attack": 5,
+            "health": 73
+          },
+          "28": {
+            "attack": 5,
+            "health": 75
+          },
+          "29": {
+            "attack": 5,
+            "health": 78
+          },
+          "30": {
+            "attack": 6,
+            "health": 81
+          }
+        },
+        "roleId": 2,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 64573,
+      "collectible": 0,
+      "slug": "64573-eudora",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 23,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 73,
+      "attack": 9,
+      "manaCost": 3,
+      "name": "Eudora",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/dc7d16fdfaa48e5ec63e85acd01362c344cc8a99091586c79884f97d794369da.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/255f065219a78226c8f4d10e14c0d18f0097e07bb1552874db76b4b98ede4382.png",
+      "mercenaryHero": {
+        "mercId": 236,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 13
+          },
+          "2": {
+            "attack": 3,
+            "health": 15
+          },
+          "3": {
+            "attack": 3,
+            "health": 17
+          },
+          "4": {
+            "attack": 3,
+            "health": 19
+          },
+          "5": {
+            "attack": 3,
+            "health": 21
+          },
+          "6": {
+            "attack": 4,
+            "health": 23
+          },
+          "7": {
+            "attack": 4,
+            "health": 25
+          },
+          "8": {
+            "attack": 4,
+            "health": 27
+          },
+          "9": {
+            "attack": 4,
+            "health": 29
+          },
+          "10": {
+            "attack": 4,
+            "health": 31
+          },
+          "11": {
+            "attack": 5,
+            "health": 33
+          },
+          "12": {
+            "attack": 5,
+            "health": 35
+          },
+          "13": {
+            "attack": 5,
+            "health": 37
+          },
+          "14": {
+            "attack": 5,
+            "health": 39
+          },
+          "15": {
+            "attack": 5,
+            "health": 41
+          },
+          "16": {
+            "attack": 6,
+            "health": 44
+          },
+          "17": {
+            "attack": 6,
+            "health": 46
+          },
+          "18": {
+            "attack": 6,
+            "health": 48
+          },
+          "19": {
+            "attack": 6,
+            "health": 50
+          },
+          "20": {
+            "attack": 6,
+            "health": 52
+          },
+          "21": {
+            "attack": 7,
+            "health": 54
+          },
+          "22": {
+            "attack": 7,
+            "health": 56
+          },
+          "23": {
+            "attack": 7,
+            "health": 58
+          },
+          "24": {
+            "attack": 7,
+            "health": 60
+          },
+          "25": {
+            "attack": 7,
+            "health": 62
+          },
+          "26": {
+            "attack": 8,
+            "health": 64
+          },
+          "27": {
+            "attack": 8,
+            "health": 66
+          },
+          "28": {
+            "attack": 8,
+            "health": 68
+          },
+          "29": {
+            "attack": 8,
+            "health": 70
+          },
+          "30": {
+            "attack": 9,
+            "health": 73
+          }
+        },
+        "roleId": 2,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 85111,
+      "collectible": 0,
+      "slug": "85111-fathom-lord-karathress",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 92,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 77,
+      "attack": 11,
+      "manaCost": 4,
+      "name": "Fathom-Lord Karathress",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/46294aa902debe74abb7aa8978383d026174cb2f67287c2881322cdd5cb191c2.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 295,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 13
+          },
+          "2": {
+            "attack": 3,
+            "health": 15
+          },
+          "3": {
+            "attack": 3,
+            "health": 17
+          },
+          "4": {
+            "attack": 3,
+            "health": 19
+          },
+          "5": {
+            "attack": 4,
+            "health": 21
+          },
+          "6": {
+            "attack": 4,
+            "health": 24
+          },
+          "7": {
+            "attack": 4,
+            "health": 26
+          },
+          "8": {
+            "attack": 4,
+            "health": 28
+          },
+          "9": {
+            "attack": 5,
+            "health": 30
+          },
+          "10": {
+            "attack": 5,
+            "health": 32
+          },
+          "11": {
+            "attack": 5,
+            "health": 35
+          },
+          "12": {
+            "attack": 6,
+            "health": 37
+          },
+          "13": {
+            "attack": 6,
+            "health": 39
+          },
+          "14": {
+            "attack": 6,
+            "health": 41
+          },
+          "15": {
+            "attack": 6,
+            "health": 43
+          },
+          "16": {
+            "attack": 7,
+            "health": 46
+          },
+          "17": {
+            "attack": 7,
+            "health": 48
+          },
+          "18": {
+            "attack": 7,
+            "health": 50
+          },
+          "19": {
+            "attack": 7,
+            "health": 52
+          },
+          "20": {
+            "attack": 8,
+            "health": 54
+          },
+          "21": {
+            "attack": 8,
+            "health": 57
+          },
+          "22": {
+            "attack": 8,
+            "health": 59
+          },
+          "23": {
+            "attack": 9,
+            "health": 61
+          },
+          "24": {
+            "attack": 9,
+            "health": 63
+          },
+          "25": {
+            "attack": 9,
+            "health": 65
+          },
+          "26": {
+            "attack": 9,
+            "health": 68
+          },
+          "27": {
+            "attack": 10,
+            "health": 70
+          },
+          "28": {
+            "attack": 10,
+            "health": 72
+          },
+          "29": {
+            "attack": 10,
+            "health": 74
+          },
+          "30": {
+            "attack": 11,
+            "health": 77
+          }
+        },
+        "roleId": 3,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 70609,
+      "collectible": 0,
+      "slug": "70609-garrosh-hellscream",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 8,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 79,
+      "attack": 11,
+      "manaCost": 5,
+      "name": "Garrosh Hellscream",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/1f91fa60b2ef65899cdebf22a72eb33dee098aac491bf6ff3b77f74d5635419d.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/267f3d42c4a435d2f5c61028fbd3c8b53d1c155504c2a329dcf462aa1719022c.png",
+      "mercenaryHero": {
+        "mercId": 50,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 13
+          },
+          "2": {
+            "attack": 2,
+            "health": 15
+          },
+          "3": {
+            "attack": 2,
+            "health": 17
+          },
+          "4": {
+            "attack": 2,
+            "health": 19
+          },
+          "5": {
+            "attack": 3,
+            "health": 22
+          },
+          "6": {
+            "attack": 3,
+            "health": 24
+          },
+          "7": {
+            "attack": 3,
+            "health": 26
+          },
+          "8": {
+            "attack": 4,
+            "health": 28
+          },
+          "9": {
+            "attack": 4,
+            "health": 31
+          },
+          "10": {
+            "attack": 4,
+            "health": 33
+          },
+          "11": {
+            "attack": 5,
+            "health": 35
+          },
+          "12": {
+            "attack": 5,
+            "health": 38
+          },
+          "13": {
+            "attack": 5,
+            "health": 40
+          },
+          "14": {
+            "attack": 6,
+            "health": 42
+          },
+          "15": {
+            "attack": 6,
+            "health": 44
+          },
+          "16": {
+            "attack": 6,
+            "health": 47
+          },
+          "17": {
+            "attack": 6,
+            "health": 49
+          },
+          "18": {
+            "attack": 7,
+            "health": 51
+          },
+          "19": {
+            "attack": 7,
+            "health": 53
+          },
+          "20": {
+            "attack": 7,
+            "health": 56
+          },
+          "21": {
+            "attack": 8,
+            "health": 58
+          },
+          "22": {
+            "attack": 8,
+            "health": 60
+          },
+          "23": {
+            "attack": 8,
+            "health": 63
+          },
+          "24": {
+            "attack": 9,
+            "health": 65
+          },
+          "25": {
+            "attack": 9,
+            "health": 67
+          },
+          "26": {
+            "attack": 9,
+            "health": 69
+          },
+          "27": {
+            "attack": 10,
+            "health": 72
+          },
+          "28": {
+            "attack": 10,
+            "health": 74
+          },
+          "29": {
+            "attack": 10,
+            "health": 76
+          },
+          "30": {
+            "attack": 11,
+            "health": 79
+          }
+        },
+        "roleId": 3,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 64529,
+      "collectible": 0,
+      "slug": "64529-grommash-hellscream",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 8,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 69,
+      "attack": 11,
+      "manaCost": 5,
+      "name": "Grommash Hellscream",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/6619b63b7960079ad3c64ba9dccdfdc170aceb5990402fefc574bf8ddc2181b8.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/cc12f88935ceb3fe0972e2633319e99435cdc02bf415bb32cec6e0a2fc3dc880.png",
+      "mercenaryHero": {
+        "mercId": 6,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 11
+          },
+          "2": {
+            "attack": 3,
+            "health": 13
+          },
+          "3": {
+            "attack": 3,
+            "health": 15
+          },
+          "4": {
+            "attack": 3,
+            "health": 17
+          },
+          "5": {
+            "attack": 4,
+            "health": 19
+          },
+          "6": {
+            "attack": 4,
+            "health": 21
+          },
+          "7": {
+            "attack": 4,
+            "health": 23
+          },
+          "8": {
+            "attack": 4,
+            "health": 25
+          },
+          "9": {
+            "attack": 5,
+            "health": 27
+          },
+          "10": {
+            "attack": 5,
+            "health": 29
+          },
+          "11": {
+            "attack": 5,
+            "health": 31
+          },
+          "12": {
+            "attack": 6,
+            "health": 33
+          },
+          "13": {
+            "attack": 6,
+            "health": 35
+          },
+          "14": {
+            "attack": 6,
+            "health": 37
+          },
+          "15": {
+            "attack": 6,
+            "health": 39
+          },
+          "16": {
+            "attack": 7,
+            "health": 41
+          },
+          "17": {
+            "attack": 7,
+            "health": 43
+          },
+          "18": {
+            "attack": 7,
+            "health": 45
+          },
+          "19": {
+            "attack": 7,
+            "health": 47
+          },
+          "20": {
+            "attack": 8,
+            "health": 49
+          },
+          "21": {
+            "attack": 8,
+            "health": 51
+          },
+          "22": {
+            "attack": 8,
+            "health": 53
+          },
+          "23": {
+            "attack": 9,
+            "health": 55
+          },
+          "24": {
+            "attack": 9,
+            "health": 57
+          },
+          "25": {
+            "attack": 9,
+            "health": 59
+          },
+          "26": {
+            "attack": 9,
+            "health": 61
+          },
+          "27": {
+            "attack": 10,
+            "health": 63
+          },
+          "28": {
+            "attack": 10,
+            "health": 65
+          },
+          "29": {
+            "attack": 10,
+            "health": 67
+          },
+          "30": {
+            "attack": 11,
+            "health": 69
+          }
+        },
+        "roleId": 3,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 64597,
+      "collectible": 0,
+      "slug": "64597-gruul",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 95,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 80,
+      "attack": 14,
+      "manaCost": 5,
+      "name": "Gruul",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/d696181b1abd4c8eed0347f835e41945ae4e638f8a78995fd8e4dada4c8f1cbe.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/bbd586f6b6caf79b78b37b121bebea38895df7a892fa7f823a858b347931742e.png",
+      "mercenaryHero": {
+        "mercId": 25,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 13
+          },
+          "2": {
+            "attack": 3,
+            "health": 15
+          },
+          "3": {
+            "attack": 3,
+            "health": 17
+          },
+          "4": {
+            "attack": 4,
+            "health": 19
+          },
+          "5": {
+            "attack": 4,
+            "health": 22
+          },
+          "6": {
+            "attack": 4,
+            "health": 24
+          },
+          "7": {
+            "attack": 5,
+            "health": 26
+          },
+          "8": {
+            "attack": 5,
+            "health": 29
+          },
+          "9": {
+            "attack": 6,
+            "health": 31
+          },
+          "10": {
+            "attack": 6,
+            "health": 33
+          },
+          "11": {
+            "attack": 6,
+            "health": 36
+          },
+          "12": {
+            "attack": 7,
+            "health": 38
+          },
+          "13": {
+            "attack": 7,
+            "health": 40
+          },
+          "14": {
+            "attack": 7,
+            "health": 43
+          },
+          "15": {
+            "attack": 8,
+            "health": 45
+          },
+          "16": {
+            "attack": 8,
+            "health": 47
+          },
+          "17": {
+            "attack": 9,
+            "health": 49
+          },
+          "18": {
+            "attack": 9,
+            "health": 52
+          },
+          "19": {
+            "attack": 9,
+            "health": 54
+          },
+          "20": {
+            "attack": 10,
+            "health": 56
+          },
+          "21": {
+            "attack": 10,
+            "health": 59
+          },
+          "22": {
+            "attack": 10,
+            "health": 61
+          },
+          "23": {
+            "attack": 11,
+            "health": 63
+          },
+          "24": {
+            "attack": 11,
+            "health": 66
+          },
+          "25": {
+            "attack": 12,
+            "health": 68
+          },
+          "26": {
+            "attack": 12,
+            "health": 70
+          },
+          "27": {
+            "attack": 12,
+            "health": 73
+          },
+          "28": {
+            "attack": 13,
+            "health": 75
+          },
+          "29": {
+            "attack": 13,
+            "health": 77
+          },
+          "30": {
+            "attack": 14,
+            "health": 80
+          }
+        },
+        "roleId": 3,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 64603,
+      "collectible": 0,
+      "slug": "64603-guff-runetotem",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 9,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 75,
+      "attack": 9,
+      "manaCost": 5,
+      "name": "Guff Runetotem",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/cbeabcc72bc8ec463278f124e2df10a9d51d2073e0ce3479003052ca38026102.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/51624da7824db10c3713959bd65e84b64a5bc8e602d9914ea275e52986bc60b4.png",
+      "mercenaryHero": {
+        "mercId": 28,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 12
+          },
+          "2": {
+            "attack": 2,
+            "health": 14
+          },
+          "3": {
+            "attack": 2,
+            "health": 16
+          },
+          "4": {
+            "attack": 2,
+            "health": 18
+          },
+          "5": {
+            "attack": 2,
+            "health": 20
+          },
+          "6": {
+            "attack": 3,
+            "health": 22
+          },
+          "7": {
+            "attack": 3,
+            "health": 25
+          },
+          "8": {
+            "attack": 3,
+            "health": 27
+          },
+          "9": {
+            "attack": 3,
+            "health": 29
+          },
+          "10": {
+            "attack": 4,
+            "health": 31
+          },
+          "11": {
+            "attack": 4,
+            "health": 33
+          },
+          "12": {
+            "attack": 4,
+            "health": 35
+          },
+          "13": {
+            "attack": 4,
+            "health": 38
+          },
+          "14": {
+            "attack": 5,
+            "health": 40
+          },
+          "15": {
+            "attack": 5,
+            "health": 42
+          },
+          "16": {
+            "attack": 5,
+            "health": 44
+          },
+          "17": {
+            "attack": 5,
+            "health": 46
+          },
+          "18": {
+            "attack": 6,
+            "health": 48
+          },
+          "19": {
+            "attack": 6,
+            "health": 51
+          },
+          "20": {
+            "attack": 6,
+            "health": 53
+          },
+          "21": {
+            "attack": 6,
+            "health": 55
+          },
+          "22": {
+            "attack": 7,
+            "health": 57
+          },
+          "23": {
+            "attack": 7,
+            "health": 59
+          },
+          "24": {
+            "attack": 7,
+            "health": 61
+          },
+          "25": {
+            "attack": 7,
+            "health": 64
+          },
+          "26": {
+            "attack": 8,
+            "health": 66
+          },
+          "27": {
+            "attack": 8,
+            "health": 68
+          },
+          "28": {
+            "attack": 8,
+            "health": 70
+          },
+          "29": {
+            "attack": 8,
+            "health": 72
+          },
+          "30": {
+            "attack": 9,
+            "health": 75
+          }
+        },
+        "roleId": 1,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 70925,
+      "collectible": 0,
+      "slug": "70925-guldan",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 8,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 82,
+      "attack": 4,
+      "manaCost": 4,
+      "name": "Gul'dan",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/d6d2db245d2aef0399023b6a0e4fe0cbbb3c6f34c4f1a659efb117b8652e11ef.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/a583b37ff8bb66ef97574626ffc18ac6260a34d0ae56b5f6d17381443f97cb95.png",
+      "mercenaryHero": {
+        "mercId": 60,
+        "default": 0,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 10
+          },
+          "2": {
+            "attack": 1,
+            "health": 12
+          },
+          "3": {
+            "attack": 1,
+            "health": 14
+          },
+          "4": {
+            "attack": 1,
+            "health": 17
+          },
+          "5": {
+            "attack": 1,
+            "health": 19
+          },
+          "6": {
+            "attack": 1,
+            "health": 22
+          },
+          "7": {
+            "attack": 1,
+            "health": 24
+          },
+          "8": {
+            "attack": 1,
+            "health": 27
+          },
+          "9": {
+            "attack": 1,
+            "health": 29
+          },
+          "10": {
+            "attack": 1,
+            "health": 32
+          },
+          "11": {
+            "attack": 2,
+            "health": 34
+          },
+          "12": {
+            "attack": 2,
+            "health": 37
+          },
+          "13": {
+            "attack": 2,
+            "health": 39
+          },
+          "14": {
+            "attack": 2,
+            "health": 42
+          },
+          "15": {
+            "attack": 2,
+            "health": 44
+          },
+          "16": {
+            "attack": 2,
+            "health": 47
+          },
+          "17": {
+            "attack": 2,
+            "health": 49
+          },
+          "18": {
+            "attack": 2,
+            "health": 52
+          },
+          "19": {
+            "attack": 2,
+            "health": 54
+          },
+          "20": {
+            "attack": 2,
+            "health": 57
+          },
+          "21": {
+            "attack": 3,
+            "health": 59
+          },
+          "22": {
+            "attack": 3,
+            "health": 62
+          },
+          "23": {
+            "attack": 3,
+            "health": 64
+          },
+          "24": {
+            "attack": 3,
+            "health": 67
+          },
+          "25": {
+            "attack": 3,
+            "health": 69
+          },
+          "26": {
+            "attack": 3,
+            "health": 72
+          },
+          "27": {
+            "attack": 3,
+            "health": 74
+          },
+          "28": {
+            "attack": 3,
+            "health": 77
+          },
+          "29": {
+            "attack": 3,
+            "health": 79
+          },
+          "30": {
+            "attack": 4,
+            "health": 82
+          }
+        },
+        "roleId": 1,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 64501,
+      "collectible": 0,
+      "slug": "64501-illidan-stormrage",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 7,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 74,
+      "attack": 12,
+      "manaCost": 4,
+      "name": "Illidan Stormrage",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/dc307d9d6e9955e0b2ee04954845175c400fc45ab9296ced0f5b1b66dae521ae.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/fb0f5bef0c2f0289b2c70d6f595a1da1b078d0ddd0989cba5aad4fd2bd687ccc.png",
+      "mercenaryHero": {
+        "mercId": 12,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 12
+          },
+          "2": {
+            "attack": 2,
+            "health": 14
+          },
+          "3": {
+            "attack": 2,
+            "health": 16
+          },
+          "4": {
+            "attack": 3,
+            "health": 18
+          },
+          "5": {
+            "attack": 3,
+            "health": 20
+          },
+          "6": {
+            "attack": 3,
+            "health": 22
+          },
+          "7": {
+            "attack": 4,
+            "health": 24
+          },
+          "8": {
+            "attack": 4,
+            "health": 26
+          },
+          "9": {
+            "attack": 4,
+            "health": 29
+          },
+          "10": {
+            "attack": 5,
+            "health": 31
+          },
+          "11": {
+            "attack": 5,
+            "health": 33
+          },
+          "12": {
+            "attack": 5,
+            "health": 35
+          },
+          "13": {
+            "attack": 6,
+            "health": 37
+          },
+          "14": {
+            "attack": 6,
+            "health": 39
+          },
+          "15": {
+            "attack": 6,
+            "health": 41
+          },
+          "16": {
+            "attack": 7,
+            "health": 44
+          },
+          "17": {
+            "attack": 7,
+            "health": 46
+          },
+          "18": {
+            "attack": 7,
+            "health": 48
+          },
+          "19": {
+            "attack": 8,
+            "health": 50
+          },
+          "20": {
+            "attack": 8,
+            "health": 52
+          },
+          "21": {
+            "attack": 8,
+            "health": 54
+          },
+          "22": {
+            "attack": 9,
+            "health": 56
+          },
+          "23": {
+            "attack": 9,
+            "health": 59
+          },
+          "24": {
+            "attack": 9,
+            "health": 61
+          },
+          "25": {
+            "attack": 10,
+            "health": 63
+          },
+          "26": {
+            "attack": 10,
+            "health": 65
+          },
+          "27": {
+            "attack": 10,
+            "health": 67
+          },
+          "28": {
+            "attack": 11,
+            "health": 69
+          },
+          "29": {
+            "attack": 11,
+            "health": 71
+          },
+          "30": {
+            "attack": 12,
+            "health": 74
+          }
+        },
+        "roleId": 2,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 73478,
+      "collectible": 0,
+      "slug": "73478-jaina-proudmoore",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 6,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 72,
+      "attack": 7,
+      "manaCost": 5,
+      "name": "Jaina Proudmoore",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/737d920696e8aafbe0af81cfecfb0346e4025d5ef4558066d920b2c68aaa14f3.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/43a257edb385194979216bdd23d158f6b3e1094c6e6bd2186ce5f6a27c9e10f0.png",
+      "mercenaryHero": {
+        "mercId": 97,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 10
+          },
+          "2": {
+            "attack": 1,
+            "health": 12
+          },
+          "3": {
+            "attack": 1,
+            "health": 14
+          },
+          "4": {
+            "attack": 1,
+            "health": 16
+          },
+          "5": {
+            "attack": 1,
+            "health": 18
+          },
+          "6": {
+            "attack": 2,
+            "health": 20
+          },
+          "7": {
+            "attack": 2,
+            "health": 22
+          },
+          "8": {
+            "attack": 2,
+            "health": 24
+          },
+          "9": {
+            "attack": 2,
+            "health": 27
+          },
+          "10": {
+            "attack": 2,
+            "health": 29
+          },
+          "11": {
+            "attack": 3,
+            "health": 31
+          },
+          "12": {
+            "attack": 3,
+            "health": 33
+          },
+          "13": {
+            "attack": 3,
+            "health": 35
+          },
+          "14": {
+            "attack": 3,
+            "health": 37
+          },
+          "15": {
+            "attack": 3,
+            "health": 39
+          },
+          "16": {
+            "attack": 4,
+            "health": 42
+          },
+          "17": {
+            "attack": 4,
+            "health": 44
+          },
+          "18": {
+            "attack": 4,
+            "health": 46
+          },
+          "19": {
+            "attack": 4,
+            "health": 48
+          },
+          "20": {
+            "attack": 4,
+            "health": 50
+          },
+          "21": {
+            "attack": 5,
+            "health": 52
+          },
+          "22": {
+            "attack": 5,
+            "health": 54
+          },
+          "23": {
+            "attack": 5,
+            "health": 57
+          },
+          "24": {
+            "attack": 5,
+            "health": 59
+          },
+          "25": {
+            "attack": 5,
+            "health": 61
+          },
+          "26": {
+            "attack": 6,
+            "health": 63
+          },
+          "27": {
+            "attack": 6,
+            "health": 65
+          },
+          "28": {
+            "attack": 6,
+            "health": 67
+          },
+          "29": {
+            "attack": 6,
+            "health": 69
+          },
+          "30": {
+            "attack": 7,
+            "health": 72
+          }
+        },
+        "roleId": 1,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 70916,
+      "collectible": 0,
+      "slug": "70916-kazakus-golem-shaper",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 10,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 70,
+      "attack": 9,
+      "manaCost": 4,
+      "name": "Kazakus, Golem Shaper",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/2e1959ca55cf7ae61d6a5566483752e4915883a2f11e0c59c7181d9d3e23e318.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/a2175da7032981d1aa3ab721da0cf842131f3b6905dffef593c50c7596ef925e.png",
+      "mercenaryHero": {
+        "mercId": 155,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 10
+          },
+          "2": {
+            "attack": 2,
+            "health": 12
+          },
+          "3": {
+            "attack": 2,
+            "health": 14
+          },
+          "4": {
+            "attack": 2,
+            "health": 16
+          },
+          "5": {
+            "attack": 2,
+            "health": 18
+          },
+          "6": {
+            "attack": 3,
+            "health": 20
+          },
+          "7": {
+            "attack": 3,
+            "health": 22
+          },
+          "8": {
+            "attack": 3,
+            "health": 24
+          },
+          "9": {
+            "attack": 3,
+            "health": 26
+          },
+          "10": {
+            "attack": 4,
+            "health": 28
+          },
+          "11": {
+            "attack": 4,
+            "health": 30
+          },
+          "12": {
+            "attack": 4,
+            "health": 32
+          },
+          "13": {
+            "attack": 4,
+            "health": 34
+          },
+          "14": {
+            "attack": 5,
+            "health": 36
+          },
+          "15": {
+            "attack": 5,
+            "health": 38
+          },
+          "16": {
+            "attack": 5,
+            "health": 41
+          },
+          "17": {
+            "attack": 5,
+            "health": 43
+          },
+          "18": {
+            "attack": 6,
+            "health": 45
+          },
+          "19": {
+            "attack": 6,
+            "health": 47
+          },
+          "20": {
+            "attack": 6,
+            "health": 49
+          },
+          "21": {
+            "attack": 6,
+            "health": 51
+          },
+          "22": {
+            "attack": 7,
+            "health": 53
+          },
+          "23": {
+            "attack": 7,
+            "health": 55
+          },
+          "24": {
+            "attack": 7,
+            "health": 57
+          },
+          "25": {
+            "attack": 7,
+            "health": 59
+          },
+          "26": {
+            "attack": 8,
+            "health": 61
+          },
+          "27": {
+            "attack": 8,
+            "health": 63
+          },
+          "28": {
+            "attack": 8,
+            "health": 65
+          },
+          "29": {
+            "attack": 8,
+            "health": 67
+          },
+          "30": {
+            "attack": 9,
+            "health": 70
+          }
+        },
+        "roleId": 1,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 64606,
+      "collectible": 0,
+      "slug": "64606-king-krush",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 20,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 68,
+      "attack": 11,
+      "manaCost": 4,
+      "name": "King Krush",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/b9c2fa6a1ac6d62ceff27bbf1af65c127de83b22f975f2b4204e4f8435b3b2f5.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/22bfce48c9546fee281c457e0bb53c8e5a9ef7daaa84ec2c84bcc76dc2ac461e.png",
+      "mercenaryHero": {
+        "mercId": 43,
+        "default": 0,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 12
+          },
+          "2": {
+            "attack": 3,
+            "health": 13
+          },
+          "3": {
+            "attack": 3,
+            "health": 15
+          },
+          "4": {
+            "attack": 3,
+            "health": 17
+          },
+          "5": {
+            "attack": 4,
+            "health": 19
+          },
+          "6": {
+            "attack": 4,
+            "health": 21
+          },
+          "7": {
+            "attack": 4,
+            "health": 23
+          },
+          "8": {
+            "attack": 4,
+            "health": 25
+          },
+          "9": {
+            "attack": 5,
+            "health": 27
+          },
+          "10": {
+            "attack": 5,
+            "health": 29
+          },
+          "11": {
+            "attack": 5,
+            "health": 31
+          },
+          "12": {
+            "attack": 6,
+            "health": 33
+          },
+          "13": {
+            "attack": 6,
+            "health": 35
+          },
+          "14": {
+            "attack": 6,
+            "health": 37
+          },
+          "15": {
+            "attack": 6,
+            "health": 39
+          },
+          "16": {
+            "attack": 7,
+            "health": 40
+          },
+          "17": {
+            "attack": 7,
+            "health": 42
+          },
+          "18": {
+            "attack": 7,
+            "health": 44
+          },
+          "19": {
+            "attack": 7,
+            "health": 46
+          },
+          "20": {
+            "attack": 8,
+            "health": 48
+          },
+          "21": {
+            "attack": 8,
+            "health": 50
+          },
+          "22": {
+            "attack": 8,
+            "health": 52
+          },
+          "23": {
+            "attack": 9,
+            "health": 54
+          },
+          "24": {
+            "attack": 9,
+            "health": 56
+          },
+          "25": {
+            "attack": 9,
+            "health": 58
+          },
+          "26": {
+            "attack": 9,
+            "health": 60
+          },
+          "27": {
+            "attack": 10,
+            "health": 62
+          },
+          "28": {
+            "attack": 10,
+            "health": 64
+          },
+          "29": {
+            "attack": 10,
+            "health": 66
+          },
+          "30": {
+            "attack": 11,
+            "health": 68
+          }
+        },
+        "roleId": 2,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 64521,
+      "collectible": 0,
+      "slug": "64521-king-mukla",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 20,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 77,
+      "attack": 11,
+      "manaCost": 5,
+      "name": "King Mukla",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/54d633deeab8623a2ac52c05dd4354544dce1e1998fdfd6e4c5ae9c3d47a5dce.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/6a1fd1f9474e8a566a52011e448f538eb379d657d6725ec5467c4a8d2b3b2c24.png",
+      "mercenaryHero": {
+        "mercId": 42,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 3,
+            "health": 13
+          },
+          "2": {
+            "attack": 3,
+            "health": 15
+          },
+          "3": {
+            "attack": 3,
+            "health": 17
+          },
+          "4": {
+            "attack": 3,
+            "health": 19
+          },
+          "5": {
+            "attack": 4,
+            "health": 21
+          },
+          "6": {
+            "attack": 4,
+            "health": 24
+          },
+          "7": {
+            "attack": 4,
+            "health": 26
+          },
+          "8": {
+            "attack": 4,
+            "health": 28
+          },
+          "9": {
+            "attack": 5,
+            "health": 30
+          },
+          "10": {
+            "attack": 5,
+            "health": 32
+          },
+          "11": {
+            "attack": 5,
+            "health": 35
+          },
+          "12": {
+            "attack": 6,
+            "health": 37
+          },
+          "13": {
+            "attack": 6,
+            "health": 39
+          },
+          "14": {
+            "attack": 6,
+            "health": 41
+          },
+          "15": {
+            "attack": 6,
+            "health": 43
+          },
+          "16": {
+            "attack": 7,
+            "health": 46
+          },
+          "17": {
+            "attack": 7,
+            "health": 48
+          },
+          "18": {
+            "attack": 7,
+            "health": 50
+          },
+          "19": {
+            "attack": 7,
+            "health": 52
+          },
+          "20": {
+            "attack": 8,
+            "health": 54
+          },
+          "21": {
+            "attack": 8,
+            "health": 57
+          },
+          "22": {
+            "attack": 8,
+            "health": 59
+          },
+          "23": {
+            "attack": 9,
+            "health": 61
+          },
+          "24": {
+            "attack": 9,
+            "health": 63
+          },
+          "25": {
+            "attack": 9,
+            "health": 65
+          },
+          "26": {
+            "attack": 9,
+            "health": 68
+          },
+          "27": {
+            "attack": 10,
+            "health": 70
+          },
+          "28": {
+            "attack": 10,
+            "health": 72
+          },
+          "29": {
+            "attack": 10,
+            "health": 74
+          },
+          "30": {
+            "attack": 11,
+            "health": 77
+          }
+        },
+        "roleId": 3,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 64510,
+      "collectible": 0,
+      "slug": "64510-kurtrus-ashfallen",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 7,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 69,
+      "attack": 13,
+      "manaCost": 4,
+      "name": "Kurtrus Ashfallen",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/9299e3a754de029a54e8977dc58f0ef074b228e86579e6c835aa47be3dd288a2.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/8cf4ce8de648f406aba0fe1a0f119dcca1e93a37989c1081a6b6953f2a3c32a7.png",
+      "mercenaryHero": {
+        "mercId": 3,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 12
+          },
+          "2": {
+            "attack": 1,
+            "health": 13
+          },
+          "3": {
+            "attack": 1,
+            "health": 15
+          },
+          "4": {
+            "attack": 2,
+            "health": 17
+          },
+          "5": {
+            "attack": 2,
+            "health": 19
+          },
+          "6": {
+            "attack": 3,
+            "health": 21
+          },
+          "7": {
+            "attack": 3,
+            "health": 23
+          },
+          "8": {
+            "attack": 3,
+            "health": 25
+          },
+          "9": {
+            "attack": 4,
+            "health": 27
+          },
+          "10": {
+            "attack": 4,
+            "health": 29
+          },
+          "11": {
+            "attack": 5,
+            "health": 31
+          },
+          "12": {
+            "attack": 5,
+            "health": 33
+          },
+          "13": {
+            "attack": 5,
+            "health": 35
+          },
+          "14": {
+            "attack": 6,
+            "health": 37
+          },
+          "15": {
+            "attack": 6,
+            "health": 39
+          },
+          "16": {
+            "attack": 7,
+            "health": 41
+          },
+          "17": {
+            "attack": 7,
+            "health": 43
+          },
+          "18": {
+            "attack": 8,
+            "health": 45
+          },
+          "19": {
+            "attack": 8,
+            "health": 47
+          },
+          "20": {
+            "attack": 8,
+            "health": 49
+          },
+          "21": {
+            "attack": 9,
+            "health": 51
+          },
+          "22": {
+            "attack": 9,
+            "health": 53
+          },
+          "23": {
+            "attack": 10,
+            "health": 55
+          },
+          "24": {
+            "attack": 10,
+            "health": 57
+          },
+          "25": {
+            "attack": 10,
+            "health": 59
+          },
+          "26": {
+            "attack": 11,
+            "health": 61
+          },
+          "27": {
+            "attack": 11,
+            "health": 63
+          },
+          "28": {
+            "attack": 12,
+            "health": 65
+          },
+          "29": {
+            "attack": 12,
+            "health": 67
+          },
+          "30": {
+            "attack": 13,
+            "health": 69
+          }
+        },
+        "roleId": 3,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 70919,
+      "collectible": 0,
+      "slug": "70919-lady-anacondra",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 7,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 71,
+      "attack": 7,
+      "manaCost": 4,
+      "name": "Lady Anacondra",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/addc030880a017cb3163fa712d7a94479860c8e39c40ef8cf9455447f3f884e2.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/39d84564e2ed33beb456caacdbd23007099388568e9e519c87db3a86b4994570.png",
+      "mercenaryHero": {
+        "mercId": 63,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 1,
+            "health": 10
+          },
+          "2": {
+            "attack": 1,
+            "health": 12
+          },
+          "3": {
+            "attack": 1,
+            "health": 14
+          },
+          "4": {
+            "attack": 1,
+            "health": 16
+          },
+          "5": {
+            "attack": 1,
+            "health": 18
+          },
+          "6": {
+            "attack": 2,
+            "health": 20
+          },
+          "7": {
+            "attack": 2,
+            "health": 22
+          },
+          "8": {
+            "attack": 2,
+            "health": 24
+          },
+          "9": {
+            "attack": 2,
+            "health": 26
+          },
+          "10": {
+            "attack": 2,
+            "health": 28
+          },
+          "11": {
+            "attack": 3,
+            "health": 31
+          },
+          "12": {
+            "attack": 3,
+            "health": 33
+          },
+          "13": {
+            "attack": 3,
+            "health": 35
+          },
+          "14": {
+            "attack": 3,
+            "health": 37
+          },
+          "15": {
+            "attack": 3,
+            "health": 39
+          },
+          "16": {
+            "attack": 4,
+            "health": 41
+          },
+          "17": {
+            "attack": 4,
+            "health": 43
+          },
+          "18": {
+            "attack": 4,
+            "health": 45
+          },
+          "19": {
+            "attack": 4,
+            "health": 47
+          },
+          "20": {
+            "attack": 4,
+            "health": 49
+          },
+          "21": {
+            "attack": 5,
+            "health": 52
+          },
+          "22": {
+            "attack": 5,
+            "health": 54
+          },
+          "23": {
+            "attack": 5,
+            "health": 56
+          },
+          "24": {
+            "attack": 5,
+            "health": 58
+          },
+          "25": {
+            "attack": 5,
+            "health": 60
+          },
+          "26": {
+            "attack": 6,
+            "health": 62
+          },
+          "27": {
+            "attack": 6,
+            "health": 64
+          },
+          "28": {
+            "attack": 6,
+            "health": 66
+          },
+          "29": {
+            "attack": 6,
+            "health": 68
+          },
+          "30": {
+            "attack": 7,
+            "health": 71
+          }
+        },
+        "roleId": 2,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    },
+    {
+      "id": 84176,
+      "collectible": 0,
+      "slug": "84176-lady-vashj",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 92,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 70,
+      "attack": 9,
+      "manaCost": 4,
+      "name": "Lady Vashj",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/9479fd5496ed39547f670f72bf30280a3eb469e701d89a26f734700578677006.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 289,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 12
+          },
+          "2": {
+            "attack": 2,
+            "health": 14
+          },
+          "3": {
+            "attack": 2,
+            "health": 16
+          },
+          "4": {
+            "attack": 2,
+            "health": 18
+          },
+          "5": {
+            "attack": 2,
+            "health": 20
+          },
+          "6": {
+            "attack": 3,
+            "health": 22
+          },
+          "7": {
+            "attack": 3,
+            "health": 24
+          },
+          "8": {
+            "attack": 3,
+            "health": 26
+          },
+          "9": {
+            "attack": 3,
+            "health": 28
+          },
+          "10": {
+            "attack": 4,
+            "health": 30
+          },
+          "11": {
+            "attack": 4,
+            "health": 32
+          },
+          "12": {
+            "attack": 4,
+            "health": 34
+          },
+          "13": {
+            "attack": 4,
+            "health": 36
+          },
+          "14": {
+            "attack": 5,
+            "health": 38
+          },
+          "15": {
+            "attack": 5,
+            "health": 40
+          },
+          "16": {
+            "attack": 5,
+            "health": 42
+          },
+          "17": {
+            "attack": 5,
+            "health": 44
+          },
+          "18": {
+            "attack": 6,
+            "health": 46
+          },
+          "19": {
+            "attack": 6,
+            "health": 48
+          },
+          "20": {
+            "attack": 6,
+            "health": 50
+          },
+          "21": {
+            "attack": 6,
+            "health": 52
+          },
+          "22": {
+            "attack": 7,
+            "health": 54
+          },
+          "23": {
+            "attack": 7,
+            "health": 56
+          },
+          "24": {
+            "attack": 7,
+            "health": 58
+          },
+          "25": {
+            "attack": 7,
+            "health": 60
+          },
+          "26": {
+            "attack": 8,
+            "health": 62
+          },
+          "27": {
+            "attack": 8,
+            "health": 64
+          },
+          "28": {
+            "attack": 8,
+            "health": 66
+          },
+          "29": {
+            "attack": 8,
+            "health": 68
+          },
+          "30": {
+            "attack": 9,
+            "health": 70
+          }
+        },
+        "roleId": 2,
+        "rarity": 4,
+        "collectible": 1,
+        "craftingCost": 300
+      }
+    },
+    {
+      "id": 84009,
+      "collectible": 0,
+      "slug": "84009-leeroy-jenkins",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 6,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 5,
+      "artistName": null,
+      "health": 64,
+      "attack": 10,
+      "manaCost": 0,
+      "name": "Leeroy Jenkins",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/da8ee64801a73bde61f8eeebe5fb3eb085fe374de3be9786db3765e94d58264e.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 284,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 10
+          },
+          "2": {
+            "attack": 2,
+            "health": 11
+          },
+          "3": {
+            "attack": 2,
+            "health": 13
+          },
+          "4": {
+            "attack": 2,
+            "health": 15
+          },
+          "5": {
+            "attack": 3,
+            "health": 17
+          },
+          "6": {
+            "attack": 3,
+            "health": 19
+          },
+          "7": {
+            "attack": 3,
+            "health": 21
+          },
+          "8": {
+            "attack": 3,
+            "health": 23
+          },
+          "9": {
+            "attack": 4,
+            "health": 24
+          },
+          "10": {
+            "attack": 4,
+            "health": 26
+          },
+          "11": {
+            "attack": 4,
+            "health": 28
+          },
+          "12": {
+            "attack": 5,
+            "health": 30
+          },
+          "13": {
+            "attack": 5,
+            "health": 32
+          },
+          "14": {
+            "attack": 5,
+            "health": 34
+          },
+          "15": {
+            "attack": 5,
+            "health": 36
+          },
+          "16": {
+            "attack": 6,
+            "health": 37
+          },
+          "17": {
+            "attack": 6,
+            "health": 39
+          },
+          "18": {
+            "attack": 6,
+            "health": 41
+          },
+          "19": {
+            "attack": 6,
+            "health": 43
+          },
+          "20": {
+            "attack": 7,
+            "health": 45
+          },
+          "21": {
+            "attack": 7,
+            "health": 47
+          },
+          "22": {
+            "attack": 7,
+            "health": 49
+          },
+          "23": {
+            "attack": 8,
+            "health": 50
+          },
+          "24": {
+            "attack": 8,
+            "health": 52
+          },
+          "25": {
+            "attack": 8,
+            "health": 54
+          },
+          "26": {
+            "attack": 8,
+            "health": 56
+          },
+          "27": {
+            "attack": 9,
+            "health": 58
+          },
+          "28": {
+            "attack": 9,
+            "health": 60
+          },
+          "29": {
+            "attack": 9,
+            "health": 62
+          },
+          "30": {
+            "attack": 10,
+            "health": 64
+          }
+        },
+        "roleId": 2,
+        "rarity": 5,
+        "collectible": 1,
+        "craftingCost": 500
+      }
+    },
+    {
+      "id": 82281,
+      "collectible": 0,
+      "slug": "82281-lokholar-the-ice-lord",
+      "classId": null,
+      "multiClassIds": [],
+      "minionTypeId": 18,
+      "cardTypeId": 4,
+      "cardSetId": 1586,
+      "rarityId": 3,
+      "artistName": null,
+      "health": 77,
+      "attack": 8,
+      "manaCost": 0,
+      "name": "Lokholar the Ice Lord",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/47292db54344654c0ac5aee6911e6a5e5e5e26b0f8c2680b213f0e2eb2ffe30c.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "mercenaryHero": {
+        "mercId": 251,
+        "default": 1,
+        "statsByLevel": {
+          "1": {
+            "attack": 2,
+            "health": 9
+          },
+          "2": {
+            "attack": 2,
+            "health": 11
+          },
+          "3": {
+            "attack": 2,
+            "health": 13
+          },
+          "4": {
+            "attack": 2,
+            "health": 16
+          },
+          "5": {
+            "attack": 2,
+            "health": 18
+          },
+          "6": {
+            "attack": 3,
+            "health": 20
+          },
+          "7": {
+            "attack": 3,
+            "health": 23
+          },
+          "8": {
+            "attack": 3,
+            "health": 25
+          },
+          "9": {
+            "attack": 3,
+            "health": 27
+          },
+          "10": {
+            "attack": 3,
+            "health": 30
+          },
+          "11": {
+            "attack": 4,
+            "health": 32
+          },
+          "12": {
+            "attack": 4,
+            "health": 34
+          },
+          "13": {
+            "attack": 4,
+            "health": 37
+          },
+          "14": {
+            "attack": 4,
+            "health": 39
+          },
+          "15": {
+            "attack": 4,
+            "health": 41
+          },
+          "16": {
+            "attack": 5,
+            "health": 44
+          },
+          "17": {
+            "attack": 5,
+            "health": 46
+          },
+          "18": {
+            "attack": 5,
+            "health": 48
+          },
+          "19": {
+            "attack": 5,
+            "health": 51
+          },
+          "20": {
+            "attack": 5,
+            "health": 53
+          },
+          "21": {
+            "attack": 6,
+            "health": 55
+          },
+          "22": {
+            "attack": 6,
+            "health": 58
+          },
+          "23": {
+            "attack": 6,
+            "health": 60
+          },
+          "24": {
+            "attack": 6,
+            "health": 62
+          },
+          "25": {
+            "attack": 6,
+            "health": 65
+          },
+          "26": {
+            "attack": 7,
+            "health": 67
+          },
+          "27": {
+            "attack": 7,
+            "health": 69
+          },
+          "28": {
+            "attack": 7,
+            "health": 72
+          },
+          "29": {
+            "attack": 7,
+            "health": 74
+          },
+          "30": {
+            "attack": 8,
+            "health": 77
+          }
+        },
+        "roleId": 3,
+        "rarity": 3,
+        "collectible": 1,
+        "craftingCost": 100
+      }
+    }
+  ],
+  "cardCount": 97,
+  "pageCount": 3,
+  "page": 1
+}
