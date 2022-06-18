@@ -6,39 +6,39 @@ sealed class Regionality(
 ) {
     class NorteAmerica(locale: NorthAmericaLocale) : Regionality(Region.US(), locale)
     class Europe(locale: EuropeLocale) : Regionality(Region.EU(), locale)
-    class Korea: Regionality(Region.KR(), Korean())
-    class Taiwan: Regionality(Region.TW(), Mandarin())
-    class China: Regionality(Region.CN(), Chinesse())
+    class Korea : Regionality(Region.KR(), Korean())
+    class Taiwan : Regionality(Region.TW(), Mandarin())
+    class China : Regionality(Region.CN(), Chinese())
 }
 
 sealed class Region(val value: String) {
-    class US: Region("us")
-    class EU: Region("eu")
-    class KR: Region("kr")
-    class TW: Region("tw")
-    class CN: Region("cn")
+    class US : Region("us")
+    class EU : Region("eu")
+    class KR : Region("kr")
+    class TW : Region("tw")
+    class CN : Region("cn")
 }
 
 sealed class Locale(val value: String)
 
-class Korean: Locale("ko_KR")
+class Korean : Locale("ko_KR")
 
-class Mandarin: Locale("zh_TW")
+class Mandarin : Locale("zh_TW")
 
-class Chinesse: Locale("zh_CN")
+class Chinese : Locale("zh_CN")
 
-sealed class NorthAmericaLocale(value: String): Locale(value) {
-    class English: NorthAmericaLocale("en_US")
-    class Spanish: NorthAmericaLocale("es_MX")
-    class Portuguese: NorthAmericaLocale("pt_BR")
+sealed class NorthAmericaLocale(value: String) : Locale(value) {
+    class English : NorthAmericaLocale("en_US")
+    class Spanish : NorthAmericaLocale("es_MX")
+    class Portuguese : NorthAmericaLocale("pt_BR")
 }
 
-sealed class EuropeLocale(value: String): Locale(value) {
-    class English: EuropeLocale("en_GB")
-    class Spanish: EuropeLocale("es_ES")
-    class French: EuropeLocale("fr_FR")
-    class Rumain: EuropeLocale("ru_RU")
-    class German: EuropeLocale("de_DE")
-    class Portuguese: EuropeLocale("pt_PT")
-    class Italian: EuropeLocale("it_IT")
+sealed class EuropeLocale(value: String) : Locale(value) {
+    class English : EuropeLocale("en_GB")
+    class Spanish : EuropeLocale("es_ES")
+    class French : EuropeLocale("fr_FR")
+    class Rumain : EuropeLocale("ru_RU")
+    class German : EuropeLocale("de_DE")
+    class Portuguese : EuropeLocale("pt_PT")
+    class Italian : EuropeLocale("it_IT")
 }
