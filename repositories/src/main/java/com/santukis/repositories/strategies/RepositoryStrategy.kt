@@ -10,3 +10,5 @@ suspend infix fun <T> Result<T>?.or(alternative: suspend () -> Result<T>): Resul
     } else {
         this
     }
+
+fun <Response> defaultError(): Result<Response> = Result.failure(Exception("UNIMPLEMENTED_METHOD"))
