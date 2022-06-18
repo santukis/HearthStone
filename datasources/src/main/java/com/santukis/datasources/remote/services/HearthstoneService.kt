@@ -1,4 +1,4 @@
-package com.santukis.datasources.hearthstone
+package com.santukis.datasources.remote.services
 
 import com.santukis.datasources.entities.dto.CardsResponse
 import com.santukis.datasources.entities.dto.DeckResponse

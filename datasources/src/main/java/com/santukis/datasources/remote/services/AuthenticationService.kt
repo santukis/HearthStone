@@ -1,4 +1,4 @@
-package com.santukis.datasources.authentication
+package com.santukis.datasources.remote.services
 
 import com.santukis.datasources.entities.dto.AuthenticationSuccessDTO
 import okhttp3.RequestBody

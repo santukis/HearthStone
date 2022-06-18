@@ -1,8 +1,8 @@
 package com.santukis.datasources.remote
 
 import com.santukis.datasources.entities.dto.ServerResponse
-import com.santukis.datasources.authentication.AuthenticationService
-import com.santukis.datasources.hearthstone.HearthstoneService
+import com.santukis.datasources.remote.services.AuthenticationService
+import com.santukis.datasources.remote.services.HearthstoneService
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import retrofit2.Call

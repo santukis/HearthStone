@@ -31,7 +31,7 @@ class Dependencies {
         const val encryptedPreferences = "androidx.security:security-crypto:${Versions.Androidx.encryptedPreferences}"
         const val room = "androidx.room:room-runtime:${Versions.Androidx.room}"
         const val roomKotlin = "androidx.room:room-ktx:${Versions.Androidx.room}"
-        const val roomCompiler = "\"androidx.room:room-compiler:${Versions.Androidx.room}"
+        const val roomCompiler = "androidx.room:room-compiler:${Versions.Androidx.room}"
     }
 
     object Kodein {

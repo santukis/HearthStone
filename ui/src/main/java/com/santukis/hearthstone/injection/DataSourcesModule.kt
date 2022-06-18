@@ -5,6 +5,7 @@ import com.santukis.datasources.authentication.AuthenticationDataSource
 import com.santukis.datasources.authentication.BattlenetAuthenticationDataSource
 import com.santukis.datasources.authentication.EncryptedAuthenticationDataSource
 import com.santukis.datasources.hearthstone.BattlenetHearthstoneDataSource
+import com.santukis.datasources.local.HearthstoneDatabase
 import com.santukis.datasources.remote.BasicAuthorization
 import com.santukis.datasources.remote.Environment
 import com.santukis.datasources.remote.HttpClient
@@ -12,6 +13,7 @@ import com.santukis.datasources.remote.TokenAuthorization
 import com.santukis.hearthstone.injection.DataSourceConstants.AUTHENTICATION_CLIENT
 import com.santukis.hearthstone.injection.DataSourceConstants.AUTHENTICATION_MODULE_NAME
 import com.santukis.hearthstone.injection.DataSourceConstants.BATTLENET_DATA_SOURCE
+import com.santukis.hearthstone.injection.DataSourceConstants.DATABASE_MODULE_NAME
 import com.santukis.hearthstone.injection.DataSourceConstants.DATA_SOURCES_MODULE_NAME
 import com.santukis.hearthstone.injection.DataSourceConstants.ENCRYPTED_DATA_SOURCE
 import com.santukis.hearthstone.injection.DataSourceConstants.HEARTHSTONE_CLIENT
@@ -29,6 +31,7 @@ object DataSourceConstants {
     const val DATA_SOURCES_MODULE_NAME = "dataSources"
     const val AUTHENTICATION_MODULE_NAME = "authentication"
     const val HEARTHSTONE_MODULE_NAME = "hearthstone"
+    const val DATABASE_MODULE_NAME = "database"
     const val HTTP_CLIENT_MODULE_NAME = "httpClient"
     const val BATTLENET_DATA_SOURCE = "battlenet"
     const val ENCRYPTED_DATA_SOURCE = "encrypted"
@@ -43,6 +46,7 @@ fun dataSources() = DI.Module(
 ) {
     import(authentication(), allowOverride = true)
     import(hearthstone(), allowOverride = true)
+    import(dataBase(), allowOverride = true)
     import(httpClient(), allowOverride = true)
 }
 
@@ -59,6 +63,13 @@ fun hearthstone() = DI.Module(
     allowSilentOverride = true
 ) {
     bind<HearthstoneDataSource>(tag = BATTLENET_DATA_SOURCE) with provider { BattlenetHearthstoneDataSource(instance(HEARTHSTONE_CLIENT)) }
+}
+
+fun dataBase() = DI.Module(
+    name = DATABASE_MODULE_NAME,
+    allowSilentOverride = true
+) {
+    bind<HearthstoneDatabase>() with eagerSingleton { HearthstoneDatabase.getInstance(instance()) }
 }
 
 fun httpClient() = DI.Module(
