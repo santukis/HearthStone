@@ -1,7 +1,7 @@
 package com.santukis.entities.hearthstone
 
 data class Card(
-    val identity: Identity,
+    val identity: Identity = Identity(),
 
     val collectible: Collectible? = null,
 

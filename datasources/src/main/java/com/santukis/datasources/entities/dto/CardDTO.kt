@@ -10,7 +10,7 @@ data class CardDTO(
     val id: Int? = null,
 
     @Json(name = "collectible")
-    val collectible: Int? = null,
+    val collectible: String? = null,
 
     @Json(name = "slug")
     val slug: String? = null,

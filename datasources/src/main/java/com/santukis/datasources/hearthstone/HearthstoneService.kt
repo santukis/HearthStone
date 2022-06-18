@@ -25,7 +25,7 @@ interface HearthstoneService {
         @Query("manaCost") manaCost: Int? = null,
         @Query("attack") attack: Int? = null,
         @Query("health") health: Int? = null,
-        @Query("collectible") collectible: Int? = null,
+        @Query("collectible") collectible: String? = null,
         @Query("rarity") rarity: String? = null,
         @Query("type") type: String? = null,
         @Query("minionType") minionType: String? = null,

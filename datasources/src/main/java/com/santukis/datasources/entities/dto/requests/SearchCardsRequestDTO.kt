@@ -42,7 +42,7 @@ data class SearchCardsRequestDTO(
      * A value of 1 indicates that collectible cards should be returned; 0 indicates uncollectible cards.
      * To return all cards, use a value of '0,1'.
      */
-    val collectible: Int? = null,
+    val collectible: String? = null,
 
     /**
      * The rarity of a card. This value must match the rarity slugs found in metadata.

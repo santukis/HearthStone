@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import com.santukis.entities.hearthstone.DeckRequest
 import com.santukis.entities.hearthstone.EuropeLocale
 import com.santukis.entities.hearthstone.Regionality
+import com.santukis.entities.hearthstone.SearchCardsRequest
 import com.santukis.hearthstone.components.SampleComposable
 import com.santukis.hearthstone.injection.DataSourceConstants.BATTLENET_DATA_SOURCE
 import com.santukis.hearthstone.theme.CleanArchitectureTheme
@@ -28,10 +29,9 @@ class MainActivity : ComponentActivity(), DIAware {
         super.onCreate(savedInstanceState)
 
         CoroutineScope(Dispatchers.IO).launch {
-            hearthstoneDataSource.getDeck(
-                DeckRequest(
-                    regionality = Regionality.Taiwan(),
-                    deckCode = "AAECAQcG+wyd8AKS+AKggAOblAPanQMMS6IE/web8wLR9QKD+wKe+wKz/AL1gAOXlAOalAOSnwMA"
+            hearthstoneDataSource.searchCards(
+                SearchCardsRequest(
+                    regionality = Regionality.Taiwan()
                 )
             )
                 .onSuccess { println(it) }
