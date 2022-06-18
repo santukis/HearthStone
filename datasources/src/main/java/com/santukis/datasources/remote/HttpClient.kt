@@ -52,19 +52,17 @@ inline fun <reified ErrorDTO, reified SuccessDTO, SuccessResult> Call<SuccessDTO
 ): Result<SuccessResult> =
     try {
         execute().let { response ->
-            when (response.isSuccessful) {
-                true -> {
-                    val successDTO = response.body() ?: throw Exception("No body to parse")
-                    ServerResponse.Success(onSuccess(successDTO)).toResult()
-                }
-                false -> {
-                    val errorDTO = Moshi.Builder()
-                        .build()
-                        .adapter(ErrorDTO::class.java)
-                        .fromJson(response.errorBody()?.source()) ?: throw Exception("No errorBody to parse")
+            if (response.isSuccessful) {
+                val successDTO = response.body() ?: throw Exception("No body to parse")
+                ServerResponse.Success(onSuccess(successDTO)).toResult()
 
-                    ServerResponse.Error<SuccessResult>(onError(errorDTO)).toResult()
-                }
+            } else {
+                val errorDTO = Moshi.Builder()
+                    .build()
+                    .adapter(ErrorDTO::class.java)
+                    .fromJson(response.errorBody()?.source()) ?: throw Exception("No errorBody to parse")
+
+                ServerResponse.Error<SuccessResult>(onError(errorDTO)).toResult()
             }
         }
 
