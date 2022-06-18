@@ -3,7 +3,6 @@ package com.santukis.datasources.remote
 import com.santukis.datasources.entities.dto.ServerResponse
 import com.santukis.datasources.authentication.AuthenticationService
 import com.santukis.datasources.hearthstone.HearthstoneService
-import com.santukis.entities.hearthstone.Region
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -31,19 +30,6 @@ class HttpClient(
     val hearthstoneService: HearthstoneService = retrofitBuilder
         .build()
         .create(HearthstoneService::class.java)
-}
-
-sealed class Environment(
-    val authApi: String
-) {
-    private val blizzardApi: String = "https://{region}.api.blizzard.com/"
-
-    class Pro: Environment(authApi = "https://us.battle.net/")
-
-    class Testing(baseUrl: String): Environment(baseUrl)
-
-    fun deckEndpoint(region: Region): String =
-        blizzardApi.replace("{region}", region.value) + "hearthstone/deck"
 }
 
 inline fun <reified ErrorDTO, reified SuccessDTO, SuccessResult> Call<SuccessDTO>.unwrapCall(
