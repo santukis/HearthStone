@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity(), DIAware {
         CoroutineScope(Dispatchers.IO).launch {
             hearthstoneDataSource.getDeck(
                 DeckRequest(
-                    regionality = Regionality.Europe(EuropeLocale.Spanish()),
+                    regionality = Regionality.Taiwan(),
                     deckCode = "AAECAQcG+wyd8AKS+AKggAOblAPanQMMS6IE/web8wLR9QKD+wKe+wKz/AL1gAOXlAOalAOSnwMA"
                 )
             )
