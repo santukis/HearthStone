@@ -12,12 +12,7 @@ class BattlenetAuthenticationDataSource(private val client: HttpClient) : Authen
         return client.authenticationService
             .refreshToken()
             .unwrapCall<AuthenticationErrorDTO, AuthenticationSuccessDTO, Token>(
-                onSuccess = { successDto ->
-                    Token(
-                        accessToken = successDto.accessToken.orEmpty(),
-                        expires = successDto.expiresIn?.toLong() ?: 0L
-                    )
-                },
+                onSuccess = { successDto -> successDto.toToken() },
                 onError = { errorDTO -> Exception(errorDTO.description) }
             )
     }

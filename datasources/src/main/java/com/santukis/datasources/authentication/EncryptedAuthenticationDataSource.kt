@@ -53,6 +53,6 @@ class EncryptedAuthenticationDataSource(context: Context) : AuthenticationDataSo
 
     override fun saveToken(token: Token) {
         this.token = token.accessToken
-        this.expires = token.expires
+        this.expires = System.currentTimeMillis() + (token.expires * 1000)
     }
 }

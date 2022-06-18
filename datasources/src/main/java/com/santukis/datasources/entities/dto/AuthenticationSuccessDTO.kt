@@ -1,6 +1,7 @@
 package com.santukis.datasources.entities.dto
 
 
+import com.santukis.entities.authentication.Token
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -17,4 +18,11 @@ data class AuthenticationSuccessDTO(
 
     @Json(name = "sub")
     val sub: String? = null
-)
+) {
+
+    fun toToken(): Token =
+        Token(
+            accessToken = accessToken.orEmpty(),
+            expires = expiresIn?.toLong() ?: 0L
+        )
+}

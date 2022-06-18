@@ -1,6 +1,8 @@
 package com.santukis.datasources.entities.dto
 
 
+import com.santukis.datasources.mappers.orDefault
+import com.santukis.entities.hearthstone.Deck
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -29,4 +31,13 @@ data class DeckResponseDTO(
 
     @Json(name = "cardCount")
     val cardCount: Int? = 0
-)
+) {
+
+    fun toDeck(): Deck =
+        Deck(
+            code = deckCode.orEmpty(),
+            version = version.orDefault(),
+            format = format.orEmpty(),
+            cardCount = cardCount.orDefault()
+        )
+}

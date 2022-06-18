@@ -10,10 +10,4 @@ sealed class ServerResponse<out Response> {
         is Success -> Result.success(data)
         is Error -> Result.failure(error)
     }
-
-    companion object {
-        private const val UNIMPLEMENTED_METHOD = "UNIMPLEMENTED_METHOD"
-
-        fun <Response> defaultError(): Error<Response> = Error(Exception(UNIMPLEMENTED_METHOD))
-    }
 }
