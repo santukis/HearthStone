@@ -1,7 +1,7 @@
 package com.santukis.datasources.hearthstone
 
 import com.santukis.datasources.entities.dto.DeckResponseDTO
-import com.santukis.datasources.entities.dto.HearthStoneErrorDTO
+import com.santukis.datasources.entities.dto.HearthstoneErrorDTO
 import com.santukis.datasources.entities.dto.requests.DeckRequestDTO
 import com.santukis.datasources.mappers.toDeckRequestDTO
 import com.santukis.datasources.remote.HttpClient
@@ -23,7 +23,7 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
             ids = deckDTO.cardIds,
             heroId = deckDTO.heroId
 
-        ).unwrapCall<HearthStoneErrorDTO, DeckResponseDTO, Deck>(
+        ).unwrapCall<HearthstoneErrorDTO, DeckResponseDTO, Deck>(
             onSuccess = { it.toDeck() },
             onError = { Exception(it.error?.message) }
         )
