@@ -1,7 +1,8 @@
 package com.santukis.datasources.hearthstone
 
 import com.santukis.datasources.entities.dto.CardsResponse
-import com.santukis.datasources.entities.dto.DeckResponseDTO
+import com.santukis.datasources.entities.dto.DeckResponse
+import com.santukis.datasources.entities.dto.MetadataResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -14,7 +15,7 @@ interface HearthstoneService {
         @Query("code", encoded = true) code: String? = null,
         @Query("ids") ids: String? = null,
         @Query("hero") heroId: String? = null
-    ): Call<DeckResponseDTO>
+    ): Call<DeckResponse>
 
     @GET
     fun searchCards(
@@ -37,4 +38,10 @@ interface HearthstoneService {
         @Query("pageSize") pageSize: Int? = null,
         @Query("sort") sort: String? = null
     ): Call<CardsResponse>
+
+    @GET
+    fun getMetadata(
+        @Url baseUrl: String,
+        @Query("locale") locale: String
+    ): Call<MetadataResponse>
 }

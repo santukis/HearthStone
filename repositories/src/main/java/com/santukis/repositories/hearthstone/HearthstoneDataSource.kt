@@ -1,9 +1,6 @@
 package com.santukis.repositories.hearthstone
 
-import com.santukis.entities.hearthstone.Card
-import com.santukis.entities.hearthstone.Deck
-import com.santukis.entities.hearthstone.DeckRequest
-import com.santukis.entities.hearthstone.SearchCardsRequest
+import com.santukis.entities.hearthstone.*
 import com.santukis.repositories.strategies.defaultError
 
 interface HearthstoneDataSource {
@@ -15,4 +12,8 @@ interface HearthstoneDataSource {
     suspend fun searchCards(searchCardsRequest: SearchCardsRequest): Result<List<Card>> = defaultError()
 
     suspend fun saveCards(cards: List<Card>): Result<List<Card>> = defaultError()
+
+    suspend fun getMetadata(regionality: Regionality): Result<Metadata> = defaultError()
+
+    suspend fun saveMetadata(metadata: Metadata): Result<Metadata> = defaultError()
 }

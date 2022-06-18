@@ -8,7 +8,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class DeckResponseDTO(
+data class DeckResponse(
     @Json(name = "deckCode")
     val deckCode: String? = "",
 

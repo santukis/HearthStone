@@ -29,10 +29,8 @@ class MainActivity : ComponentActivity(), DIAware {
         super.onCreate(savedInstanceState)
 
         CoroutineScope(Dispatchers.IO).launch {
-            hearthstoneDataSource.searchCards(
-                SearchCardsRequest(
-                    regionality = Regionality.Taiwan()
-                )
+            hearthstoneDataSource.getMetadata(
+                Regionality.Taiwan()
             )
                 .onSuccess { println(it) }
                 .onFailure { println(it.message) }

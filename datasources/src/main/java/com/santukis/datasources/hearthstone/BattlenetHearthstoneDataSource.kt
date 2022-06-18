@@ -1,17 +1,15 @@
 package com.santukis.datasources.hearthstone
 
 import com.santukis.datasources.entities.dto.CardsResponse
-import com.santukis.datasources.entities.dto.DeckResponseDTO
+import com.santukis.datasources.entities.dto.DeckResponse
 import com.santukis.datasources.entities.dto.HearthstoneErrorDTO
+import com.santukis.datasources.entities.dto.MetadataResponse
 import com.santukis.datasources.entities.dto.requests.DeckRequestDTO
 import com.santukis.datasources.mappers.toDeckRequestDTO
 import com.santukis.datasources.mappers.toSearchCardsRequestDTO
 import com.santukis.datasources.remote.HttpClient
 import com.santukis.datasources.remote.unwrapCall
-import com.santukis.entities.hearthstone.Card
-import com.santukis.entities.hearthstone.Deck
-import com.santukis.entities.hearthstone.DeckRequest
-import com.santukis.entities.hearthstone.SearchCardsRequest
+import com.santukis.entities.hearthstone.*
 import com.santukis.repositories.hearthstone.HearthstoneDataSource
 
 class BattlenetHearthstoneDataSource(private val client: HttpClient) : HearthstoneDataSource {
@@ -27,7 +25,7 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
             ids = deckDTO.cardIds,
             heroId = deckDTO.heroId
 
-        ).unwrapCall<HearthstoneErrorDTO, DeckResponseDTO, Deck>(
+        ).unwrapCall<HearthstoneErrorDTO, DeckResponse, Deck>(
             onSuccess = { it.toDeck() },
             onError = { it.toException() }
         )
@@ -59,6 +57,19 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
 
         ).unwrapCall<HearthstoneErrorDTO, CardsResponse, List<Card>>(
             onSuccess = { it.toCardList() },
+            onError = { it.toException() }
+        )
+    }
+
+    override suspend fun getMetadata(regionality: Regionality): Result<Metadata> {
+        val metadataEndpoint = client.environment.metadata(regionality.region)
+
+        return client.hearthstoneService.getMetadata(
+            baseUrl = metadataEndpoint,
+            locale = regionality.locale.value
+
+        ).unwrapCall<HearthstoneErrorDTO, MetadataResponse, Metadata>(
+            onSuccess = { it.toMetadata() },
             onError = { it.toException() }
         )
     }
