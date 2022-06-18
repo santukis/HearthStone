@@ -9,4 +9,5 @@ fun Int?.takeIfNotDefault(default: Int = -1): Int? = this?.let {
         null
     }
 }
+
 fun Int?.orDefault(default: Int = -1): Int = this ?: default

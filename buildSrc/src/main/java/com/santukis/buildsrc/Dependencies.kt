@@ -15,6 +15,7 @@ class Dependencies {
         const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.AndroidTest.espressoCore}"
         const val composeUi = "androidx.compose.ui:ui-test-junit4:${Versions.Androidx.compose}"
         const val mockKAndroid = "io.mockk:mockk-android:${Versions.Test.mockk}"
+        const val room = "androidx.room:room-testing:${Versions.Androidx.room}"
     }
 
     object Androidx {
@@ -28,6 +29,9 @@ class Dependencies {
         const val composeMaterialIcons = "androidx.compose.material:material-icons-core:${Versions.Androidx.compose}"
         const val composeMaterialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.Androidx.compose}"
         const val encryptedPreferences = "androidx.security:security-crypto:${Versions.Androidx.encryptedPreferences}"
+        const val room = "androidx.room:room-runtime:${Versions.Androidx.room}"
+        const val roomKotlin = "androidx.room:room-ktx:${Versions.Androidx.room}"
+        const val roomCompiler = "\"androidx.room:room-compiler:${Versions.Androidx.room}"
     }
 
     object Kodein {

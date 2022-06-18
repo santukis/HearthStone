@@ -16,6 +16,15 @@ android {
     defaultConfig {
         buildConfigField("String", "BATTLENET_CLIENT_ID", battlenetProperties.getProperty("client_id"))
         buildConfigField("String", "BATTLENET_CLIENT_SECRET", battlenetProperties.getProperty("client_secret"))
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
     }
 }
 
@@ -29,9 +38,16 @@ dependencies {
     implementation Dependencies.Squareup.retrofit
     implementation Dependencies.Squareup.okhttp
 
+    implementation Dependencies.Androidx.room
+    implementation Dependencies.Androidx.roomKotlin
+    annotationProcessor Dependencies.Androidx.roomCompiler
+    kapt Dependencies.Androidx.roomCompiler
+
     implementation Dependencies.Androidx.encryptedPreferences
 
     testImplementation Dependencies.Test.junit5
     testImplementation Dependencies.Test.mockWebServer
     testImplementation Dependencies.Test.mockK
+
+    androidTestImplementation Dependencies.Androidx.room
 }
