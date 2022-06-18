@@ -4,7 +4,6 @@ import com.santukis.datasources.entities.dto.CardsResponse
 import com.santukis.datasources.entities.dto.DeckResponseDTO
 import com.santukis.datasources.entities.dto.HearthstoneErrorDTO
 import com.santukis.datasources.entities.dto.requests.DeckRequestDTO
-import com.santukis.datasources.mappers.toCardList
 import com.santukis.datasources.mappers.toDeckRequestDTO
 import com.santukis.datasources.mappers.toSearchCardsRequestDTO
 import com.santukis.datasources.remote.HttpClient
@@ -30,7 +29,7 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
 
         ).unwrapCall<HearthstoneErrorDTO, DeckResponseDTO, Deck>(
             onSuccess = { it.toDeck() },
-            onError = { Exception(it.error?.message) }
+            onError = { it.toException() }
         )
     }
 
@@ -60,7 +59,7 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
 
         ).unwrapCall<HearthstoneErrorDTO, CardsResponse, List<Card>>(
             onSuccess = { it.toCardList() },
-            onError = { Exception(it.error?.message) }
+            onError = { it.toException() }
         )
     }
 }

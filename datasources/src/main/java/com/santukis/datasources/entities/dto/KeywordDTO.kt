@@ -1,6 +1,11 @@
 package com.santukis.datasources.entities.dto
 
 
+import com.santukis.datasources.mappers.orDefault
+import com.santukis.datasources.mappers.toGameModeList
+import com.santukis.entities.hearthstone.CardText
+import com.santukis.entities.hearthstone.Identity
+import com.santukis.entities.hearthstone.Keyword
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -23,4 +28,19 @@ data class KeywordDTO(
 
     @Json(name = "gameModes")
     val gameModes: List<Int>? = null
-)
+) {
+
+    fun toKeyword(): Keyword =
+        Keyword(
+            identity = Identity(
+                id = id.orDefault(),
+                slug = slug.orEmpty(),
+                name = name.orEmpty()
+            ),
+            cardText = CardText(
+                referenceText = refText.orEmpty(),
+                ruleText = text.orEmpty()
+            ),
+            gameModes = gameModes.toGameModeList()
+        )
+}

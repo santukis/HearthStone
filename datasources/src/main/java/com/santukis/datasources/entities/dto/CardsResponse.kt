@@ -1,6 +1,7 @@
 package com.santukis.datasources.entities.dto
 
 
+import com.santukis.entities.hearthstone.Card
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -17,4 +18,7 @@ data class CardsResponse(
 
     @Json(name = "page")
     val page: Int? = null
-)
+) {
+
+    fun toCardList(): List<Card> = cards?.map { it.toCard() }.orEmpty()
+}

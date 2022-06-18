@@ -1,6 +1,9 @@
 package com.santukis.datasources.entities.dto
 
 
+import com.santukis.datasources.mappers.orDefault
+import com.santukis.datasources.mappers.toSimplifiedIdentity
+import com.santukis.entities.hearthstone.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -74,4 +77,48 @@ data class CardDTO(
 
     @Json(name = "battlegrounds")
     val battlegrounds: BattlegroundsDTO? = null,
-)
+
+    @Json(name = "parentId")
+    val parentId: Int? = null
+) {
+
+    fun toCard(): Card =
+        Card(
+            identity = Identity(
+                id = id.orDefault(),
+                slug = slug.orEmpty(),
+                name = name.orEmpty()
+            ),
+            collectible = collectible.toCollectible(),
+            cardClass = CardClass(identity = classId.toSimplifiedIdentity()),
+            multiClassIds = multiClassIds.orEmpty(),
+            cardType = CardType(identity = cardTypeId.toSimplifiedIdentity()),
+            cardSet = CardSet(identity = cardSetId.toSimplifiedIdentity()),
+            rarity = Rarity(identity = rarityId.toSimplifiedIdentity()),
+            cardStats = CardStats(
+                manaCost = manaCost.orDefault(),
+                attack = attack.orDefault(),
+                health = health.orDefault()
+            ),
+            cardText = CardText(
+                ruleText = text.orEmpty(),
+                flavorText = flavorText.orEmpty()
+            ),
+            images = CardImage(
+                image = image.orEmpty(),
+                imageGold = imageGold.orEmpty(),
+                cropImage = cropImage.orEmpty(),
+                artistName = artistName.orEmpty()
+            ),
+            keywords = keywordIds?.map { Keyword(identity = it.toSimplifiedIdentity()) }.orEmpty(),
+            childIds = childIds.orEmpty()
+        )
+
+    private fun String?.toCollectible(): Collectible? =
+        when(this) {
+            "0" -> Collectible.Uncollectible
+            "1" -> Collectible.Collectible
+            "0,1" -> Collectible.All
+            else -> null
+        }
+}

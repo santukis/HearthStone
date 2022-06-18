@@ -1,11 +1,14 @@
 package com.santukis.datasources.entities.dto
 
 
+import com.santukis.datasources.mappers.orDefault
+import com.santukis.entities.hearthstone.CardClass
+import com.santukis.entities.hearthstone.Identity
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class HeroClassDTO(
+data class CardClassDTO(
     @Json(name = "slug")
     val slug: String? = null,
 
@@ -23,4 +26,16 @@ data class HeroClassDTO(
 
     @Json(name = "alternateHeroCardIds")
     val alternateHeroCardIds: List<Int>? = null
-)
+) {
+
+    fun toCardClass(): CardClass =
+        CardClass(
+            identity = Identity(
+                id = id.orDefault(),
+                slug = slug.orEmpty(),
+                name = name.orEmpty()
+            ),
+            cardId = cardId.orDefault(),
+            heroPowerCardId = heroPowerCardId.orDefault()
+        )
+}

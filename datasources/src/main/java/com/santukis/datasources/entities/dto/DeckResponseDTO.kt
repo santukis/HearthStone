@@ -1,7 +1,8 @@
 package com.santukis.datasources.entities.dto
 
-
 import com.santukis.datasources.mappers.orDefault
+import com.santukis.entities.hearthstone.Card
+import com.santukis.entities.hearthstone.CardClass
 import com.santukis.entities.hearthstone.Deck
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -18,13 +19,13 @@ data class DeckResponseDTO(
     val format: String? = "",
 
     @Json(name = "hero")
-    val hero: HeroDTO? = HeroDTO(),
+    val hero: CardDTO? = null,
 
     @Json(name = "heroPower")
-    val heroPower: HeroPowerDTO? = HeroPowerDTO(),
+    val heroPower: CardDTO? = null,
 
     @Json(name = "class")
-    val heroClass: HeroClassDTO? = HeroClassDTO(),
+    val cardClass: CardClassDTO? = null,
 
     @Json(name = "cards")
     val cards: List<CardDTO>? = listOf(),
@@ -38,6 +39,10 @@ data class DeckResponseDTO(
             code = deckCode.orEmpty(),
             version = version.orDefault(),
             format = format.orEmpty(),
+            hero = hero?.toCard() ?: Card(),
+            heroPower = heroPower?.toCard() ?: Card(),
+            cardClass = cardClass?.toCardClass() ?: CardClass(),
+            cards = cards?.map { it.toCard() }.orEmpty(),
             cardCount = cardCount.orDefault()
         )
 }

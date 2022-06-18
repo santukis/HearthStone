@@ -8,4 +8,7 @@ import com.squareup.moshi.JsonClass
 data class HearthstoneErrorDTO(
     @Json(name = "error")
     val error: ErrorDTO? = null
-)
+) {
+
+    fun toException(): Exception = Exception(error?.message)
+}

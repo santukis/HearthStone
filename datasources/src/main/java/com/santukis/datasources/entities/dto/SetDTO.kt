@@ -1,6 +1,10 @@
 package com.santukis.datasources.entities.dto
 
 
+import com.santukis.datasources.mappers.orDefault
+import com.santukis.entities.hearthstone.CardSet
+import com.santukis.entities.hearthstone.Identity
+import com.santukis.entities.hearthstone.SetType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -32,4 +36,24 @@ data class SetDTO(
 
     @Json(name = "aliasSetIds")
     val aliasSetIds: List<Int>? = null
-)
+) {
+
+    fun toCardSet(): CardSet =
+        CardSet(
+            identity = Identity(
+                id = id.orDefault(),
+                slug = slug.orEmpty(),
+                name = name.orEmpty()
+            ),
+            type = toSetType(),
+            collectibleCount = collectibleCount.orDefault(),
+        )
+
+    private fun toSetType(): SetType =
+        when (type) {
+            "base" -> SetType.Base
+            "adventure" -> SetType.Adventure
+            "expansion" -> SetType.Expansion
+            else -> SetType.Unknown
+        }
+}

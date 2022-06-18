@@ -1,6 +1,7 @@
 package com.santukis.datasources.entities.dto
 
 
+import com.santukis.entities.hearthstone.Metadata
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -25,7 +26,7 @@ data class MetadataResponse(
     val rarities: List<RarityDTO>? = null,
 
     @Json(name = "classes")
-    val classes: List<HeroClassDTO>? = null,
+    val classes: List<CardClassDTO>? = null,
 
     @Json(name = "minionTypes")
     val minionTypes: List<MinionTypeDTO>? = null,
@@ -47,4 +48,18 @@ data class MetadataResponse(
 
     @Json(name = "cardBackCategories")
     val cardBackCategories: List<CardBackCategoryDTO>? = null
-)
+) {
+
+    fun toMetadata(): Metadata =
+        Metadata(
+            sets = sets?.map { it.toCardSet() }.orEmpty(),
+            gameModes = gameModes?.map { it.toGameMode() }.orEmpty(),
+            arenaIds = arenaIds.orEmpty(),
+            types = types?.map { it.toCardType() }.orEmpty(),
+            rarities = rarities?.map { it.toRarity() }.orEmpty(),
+            classes = classes?.map { it.toCardClass() }.orEmpty(),
+            minionTypes = minionTypes?.map { it.toMinionType() }.orEmpty(),
+            spellSchools = spellSchools?.map { it.toSpellSchool() }.orEmpty(),
+            keywords = keywords?.map { it.toKeyword() }.orEmpty()
+        )
+}

@@ -1,6 +1,9 @@
 package com.santukis.datasources.entities.dto
 
 
+import com.santukis.datasources.mappers.orDefault
+import com.santukis.entities.hearthstone.Identity
+import com.santukis.entities.hearthstone.SpellSchool
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -14,4 +17,13 @@ data class SpellSchoolDTO(
 
     @Json(name = "name")
     val name: String? = null
-)
+) {
+    fun toSpellSchool(): SpellSchool =
+        SpellSchool(
+            identity = Identity(
+                id = id.orDefault(),
+                slug = slug.orEmpty(),
+                name = name.orEmpty()
+            )
+        )
+}
