@@ -11,6 +11,8 @@ interface HearthstoneDataSource {
 
     suspend fun searchCards(searchCardsRequest: SearchCardsRequest): Result<List<Card>> = defaultError()
 
+    suspend fun getCards(): Result<List<Card>> = defaultError()
+
     suspend fun saveCards(cards: List<Card>): Result<List<Card>> = defaultError()
 
     suspend fun getMetadata(regionality: Regionality): Result<Metadata> = defaultError()

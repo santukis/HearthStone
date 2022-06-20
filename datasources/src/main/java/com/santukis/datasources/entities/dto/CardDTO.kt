@@ -111,7 +111,8 @@ data class CardDTO(
                 artistName = artistName.orEmpty()
             ),
             keywords = keywordIds?.map { Keyword(identity = it.toSimplifiedIdentity()) }.orEmpty(),
-            childIds = childIds.orEmpty()
+            childIds = childIds.orEmpty(),
+            parentId = parentId.orDefault()
         )
 
     private fun String?.toCollectible(): Collectible? =

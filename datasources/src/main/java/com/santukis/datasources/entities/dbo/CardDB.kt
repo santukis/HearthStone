@@ -1,6 +1,7 @@
 package com.santukis.datasources.entities.dbo
 
 import androidx.room.*
+import com.santukis.entities.hearthstone.*
 
 @Entity(
     tableName = "cards",
@@ -21,19 +22,19 @@ data class CardDB(
     @Embedded
     val image: CardImageDB,
 
-    val classId: Int? = null,
+    val classId: Int = -1,
 
-    val cardTypeId: Int? = null,
+    val cardTypeId: Int = -1,
 
-    val cardSetId: Int? = null,
+    val cardSetId: Int = -1,
 
-    val rarityId: Int? = null,
+    val rarityId: Int = -1,
 
-    val multiClassIds: List<Int>? = null,
+    val multiClassIds: List<Int> = emptyList(),
 
-    val childIds: List<Int>? = null,
+    val childIds: List<Int> = emptyList(),
 
-    val parentId: Int? = null,
+    val parentId: Int = -1,
 
     val updatedAt: Long = 0
 )
@@ -103,4 +104,21 @@ data class CardDetailDB(
             entityColumn = "keywordId"
         )
     ) val keywords: List<KeywordDetailDB> = emptyList()
-)
+) {
+
+    fun toCard(): Card =
+        Card(
+            identity = card.identity.toIdentity(),
+            collectible = Collectible.valueOf(card.collectible),
+            cardClass = cardClass?.toCardClass() ?: CardClass(),
+            multiClassIds = card.multiClassIds,
+            cardType = cardType?.toCardType() ?: CardType(),
+            cardSet = cardSet?.toCardSet() ?: CardSet(),
+            rarity = rarity?.toRarity() ?: Rarity(),
+            cardStats = card.cardStats.toCardStats(),
+            cardText = card.cardText.toCardText(),
+            images = card.image.toCardImage(),
+            keywords = keywords.map { it.toKeyword() },
+            childIds = card.childIds
+        )
+}

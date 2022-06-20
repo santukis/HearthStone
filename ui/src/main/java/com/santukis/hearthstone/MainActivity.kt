@@ -6,13 +6,12 @@ import androidx.activity.compose.setContent
 import com.santukis.entities.hearthstone.DeckRequest
 import com.santukis.entities.hearthstone.EuropeLocale
 import com.santukis.entities.hearthstone.Regionality
-import com.santukis.entities.hearthstone.SearchCardsRequest
 import com.santukis.hearthstone.components.SampleComposable
-import com.santukis.hearthstone.injection.DataSourceConstants.BATTLENET_DATA_SOURCE
 import com.santukis.hearthstone.theme.CleanArchitectureTheme
-import com.santukis.repositories.hearthstone.HearthstoneDataSource
+import com.santukis.repositories.hearthstone.HearthstoneRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 import org.kodein.di.DI
 import org.kodein.di.DIAware
@@ -23,15 +22,24 @@ class MainActivity : ComponentActivity(), DIAware {
 
     override val di: DI by closestDI()
 
-    private val hearthstoneDataSource: HearthstoneDataSource by instance(BATTLENET_DATA_SOURCE)
+    private val hearthstoneRepository: HearthstoneRepository by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         CoroutineScope(Dispatchers.IO).launch {
-            hearthstoneDataSource.getMetadata(
-                Regionality.Taiwan()
+            hearthstoneRepository.loadMetadata(
+                Regionality.Europe(EuropeLocale.Spanish())
             )
+                .single()
+                .onSuccess { println(it) }
+                .onFailure { println(it.message) }
+
+            hearthstoneRepository.getDeck(DeckRequest(
+                regionality = Regionality.Europe(EuropeLocale.Spanish()),
+                deckCode = "AAECAQcG+wyd8AKS+AKggAOblAPanQMMS6IE/web8wLR9QKD+wKe+wKz/AL1gAOXlAOalAOSnwMA"
+            ))
+                .single()
                 .onSuccess { println(it) }
                 .onFailure { println(it.message) }
         }

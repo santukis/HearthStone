@@ -1,6 +1,7 @@
 package com.santukis.datasources.entities.dbo
 
 import androidx.room.*
+import com.santukis.entities.hearthstone.Keyword
 
 @Entity(
     tableName = "keywords",
@@ -55,4 +56,11 @@ data class KeywordDetailDB(
             entityColumn = "gameModeId"
         )
     ) val gameModes: List<GameModeDB> = emptyList()
-)
+) {
+
+    fun toKeyword(): Keyword =
+        Keyword(
+            identity = keyword.identity.toIdentity(),
+            gameModes = gameModes.map { it.toGameMode() }
+        )
+}

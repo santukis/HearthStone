@@ -1,6 +1,7 @@
 package com.santukis.datasources.entities.dbo
 
 import androidx.room.*
+import com.santukis.entities.hearthstone.CardType
 
 @Entity(
     tableName = "cardTypes",
@@ -53,4 +54,11 @@ data class CardTypeDetailDB(
             entityColumn = "gameModeId"
         )
     ) val gameModes: List<GameModeDB> = emptyList()
-)
+) {
+
+    fun toCardType(): CardType =
+        CardType(
+            identity = cardType.identity.toIdentity(),
+            gameModes = gameModes.map { it.toGameMode() }
+        )
+}

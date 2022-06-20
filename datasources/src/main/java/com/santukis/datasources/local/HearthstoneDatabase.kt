@@ -23,7 +23,9 @@ import com.santukis.datasources.local.daos.*
         MinionTypeDB::class,
         MinionTypeDBToGameModeDB::class,
         SpellSchoolDB::class,
-        ArenaDB::class
+        ArenaDB::class,
+        DeckDB::class,
+        DeckDBToCardDB::class
     ],
     exportSchema = true, version = 1
 )
@@ -57,6 +59,10 @@ abstract class HearthstoneDatabase: RoomDatabase() {
     abstract fun spellSchoolDao(): SpellSchoolDao
 
     abstract fun arenaDao(): ArenaDao
+
+    abstract fun deckDao(): DeckDao
+
+    abstract fun deckToCardDao(): DeckToCardDao
 
     companion object {
         @Volatile

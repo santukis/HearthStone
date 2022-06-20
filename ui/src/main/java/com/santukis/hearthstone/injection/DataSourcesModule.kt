@@ -5,6 +5,7 @@ import com.santukis.datasources.authentication.AuthenticationDataSource
 import com.santukis.datasources.authentication.BattlenetAuthenticationDataSource
 import com.santukis.datasources.authentication.EncryptedAuthenticationDataSource
 import com.santukis.datasources.hearthstone.BattlenetHearthstoneDataSource
+import com.santukis.datasources.hearthstone.RoomHearthstoneDataSource
 import com.santukis.datasources.local.HearthstoneDatabase
 import com.santukis.datasources.remote.BasicAuthorization
 import com.santukis.datasources.remote.Environment
@@ -20,6 +21,7 @@ import com.santukis.hearthstone.injection.DataSourceConstants.HEARTHSTONE_CLIENT
 import com.santukis.hearthstone.injection.DataSourceConstants.HEARTHSTONE_MODULE_NAME
 import com.santukis.hearthstone.injection.DataSourceConstants.HTTP_CLIENT_MODULE_NAME
 import com.santukis.hearthstone.injection.DataSourceConstants.LOGGING_INTERCEPTOR
+import com.santukis.hearthstone.injection.DataSourceConstants.ROOM_DATA_SOURCE
 import com.santukis.repositories.hearthstone.HearthstoneDataSource
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -35,6 +37,7 @@ object DataSourceConstants {
     const val HTTP_CLIENT_MODULE_NAME = "httpClient"
     const val BATTLENET_DATA_SOURCE = "battlenet"
     const val ENCRYPTED_DATA_SOURCE = "encrypted"
+    const val ROOM_DATA_SOURCE = "room"
     const val AUTHENTICATION_CLIENT = "authenticationClient"
     const val HEARTHSTONE_CLIENT = "hearthstoneApiClient"
     const val LOGGING_INTERCEPTOR = "loggingInterceptor"
@@ -63,6 +66,7 @@ fun hearthstone() = DI.Module(
     allowSilentOverride = true
 ) {
     bind<HearthstoneDataSource>(tag = BATTLENET_DATA_SOURCE) with provider { BattlenetHearthstoneDataSource(instance(HEARTHSTONE_CLIENT)) }
+    bind<HearthstoneDataSource>(tag = ROOM_DATA_SOURCE) with singleton { RoomHearthstoneDataSource(instance()) }
 }
 
 fun dataBase() = DI.Module(
