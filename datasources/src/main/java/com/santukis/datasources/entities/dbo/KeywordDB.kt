@@ -61,6 +61,7 @@ data class KeywordDetailDB(
     fun toKeyword(): Keyword =
         Keyword(
             identity = keyword.identity.toIdentity(),
+            cardText = keyword.cardText.toCardText(),
             gameModes = gameModes.map { it.toGameMode() }
         )
 }
