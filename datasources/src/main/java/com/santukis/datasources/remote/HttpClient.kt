@@ -1,6 +1,5 @@
 package com.santukis.datasources.remote
 
-import com.santukis.datasources.entities.dto.ServerResponse
 import com.santukis.datasources.remote.services.AuthenticationService
 import com.santukis.datasources.remote.services.HearthstoneService
 import com.squareup.moshi.Moshi
@@ -40,7 +39,7 @@ inline fun <reified ErrorDTO, reified SuccessDTO, SuccessResult> Call<SuccessDTO
         execute().let { response ->
             if (response.isSuccessful) {
                 val successDTO = response.body() ?: throw Exception("No body to parse")
-                ServerResponse.Success(onSuccess(successDTO)).toResult()
+                Result.success(onSuccess(successDTO))
 
             } else {
                 val errorDTO = Moshi.Builder()
@@ -48,10 +47,10 @@ inline fun <reified ErrorDTO, reified SuccessDTO, SuccessResult> Call<SuccessDTO
                     .adapter(ErrorDTO::class.java)
                     .fromJson(response.errorBody()?.source()) ?: throw Exception("No errorBody to parse")
 
-                ServerResponse.Error<SuccessResult>(onError(errorDTO)).toResult()
+                Result.failure(onError(errorDTO))
             }
         }
 
     } catch (exception: Exception) {
-        ServerResponse.Error<SuccessResult>(exception).toResult()
+        Result.failure(exception)
     }
