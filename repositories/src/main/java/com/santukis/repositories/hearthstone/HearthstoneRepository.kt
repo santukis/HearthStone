@@ -37,16 +37,13 @@ class HearthstoneRepository(
     override suspend fun loadMetadata(regionality: Regionality): Flow<Result<Unit>> {
         return flow {
             val response = object : LocalRemoteStrategy<Regionality, Metadata>() {
-                override suspend fun loadFromLocal(input: Regionality): Result<Metadata> =
-                    localHearthstoneDataSource.getMetadata(input)
+                override suspend fun loadFromLocal(input: Regionality): Result<Metadata> = localHearthstoneDataSource.getMetadata(input)
 
-                override suspend fun loadFromRemote(input: Regionality): Result<Metadata> =
-                    remoteHearthstoneDataSource.getMetadata(input)
+                override suspend fun loadFromRemote(input: Regionality): Result<Metadata> = remoteHearthstoneDataSource.getMetadata(input)
 
                 override suspend fun shouldUpdateFromRemote(input: Regionality, localOutput: Metadata): Boolean = false
 
-                override suspend fun saveIntoLocal(output: Metadata): Result<Metadata> =
-                    localHearthstoneDataSource.saveMetadata(output)
+                override suspend fun saveIntoLocal(output: Metadata): Result<Metadata> = localHearthstoneDataSource.saveMetadata(output)
 
             }.execute(regionality)
 
