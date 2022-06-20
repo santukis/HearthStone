@@ -50,10 +50,7 @@ class HearthstoneRepository(
 
             }.execute(regionality)
 
-            when (response.isSuccess) {
-                true -> emit(Result.success(Unit))
-                false -> emit(Result.failure(response.exceptionOrNull() ?: Exception()))
-            }
+            emit(response.map {  })
         }
     }
 
