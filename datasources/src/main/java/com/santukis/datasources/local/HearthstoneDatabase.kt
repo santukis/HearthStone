@@ -5,12 +5,25 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.santukis.datasources.entities.dbo.CardDB
-import com.santukis.datasources.local.daos.CardDao
+import com.santukis.datasources.entities.dbo.*
+import com.santukis.datasources.local.daos.*
 
 @Database(
     entities = [
-        CardDB::class
+        CardDB::class,
+        CardClassDB::class,
+        CardTypeDB::class,
+        CardSetDB::class,
+        GameModeDB::class,
+        CardTypeDBToGameModeDB::class,
+        RarityDB::class,
+        KeywordDB::class,
+        KeywordDBToGameModeDB::class,
+        CardDBToKeywordDB::class,
+        MinionTypeDB::class,
+        MinionTypeDBToGameModeDB::class,
+        SpellSchoolDB::class,
+        ArenaDB::class
     ],
     exportSchema = true, version = 1
 )
@@ -18,6 +31,32 @@ import com.santukis.datasources.local.daos.CardDao
 abstract class HearthstoneDatabase: RoomDatabase() {
 
     abstract fun cardDao(): CardDao
+
+    abstract fun cardClassDao(): CardClassDao
+
+    abstract fun cardSetDao(): CardSetDao
+
+    abstract fun cardTypeDao(): CardTypeDao
+
+    abstract fun gameModeDao(): GameModeDao
+
+    abstract fun cardTypeToGameModeDao(): CardTypeToGameModeDao
+
+    abstract fun rarityDao(): RarityDao
+
+    abstract fun keywordDao(): KeywordDao
+
+    abstract fun keywordToGameModeDao(): KeywordToGameModeDao
+
+    abstract fun cardToKeywordDao(): CardToKeywordDao
+
+    abstract fun minionTypeDao(): MinionTypeDao
+
+    abstract fun minionTypeToGameModeDao(): MinionTypeToGameModeDao
+
+    abstract fun spellSchoolDao(): SpellSchoolDao
+
+    abstract fun arenaDao(): ArenaDao
 
     companion object {
         @Volatile
