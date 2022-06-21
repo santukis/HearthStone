@@ -10,4 +10,4 @@ import androidx.room.Entity
 class SpellSchoolDB(
     @Embedded
     val identity: IdentityDB
-    )
+)

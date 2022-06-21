@@ -1,6 +1,7 @@
 package com.santukis.datasources.entities.dbo
 
 import androidx.room.*
+import com.santukis.datasources.mappers.orDefault
 import com.santukis.entities.hearthstone.Card
 import com.santukis.entities.hearthstone.CardClass
 import com.santukis.entities.hearthstone.Deck
@@ -91,9 +92,9 @@ data class DeckDetailDB(
             code = deck.code,
             version = deck.version,
             format = deck.format,
-            hero = hero?.toCard() ?: Card(),
-            heroPower = heroPower?.toCard() ?: Card(),
-            cardClass = cardClass?.toCardClass() ?: CardClass(),
+            hero = hero?.toCard().orDefault(),
+            heroPower = heroPower?.toCard().orDefault(),
+            cardClass = cardClass?.toCardClass().orDefault(),
             cards = cards.map { it.toCard() },
             cardCount = deck.cardCount
         )

@@ -1,6 +1,7 @@
 package com.santukis.datasources.entities.dbo
 
 import androidx.room.*
+import com.santukis.datasources.mappers.orDefault
 import com.santukis.entities.hearthstone.*
 
 @Entity(
@@ -110,11 +111,11 @@ data class CardDetailDB(
         Card(
             identity = card.identity.toIdentity(),
             collectible = Collectible.valueOf(card.collectible),
-            cardClass = cardClass?.toCardClass() ?: CardClass(),
+            cardClass = cardClass?.toCardClass().orDefault(),
             multiClassIds = card.multiClassIds,
-            cardType = cardType?.toCardType() ?: CardType(),
-            cardSet = cardSet?.toCardSet() ?: CardSet(),
-            rarity = rarity?.toRarity() ?: Rarity(),
+            cardType = cardType?.toCardType().orDefault(),
+            cardSet = cardSet?.toCardSet().orDefault(),
+            rarity = rarity?.toRarity().orDefault(),
             cardStats = card.cardStats.toCardStats(),
             cardText = card.cardText.toCardText(),
             images = card.image.toCardImage(),

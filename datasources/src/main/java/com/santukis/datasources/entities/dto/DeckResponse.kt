@@ -39,9 +39,9 @@ data class DeckResponse(
             code = deckCode.orEmpty(),
             version = version.orDefault(),
             format = format.orEmpty(),
-            hero = hero?.toCard() ?: Card(),
-            heroPower = heroPower?.toCard() ?: Card(),
-            cardClass = cardClass?.toCardClass() ?: CardClass(),
+            hero = hero?.toCard().orDefault(),
+            heroPower = heroPower?.toCard().orDefault(),
+            cardClass = cardClass?.toCardClass().orDefault(),
             cards = cards?.map { it.toCard() }.orEmpty(),
             cardCount = cardCount.orDefault()
         )

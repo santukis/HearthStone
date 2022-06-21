@@ -1,6 +1,7 @@
 package com.santukis.datasources.entities.dto
 
 
+import com.santukis.datasources.mappers.orDefault
 import com.santukis.entities.authentication.Token
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -23,6 +24,6 @@ data class AuthenticationSuccessDTO(
     fun toToken(): Token =
         Token(
             accessToken = accessToken.orEmpty(),
-            expires = expiresIn?.toLong() ?: 0L
+            expires = expiresIn?.toLong().orDefault()
         )
 }

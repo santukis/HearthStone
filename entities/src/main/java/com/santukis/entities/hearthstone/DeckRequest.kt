@@ -1,7 +1,7 @@
 package com.santukis.entities.hearthstone
 
 data class DeckRequest(
-    val regionality: Regionality,
+    val regionality: Regionality = Regionality.Europe(EuropeLocale.English()),
 
     /**
      * A code that identifies a deck.

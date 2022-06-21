@@ -11,4 +11,7 @@ data class AuthenticationErrorDTO(
 
     @Json(name = "error_description")
     val description: String? = null
-)
+) {
+
+    fun toException(): Exception = Exception(description)
+}

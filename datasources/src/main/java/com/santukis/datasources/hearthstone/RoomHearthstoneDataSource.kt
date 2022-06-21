@@ -43,9 +43,10 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase): Hear
         }
     }
 
-    override suspend fun getDeck(deckRequest: DeckRequest): Result<Deck> {
-        return super.getDeck(deckRequest)
-    }
+    override suspend fun getDeck(deckRequest: DeckRequest): Result<Deck> =
+        database.deckDao().getDeck(deckRequest.deckCode)?.let { db ->
+            Result.success(db.toDeck())
+        } ?: Result.failure(Exception())
 
     override suspend fun saveDeck(deck: Deck): Result<Deck> {
         database.deckDao().saveItem(deck.toDeckDB())
@@ -56,9 +57,7 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase): Hear
         database.deckToCardDao().saveItems(deck.cards.toDeckToCardList(deck.code))
         database.cardClassDao().saveItem(deck.cardClass.toCardClassDB())
 
-        return database.deckDao().getDeck(deck.code)?.let { deckDB ->
-            Result.success(deckDB.toDeck())
-        } ?: Result.failure(Exception())
+        return getDeck(DeckRequest(deckCode = deck.code))
     }
 
     override suspend fun saveCards(cards: List<Card>): Result<List<Card>> {

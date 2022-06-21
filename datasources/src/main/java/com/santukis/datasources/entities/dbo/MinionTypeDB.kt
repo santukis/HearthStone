@@ -1,6 +1,7 @@
 package com.santukis.datasources.entities.dbo
 
 import androidx.room.*
+import com.santukis.entities.hearthstone.MinionType
 
 @Entity(
     tableName = "minionTypes",
@@ -52,4 +53,11 @@ data class MinionTypeDetailDB(
             entityColumn = "gameModeId"
         )
     ) val gameModes: List<GameModeDB> = emptyList()
-)
+) {
+
+    fun toMinionType(): MinionType =
+        MinionType(
+            identity = minionType.identity.toIdentity(),
+            gameModes = gameModes.map { it.toGameMode() }
+        )
+}

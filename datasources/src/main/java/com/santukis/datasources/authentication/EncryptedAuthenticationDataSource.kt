@@ -29,7 +29,7 @@ class EncryptedAuthenticationDataSource(context: Context) : AuthenticationDataSo
     private var token: String
         set(value) = preferences.edit().putString(TOKEN_KEY, value).apply()
         get() {
-            return preferences.getString(TOKEN_KEY, "") ?: ""
+            return preferences.getString(TOKEN_KEY, "").orEmpty()
         }
 
     private var expires: Long

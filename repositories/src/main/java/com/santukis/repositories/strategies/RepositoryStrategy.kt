@@ -5,10 +5,6 @@ interface RepositoryStrategy<Input, Output> {
 }
 
 suspend infix fun <T> Result<T>?.or(alternative: suspend () -> Result<T>): Result<T> =
-    if (this == null || isFailure) {
-        alternative()
-    } else {
-        this
-    }
+    this?.takeIf { isSuccess } ?: alternative()
 
 fun <Response> defaultError(): Result<Response> = Result.failure(Exception("UNIMPLEMENTED_METHOD"))

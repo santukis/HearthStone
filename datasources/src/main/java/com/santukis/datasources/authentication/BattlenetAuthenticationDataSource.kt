@@ -13,7 +13,7 @@ class BattlenetAuthenticationDataSource(private val client: HttpClient) : Authen
             .refreshToken()
             .unwrapCall<AuthenticationErrorDTO, AuthenticationSuccessDTO, Token>(
                 onSuccess = { successDto -> successDto.toToken() },
-                onError = { errorDTO -> Exception(errorDTO.description) }
+                onError = { errorDTO -> errorDTO.toException() }
             )
     }
 }
