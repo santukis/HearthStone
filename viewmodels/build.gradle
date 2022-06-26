@@ -1,3 +1,4 @@
+import com.santukis.buildsrc.Dependencies
 import com.santukis.buildsrc.Modules
 
 plugins {
@@ -9,4 +10,18 @@ apply from: "$rootDir/base_android_module.gradle"
 dependencies {
     implementation project(Modules.UseCases)
     implementation project(Modules.Entities)
+
+    implementation Dependencies.Androidx.appcompat
+    implementation Dependencies.Androidx.core
+    implementation Dependencies.Androidx.lifecycleViewModel
+    implementation Dependencies.Androidx.lifecycleViewModelCompose
+    implementation Dependencies.Androidx.composeRuntime
+    implementation Dependencies.Androidx.composeUi
+    implementation Dependencies.Androidx.composeUiTooling
+    implementation Dependencies.Androidx.composeFoundation
+    implementation Dependencies.Androidx.composeMaterial
+    implementation Dependencies.Androidx.composeMaterialIcons
+    implementation Dependencies.Androidx.composeMaterialIconsExtended
+
+    implementation Dependencies.Kotlin.coroutinesCore
 }
