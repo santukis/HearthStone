@@ -12,11 +12,13 @@ internal class LocalRemoteStrategyTest {
         runBlocking {
             val expectedValue = "Expected Value"
             val strategy = object : LocalRemoteStrategy<String, String>() {
+                override suspend fun shouldLoadFromLocal(input: String): Boolean = true
+
                 override suspend fun loadFromLocal(input: String): Result<String> {
                     return Result.success(expectedValue)
                 }
 
-                override suspend fun loadFromRemote(input: String): Result<String> {
+                override suspend fun loadFromRemote(input: String, localResult: String?): Result<String> {
                     fail("loadFromRemote should not be call")
                 }
 
@@ -24,7 +26,7 @@ internal class LocalRemoteStrategyTest {
                     return false
                 }
 
-                override suspend fun saveIntoLocal(output: String): Result<String> {
+                override suspend fun saveIntoLocal(output: String) {
                     fail("saveIntoLocal should not be call")
                 }
             }
@@ -38,11 +40,13 @@ internal class LocalRemoteStrategyTest {
         runBlocking {
             val expectedValue = "Expected Value"
             val strategy = object : LocalRemoteStrategy<String, String>() {
+                override suspend fun shouldLoadFromLocal(input: String): Boolean = false
+
                 override suspend fun loadFromLocal(input: String): Result<String> {
-                    return Result.failure(Exception("Item not found"))
+                    return Result.success(expectedValue)
                 }
 
-                override suspend fun loadFromRemote(input: String): Result<String> {
+                override suspend fun loadFromRemote(input: String, localResult: String?): Result<String> {
                     return Result.success(expectedValue)
                 }
 
@@ -50,8 +54,8 @@ internal class LocalRemoteStrategyTest {
                     return false
                 }
 
-                override suspend fun saveIntoLocal(output: String): Result<String> {
-                    return Result.success(output)
+                override suspend fun saveIntoLocal(output: String) {
+
                 }
             }
 
@@ -63,11 +67,13 @@ internal class LocalRemoteStrategyTest {
         runBlocking {
             val expectedValue = "Expected Value"
             val strategy = object : LocalRemoteStrategy<String, String>() {
+                override suspend fun shouldLoadFromLocal(input: String): Boolean = false
+
                 override suspend fun loadFromLocal(input: String): Result<String> {
-                    return Result.success("Any Local value")
+                    return Result.success(expectedValue)
                 }
 
-                override suspend fun loadFromRemote(input: String): Result<String> {
+                override suspend fun loadFromRemote(input: String, localResult: String?): Result<String> {
                     return Result.success(expectedValue)
                 }
 
@@ -75,8 +81,8 @@ internal class LocalRemoteStrategyTest {
                     return true
                 }
 
-                override suspend fun saveIntoLocal(output: String): Result<String> {
-                    return Result.success(output)
+                override suspend fun saveIntoLocal(output: String) {
+                    return
                 }
             }
 
@@ -89,11 +95,13 @@ internal class LocalRemoteStrategyTest {
         runBlocking {
             val expectedValue = Exception("Item not found")
             val strategy = object : LocalRemoteStrategy<String, String>() {
+                override suspend fun shouldLoadFromLocal(input: String): Boolean = true
+
                 override suspend fun loadFromLocal(input: String): Result<String> {
                     return Result.failure(Exception("Any local exception"))
                 }
 
-                override suspend fun loadFromRemote(input: String): Result<String> {
+                override suspend fun loadFromRemote(input: String, localResult: String?): Result<String> {
                     return Result.failure(expectedValue)
                 }
 
@@ -101,7 +109,7 @@ internal class LocalRemoteStrategyTest {
                     return false
                 }
 
-                override suspend fun saveIntoLocal(output: String): Result<String> {
+                override suspend fun saveIntoLocal(output: String) {
                     fail("saveIntoLocal should not be call")
                 }
             }
@@ -113,13 +121,15 @@ internal class LocalRemoteStrategyTest {
     @Test
     fun executeShouldReturnFailureWhenErrorSavingIntoLocal() {
         runBlocking {
-            val expectedValue = Exception("Error saving item")
+            val expectedValue = Exception("Any local exception")
             val strategy = object : LocalRemoteStrategy<String, String>() {
+                override suspend fun shouldLoadFromLocal(input: String): Boolean = true
+
                 override suspend fun loadFromLocal(input: String): Result<String> {
-                    return Result.failure(Exception("Any local exception"))
+                    return Result.failure(expectedValue)
                 }
 
-                override suspend fun loadFromRemote(input: String): Result<String> {
+                override suspend fun loadFromRemote(input: String, localResult: String?): Result<String> {
                     return Result.success("Any String")
                 }
 
@@ -127,8 +137,8 @@ internal class LocalRemoteStrategyTest {
                     return false
                 }
 
-                override suspend fun saveIntoLocal(output: String): Result<String> {
-                    return Result.failure(expectedValue)
+                override suspend fun saveIntoLocal(output: String) {
+
                 }
             }
 

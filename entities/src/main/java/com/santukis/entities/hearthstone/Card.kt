@@ -8,6 +8,7 @@ data class Card(
     val cardType: CardType = CardType(),
     val cardSet: CardSet = CardSet(),
     val rarity: Rarity = Rarity(),
+    val spellSchool: SpellSchool = SpellSchool(),
     val cardStats: CardStats = CardStats(),
     val cardText: CardText = CardText(),
     val images: CardImage = CardImage(),

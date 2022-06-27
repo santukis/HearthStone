@@ -8,7 +8,7 @@ data class SearchCardsRequest(
      * The slug of the set the card belongs to.
      * If you do not supply a value, cards from all sets will be returned.
      */
-    val set: String = "",
+    val set: CardSet? = null,
 
     /**
      * The card's class.
@@ -60,20 +60,14 @@ data class SearchCardsRequest(
     val spellSchool: SpellSchool? = null,
 
     /**
-     * A page number.
-     */
-    val page: Int = -1,
-
-    /**
-     * The number of results to choose per page.
-     * A value will be selected automatically if you do not supply a pageSize or if the pageSize is higher than the maximum allowed.
-     */
-    val pageSize: Int = -1,
-
-    /**
      * The sort filter and direction used to sort the results.
      *
      * Results are sorted by [SortFilter.Name] [Order.Ascendent] by default.
      */
-    val sort: SortFilter? = null
+    val sort: SortFilter? = null,
+
+    /**
+     * item already loaded
+     */
+    val itemCount: Int = 0
 )

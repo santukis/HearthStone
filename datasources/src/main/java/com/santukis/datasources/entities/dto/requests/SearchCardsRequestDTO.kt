@@ -85,14 +85,9 @@ data class SearchCardsRequestDTO(
     val spellSchool: String? = null,
 
     /**
-     * A page number.
+     * item already loaded
      */
-    val page: Int? = null,
-
-    /**
-     * The number of results to choose per page. A value will be selected automatically if you do not supply a pageSize or if the pageSize is higher than the maximum allowed.
-     */
-    val pageSize: Int? = null,
+    val itemCount: Int = 0,
 
     /**
      * The sort option and direction used to sort the results.

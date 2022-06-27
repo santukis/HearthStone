@@ -1,7 +1,6 @@
 package com.santukis.datasources.entities.dbo
 
 import androidx.room.*
-import com.santukis.datasources.mappers.orDefault
 import com.santukis.entities.hearthstone.*
 
 @Entity(
@@ -30,6 +29,8 @@ data class CardDB(
     val cardSetId: Int = -1,
 
     val rarityId: Int = -1,
+
+    val spellSchoolId: Int = -1,
 
     val multiClassIds: List<Int> = emptyList(),
 
@@ -96,6 +97,12 @@ data class CardDetailDB(
     ) val rarity: RarityDB?,
 
     @Relation(
+        entity = SpellSchoolDB::class,
+        parentColumn = "spellSchoolId",
+        entityColumn = "id"
+    ) val spellSchool: SpellSchoolDB?,
+
+    @Relation(
         entity = KeywordDB::class,
         parentColumn = "id",
         entityColumn = "id",
@@ -111,11 +118,12 @@ data class CardDetailDB(
         Card(
             identity = card.identity.toIdentity(),
             collectible = Collectible.valueOf(card.collectible),
-            cardClass = cardClass?.toCardClass().orDefault(),
+            cardClass = cardClass?.toCardClass() ?: CardClass(),
             multiClassIds = card.multiClassIds,
-            cardType = cardType?.toCardType().orDefault(),
-            cardSet = cardSet?.toCardSet().orDefault(),
-            rarity = rarity?.toRarity().orDefault(),
+            cardType = cardType?.toCardType() ?: CardType(),
+            cardSet = cardSet?.toCardSet() ?: CardSet(),
+            rarity = rarity?.toRarity() ?: Rarity(),
+            spellSchool = spellSchool?.toSpellSchool() ?: SpellSchool(),
             cardStats = card.cardStats.toCardStats(),
             cardText = card.cardText.toCardText(),
             images = card.image.toCardImage(),

@@ -1,5 +1,7 @@
 package com.santukis.datasources.mappers
 
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.santukis.datasources.entities.dbo.*
 import com.santukis.datasources.entities.dto.requests.SearchCardsRequestDTO
 import com.santukis.entities.hearthstone.*
@@ -7,7 +9,7 @@ import com.santukis.entities.hearthstone.*
 fun SearchCardsRequest.toSearchCardsRequestDTO(): SearchCardsRequestDTO =
     SearchCardsRequestDTO(
         locale = regionality.locale.value,
-        set = set.takeIfNotEmpty(),
+        set = set?.identity?.slug?.takeIfNotEmpty(),
         classSlug = cardClass?.identity?.slug?.takeIfNotEmpty(),
         manaCost = cardStats?.manaCost?.takeIfNotDefault(),
         attack = cardStats?.attack?.takeIfNotDefault(),
@@ -20,10 +22,58 @@ fun SearchCardsRequest.toSearchCardsRequestDTO(): SearchCardsRequestDTO =
         textFilter = filter.takeIfNotEmpty(),
         gameMode = gameMode?.identity?.slug?.takeIfNotEmpty(),
         spellSchool = spellSchool?.identity?.slug?.takeIfNotEmpty(),
-        page = page.takeIfNotDefault(),
-        pageSize = pageSize.takeIfNotDefault(),
-        sort = sort?.toQuery()
+        sort = sort?.toQuery(),
+        itemCount = itemCount
     )
+
+fun SearchCardsRequest.toSqliteQuery(): SupportSQLiteQuery {
+    var query = "SELECT * FROM cards"
+    val statements = mutableListOf<String>()
+
+    set?.let {
+        statements.add("cardSetId = ${it.identity.id}")
+    }
+
+    cardClass?.let {
+        statements.add("classId = ${it.identity.id}")
+    }
+
+    cardStats?.let { stats ->
+        stats.manaCost.takeIf { cost -> cost >= 0 }?.let { statements.add("manaCost = $it") }
+        stats.attack.takeIf { attack -> attack >= 0 }?.let { statements.add("attack = $it") }
+        stats.health.takeIf { health -> health >= 0 }?.let { statements.add("health = $it") }
+    }
+
+    collectible.takeIf { it != Collectible.All }?.let { statements.add("collectible = ${it.name}") }
+
+    rarity?.let {
+        statements.add("rarityId = ${it.identity.id}")
+    }
+
+    type?.let {
+        statements.add("cardTypeId = ${it.identity.id}")
+    }
+
+    keyword?.let {
+        statements.add("INNER JOIN (SELECT cardId FROM cardsToKeywords WHERE keywordId = ${it.identity.id}) ON cardId = id")
+    }
+
+    spellSchool?.let {
+        statements.add("spellSchoolId = ${it.identity.id}")
+    }
+
+    filter.takeIfNotEmpty()?.let { statements.add("ruleText LIKE '%' || $it || '%'") }
+
+    gameMode?.let {
+        statements.add("")
+    }
+
+    statements.takeIf { it.isNotEmpty() }?.let {
+        query += " WHERE ".plus(it.joinToString(separator = " AND WHERE "))
+    }
+
+    return SimpleSQLiteQuery(query)
+}
 
 fun Int?.toSimplifiedIdentity(): Identity = Identity(id = this.orDefault())
 
@@ -40,6 +90,7 @@ fun Card.toCardDB(): CardDB =
         cardTypeId = cardType.identity.id,
         cardSetId = cardSet.identity.id,
         rarityId = rarity.identity.id,
+        spellSchoolId = spellSchool.identity.id,
         multiClassIds = multiClassIds,
         childIds = childIds,
         parentId = parentId

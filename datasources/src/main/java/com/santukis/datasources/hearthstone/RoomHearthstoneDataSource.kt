@@ -7,7 +7,7 @@ import com.santukis.repositories.hearthstone.HearthstoneDataSource
 
 class RoomHearthstoneDataSource(private val database: HearthstoneDatabase): HearthstoneDataSource {
 
-    override suspend fun saveMetadata(metadata: Metadata): Result<Metadata> {
+    override suspend fun saveMetadata(metadata: Metadata): Result<Unit> {
         database.cardSetDao().saveItems(metadata.sets.map { it.toCardSetDB() })
         database.gameModeDao().saveItems(metadata.gameModes.map { it.toGameModeDB() })
         database.arenaDao().saveItems(metadata.arenaIds.map { it.toArenaDB() })
@@ -19,7 +19,7 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase): Hear
         saveMinionTypes(metadata.minionTypes)
         saveKeywords(metadata.keywords)
 
-        return Result.success(metadata)
+        return Result.success(Unit)
     }
 
     private fun saveCardTypes(cardTypes: List<CardType>) {
@@ -48,7 +48,7 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase): Hear
             Result.success(db.toDeck())
         } ?: Result.failure(Exception())
 
-    override suspend fun saveDeck(deck: Deck): Result<Deck> {
+    override suspend fun saveDeck(deck: Deck): Result<Unit> {
         database.deckDao().saveItem(deck.toDeckDB())
 
         saveCards(listOf(deck.hero, deck.heroPower))
@@ -57,15 +57,33 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase): Hear
         database.deckToCardDao().saveItems(deck.cards.toDeckToCardList(deck.code))
         database.cardClassDao().saveItem(deck.cardClass.toCardClassDB())
 
-        return getDeck(DeckRequest(deckCode = deck.code))
+        return Result.success(Unit)
     }
 
-    override suspend fun saveCards(cards: List<Card>): Result<List<Card>> {
+    override suspend fun searchCards(searchCardsRequest: SearchCardsRequest): Result<List<Card>> {
+        val cards = database.cardDao().searchCards(searchCardsRequest.toSqliteQuery()).map { it.toCard() }
+
+        return when {
+            cards.isNotEmpty() -> Result.success(cards)
+            else -> Result.failure(Exception("No items stored in database"))
+        }
+    }
+
+    override suspend fun saveCards(cards: List<Card>): Result<Unit> {
         cards.forEach { card ->
             database.cardDao().saveItem(card.toCardDB())
             database.cardToKeywordDao().saveItems(card.keywords.toCardToKeywordList(card.identity.id))
         }
 
-        return Result.success(cards)
+        return Result.success(Unit)
+    }
+
+    override suspend fun getCards(): Result<List<Card>> {
+        val cards = database.cardDao().getCards().map { it.toCard() }
+
+        return when {
+            cards.isNotEmpty() -> Result.success(cards)
+            else -> Result.failure(Exception("No items stored in database"))
+        }
     }
 }

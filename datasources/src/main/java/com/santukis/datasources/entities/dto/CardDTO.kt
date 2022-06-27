@@ -33,6 +33,9 @@ data class CardDTO(
     @Json(name = "rarityId")
     val rarityId: Int? = null,
 
+    @Json(name = "spellSchoolId")
+    val spellSchoolId: Int? = null,
+
     @Json(name = "artistName")
     val artistName: String? = null,
 
@@ -95,6 +98,7 @@ data class CardDTO(
             cardType = CardType(identity = cardTypeId.toSimplifiedIdentity()),
             cardSet = CardSet(identity = cardSetId.toSimplifiedIdentity()),
             rarity = Rarity(identity = rarityId.toSimplifiedIdentity()),
+            spellSchool = SpellSchool(identity = spellSchoolId.toSimplifiedIdentity()),
             cardStats = CardStats(
                 manaCost = manaCost.orDefault(),
                 attack = attack.orDefault(),

@@ -1,32 +1,66 @@
 package com.santukis.repositories.hearthstone
 
-import com.santukis.entities.hearthstone.Deck
-import com.santukis.entities.hearthstone.DeckRequest
-import com.santukis.entities.hearthstone.Metadata
-import com.santukis.entities.hearthstone.Regionality
+import com.santukis.entities.hearthstone.*
 import com.santukis.repositories.strategies.LocalRemoteStrategy
 import com.santukis.usecases.hearthstone.GetDeckGateway
 import com.santukis.usecases.hearthstone.LoadMetadataGateway
+import com.santukis.usecases.hearthstone.SearchCardsGateway
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.launch
 
 class HearthstoneRepository(
     private val remoteHearthstoneDataSource: HearthstoneDataSource,
     private val localHearthstoneDataSource: HearthstoneDataSource
 ) :
     GetDeckGateway,
-    LoadMetadataGateway {
+    LoadMetadataGateway,
+    SearchCardsGateway {
+
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            loadMetadata(Regionality.Europe(EuropeLocale.Spanish())).single()
+        }
+    }
+
+    override suspend fun loadMetadata(regionality: Regionality): Flow<Result<Unit>> {
+        return flow {
+            val response = object : LocalRemoteStrategy<Regionality, Metadata>() {
+                override suspend fun shouldLoadFromLocal(input: Regionality): Boolean = true
+
+                override suspend fun loadFromLocal(input: Regionality): Result<Metadata> = localHearthstoneDataSource.getMetadata(input)
+
+                override suspend fun loadFromRemote(input: Regionality, localResult: Metadata?): Result<Metadata> = remoteHearthstoneDataSource.getMetadata(input)
+
+                override suspend fun shouldUpdateFromRemote(input: Regionality, localOutput: Metadata): Boolean = false
+
+                override suspend fun saveIntoLocal(output: Metadata) {
+                    localHearthstoneDataSource.saveMetadata(output)
+                }
+
+            }.execute(regionality)
+
+            emit(response.map { })
+        }
+    }
 
     override suspend fun getDeck(deckRequest: DeckRequest): Flow<Result<Deck>> {
         return flow {
             val response = object : LocalRemoteStrategy<DeckRequest, Deck>() {
+                override suspend fun shouldLoadFromLocal(input: DeckRequest): Boolean = true
+
                 override suspend fun loadFromLocal(input: DeckRequest): Result<Deck> = localHearthstoneDataSource.getDeck(input)
 
                 override suspend fun shouldUpdateFromRemote(input: DeckRequest, localOutput: Deck): Boolean = false
 
-                override suspend fun loadFromRemote(input: DeckRequest): Result<Deck> = remoteHearthstoneDataSource.getDeck(input)
+                override suspend fun loadFromRemote(input: DeckRequest, localResult: Deck?): Result<Deck> = remoteHearthstoneDataSource.getDeck(input)
 
-                override suspend fun saveIntoLocal(output: Deck): Result<Deck> = localHearthstoneDataSource.saveDeck(output)
+                override suspend fun saveIntoLocal(output: Deck) {
+                    localHearthstoneDataSource.saveDeck(output)
+                }
 
             }.execute(deckRequest)
 
@@ -34,21 +68,28 @@ class HearthstoneRepository(
         }
     }
 
-    override suspend fun loadMetadata(regionality: Regionality): Flow<Result<Unit>> {
+    override suspend fun searchCards(cardsRequest: SearchCardsRequest): Flow<Result<List<Card>>> {
         return flow {
-            val response = object : LocalRemoteStrategy<Regionality, Metadata>() {
-                override suspend fun loadFromLocal(input: Regionality): Result<Metadata> = localHearthstoneDataSource.getMetadata(input)
+            val response = object : LocalRemoteStrategy<SearchCardsRequest, List<Card>>() {
+                override suspend fun shouldLoadFromLocal(input: SearchCardsRequest): Boolean =
+                    input.itemCount == 0
 
-                override suspend fun loadFromRemote(input: Regionality): Result<Metadata> = remoteHearthstoneDataSource.getMetadata(input)
+                override suspend fun loadFromLocal(input: SearchCardsRequest): Result<List<Card>> =
+                    localHearthstoneDataSource.searchCards(input)
 
-                override suspend fun shouldUpdateFromRemote(input: Regionality, localOutput: Metadata): Boolean = false
+                override suspend fun shouldUpdateFromRemote(input: SearchCardsRequest, localOutput: List<Card>): Boolean =
+                    true
 
-                override suspend fun saveIntoLocal(output: Metadata): Result<Metadata> = localHearthstoneDataSource.saveMetadata(output)
+                override suspend fun loadFromRemote(input: SearchCardsRequest, localResult: List<Card>?): Result<List<Card>> =
+                    remoteHearthstoneDataSource.searchCards(input.copy(itemCount = localResult?.size ?: 0))
 
-            }.execute(regionality)
+                override suspend fun saveIntoLocal(output: List<Card>) {
+                    localHearthstoneDataSource.saveCards(output)
+                }
 
-            emit(response.map {  })
+            }.execute(cardsRequest)
+
+            emit(response)
         }
     }
-
 }
