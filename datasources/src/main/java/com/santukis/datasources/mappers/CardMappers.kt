@@ -69,7 +69,7 @@ fun SearchCardsRequest.toSqliteQuery(): SupportSQLiteQuery {
     }
 
     statements.takeIf { it.isNotEmpty() }?.let {
-        query += " WHERE ".plus(it.joinToString(separator = " AND WHERE "))
+        query += " WHERE ".plus(it.joinToString(separator = " AND "))
     }
 
     return SimpleSQLiteQuery(query)

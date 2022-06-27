@@ -14,6 +14,8 @@ object Versions {
     }
 
     object Androidx {
+        const val lifecycle = "2.4.1"
+        const val appcompat = "1.4.2"
         const val activityCompose = "1.4.0"
         const val compose = "1.1.1"
         const val core = "1.8.0"
@@ -33,5 +35,13 @@ object Versions {
         const val moshi = "1.13.0"
         const val retrofit = "2.9.0"
         const val okhttp = "4.9.3"
+    }
+
+    object Coil {
+        const val coil = "2.1.0"
+    }
+
+    object Snapper {
+        const val snapper = "0.2.2"
     }
 }

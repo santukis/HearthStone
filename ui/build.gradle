@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
+    implementation Dependencies.Androidx.appcompat
     implementation Dependencies.Androidx.core
     implementation Dependencies.Androidx.activityCompose
     implementation Dependencies.Androidx.composeRuntime
@@ -32,6 +33,11 @@ dependencies {
     implementation Dependencies.Androidx.composeMaterial
     implementation Dependencies.Androidx.composeMaterialIcons
     implementation Dependencies.Androidx.composeMaterialIconsExtended
+    implementation Dependencies.Androidx.composeUtil
+    implementation Dependencies.Androidx.lifecycleViewModelCompose
+
+    implementation Dependencies.Coil.coil
+    implementation Dependencies.Snapper.snapper
 
     implementation Dependencies.Kotlin.coroutinesCore
 

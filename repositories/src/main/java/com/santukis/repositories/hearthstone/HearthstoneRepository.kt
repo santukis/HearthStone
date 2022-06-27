@@ -2,6 +2,7 @@ package com.santukis.repositories.hearthstone
 
 import com.santukis.entities.hearthstone.*
 import com.santukis.repositories.strategies.LocalRemoteStrategy
+import com.santukis.usecases.core.emitIfSuccess
 import com.santukis.usecases.hearthstone.GetDeckGateway
 import com.santukis.usecases.hearthstone.LoadMetadataGateway
 import com.santukis.usecases.hearthstone.SearchCardsGateway
@@ -74,8 +75,11 @@ class HearthstoneRepository(
                 override suspend fun shouldLoadFromLocal(input: SearchCardsRequest): Boolean =
                     input.itemCount == 0
 
-                override suspend fun loadFromLocal(input: SearchCardsRequest): Result<List<Card>> =
-                    localHearthstoneDataSource.searchCards(input)
+                override suspend fun loadFromLocal(input: SearchCardsRequest): Result<List<Card>> {
+                    val localResult = localHearthstoneDataSource.searchCards(input)
+                    localResult.emitIfSuccess(this@flow)
+                    return localResult
+                }
 
                 override suspend fun shouldUpdateFromRemote(input: SearchCardsRequest, localOutput: List<Card>): Boolean =
                     true

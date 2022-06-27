@@ -19,7 +19,10 @@ class Dependencies {
     }
 
     object Androidx {
+        const val appcompat = "androidx.appcompat:appcompat:${Versions.Androidx.appcompat}"
         const val core = "androidx.core:core-ktx:${Versions.Androidx.core}"
+        const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Androidx.lifecycle}"
+        const val lifecycleViewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Androidx.lifecycle}"
         const val activityCompose = "androidx.activity:activity-compose:${Versions.Androidx.activityCompose}"
         const val composeRuntime = "androidx.compose.runtime:runtime:${Versions.Androidx.compose}"
         const val composeUi = "androidx.compose.ui:ui:${Versions.Androidx.compose}"
@@ -28,6 +31,7 @@ class Dependencies {
         const val composeMaterial = "androidx.compose.material:material:${Versions.Androidx.compose}"
         const val composeMaterialIcons = "androidx.compose.material:material-icons-core:${Versions.Androidx.compose}"
         const val composeMaterialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.Androidx.compose}"
+        const val composeUtil = "androidx.compose.ui:ui-util:${Versions.Androidx.compose}"
         const val encryptedPreferences = "androidx.security:security-crypto:${Versions.Androidx.encryptedPreferences}"
         const val room = "androidx.room:room-runtime:${Versions.Androidx.room}"
         const val roomKotlin = "androidx.room:room-ktx:${Versions.Androidx.room}"
@@ -51,5 +55,13 @@ class Dependencies {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.Squareup.retrofit}"
         const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.Squareup.okhttp}"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.Squareup.okhttp}"
+    }
+
+    object Coil {
+        const val coil = "io.coil-kt:coil-compose:${Versions.Coil.coil}"
+    }
+
+    object Snapper {
+        const val snapper = "dev.chrisbanes.snapper:snapper:${Versions.Snapper.snapper}"
     }
 }
