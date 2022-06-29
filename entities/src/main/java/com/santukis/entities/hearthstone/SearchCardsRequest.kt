@@ -20,7 +20,7 @@ data class SearchCardsRequest(
     /**
      * Whether a card is collectible.
      */
-    val collectible: Collectible = Collectible.All,
+    val collectible: Collectible = Collectible.Collectible,
 
     /**
      * The rarity of a card

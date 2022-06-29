@@ -7,20 +7,19 @@ import com.santukis.repositories.hearthstone.HearthstoneDataSource
 
 class RoomHearthstoneDataSource(private val database: HearthstoneDatabase): HearthstoneDataSource {
 
-    override suspend fun saveMetadata(metadata: Metadata): Result<Unit> {
-        database.cardSetDao().saveItems(metadata.sets.map { it.toCardSetDB() })
-        database.gameModeDao().saveItems(metadata.gameModes.map { it.toGameModeDB() })
-        database.arenaDao().saveItems(metadata.arenaIds.map { it.toArenaDB() })
-        database.rarityDao().saveItems(metadata.rarities.map { it.toRarityDB() })
-        database.cardClassDao().saveItems(metadata.classes.map { it.toCardClassDB() })
-        database.spellSchoolDao().saveItems(metadata.spellSchools.map { it.toSpellSchoolDB() })
+    override suspend fun saveMetadata(metadata: Metadata): Result<Unit> =
+        kotlin.runCatching {
+            database.cardSetDao().saveItems(metadata.sets.map { it.toCardSetDB() })
+            database.gameModeDao().saveItems(metadata.gameModes.map { it.toGameModeDB() })
+            database.arenaDao().saveItems(metadata.arenaIds.map { it.toArenaDB() })
+            database.rarityDao().saveItems(metadata.rarities.map { it.toRarityDB() })
+            database.cardClassDao().saveItems(metadata.classes.map { it.toCardClassDB() })
+            database.spellSchoolDao().saveItems(metadata.spellSchools.map { it.toSpellSchoolDB() })
 
-        saveCardTypes(metadata.types)
-        saveMinionTypes(metadata.minionTypes)
-        saveKeywords(metadata.keywords)
-
-        return Result.success(Unit)
-    }
+            saveCardTypes(metadata.types)
+            saveMinionTypes(metadata.minionTypes)
+            saveKeywords(metadata.keywords)
+        }
 
     private fun saveCardTypes(cardTypes: List<CardType>) {
         cardTypes.forEach { cardType ->
@@ -44,46 +43,48 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase): Hear
     }
 
     override suspend fun getDeck(deckRequest: DeckRequest): Result<Deck> =
-        database.deckDao().getDeck(deckRequest.deckCode)?.let { db ->
-            Result.success(db.toDeck())
-        } ?: Result.failure(Exception())
-
-    override suspend fun saveDeck(deck: Deck): Result<Unit> {
-        database.deckDao().saveItem(deck.toDeckDB())
-
-        saveCards(listOf(deck.hero, deck.heroPower))
-        saveCards(deck.cards)
-
-        database.deckToCardDao().saveItems(deck.cards.toDeckToCardList(deck.code))
-        database.cardClassDao().saveItem(deck.cardClass.toCardClassDB())
-
-        return Result.success(Unit)
-    }
-
-    override suspend fun searchCards(searchCardsRequest: SearchCardsRequest): Result<List<Card>> {
-        val cards = database.cardDao().searchCards(searchCardsRequest.toSqliteQuery()).map { it.toCard() }
-
-        return when {
-            cards.isNotEmpty() -> Result.success(cards)
-            else -> Result.failure(Exception("No items stored in database"))
-        }
-    }
-
-    override suspend fun saveCards(cards: List<Card>): Result<Unit> {
-        cards.forEach { card ->
-            database.cardDao().saveItem(card.toCardDB())
-            database.cardToKeywordDao().saveItems(card.keywords.toCardToKeywordList(card.identity.id))
+        kotlin.runCatching {
+            database
+                .deckDao()
+                .getDeck(deckRequest.deckCode)
+                ?.toDeck() ?: throw Exception("No items stored in database")
         }
 
-        return Result.success(Unit)
-    }
+    override suspend fun saveDeck(deck: Deck): Result<Unit> =
+        kotlin.runCatching {
+            database.deckDao().saveItem(deck.toDeckDB())
 
-    override suspend fun getCards(): Result<List<Card>> {
-        val cards = database.cardDao().getCards().map { it.toCard() }
+            saveCards(listOf(deck.hero, deck.heroPower, *deck.cards.toTypedArray()))
 
-        return when {
-            cards.isNotEmpty() -> Result.success(cards)
-            else -> Result.failure(Exception("No items stored in database"))
+            database.deckToCardDao().saveItems(deck.cards.toDeckToCardList(deck.code))
+            database.cardClassDao().saveItem(deck.cardClass.toCardClassDB())
         }
-    }
+
+    override suspend fun searchCards(searchCardsRequest: SearchCardsRequest): Result<List<Card>> =
+        kotlin.runCatching {
+            database
+                .cardDao()
+                .searchCards(searchCardsRequest.toSqliteQuery())
+                .takeIf { it.isNotEmpty() }
+                ?.distinctBy { it.card.identity.name }
+                ?.map { it.toCard() } ?: throw Exception("No items stored in database")
+        }
+
+    override suspend fun saveCards(cards: List<Card>): Result<Unit> =
+        kotlin.runCatching {
+            cards.forEach { card ->
+                database.cardDao().saveItem(card.toCardDB())
+                database.cardToKeywordDao().saveItems(card.keywords.toCardToKeywordList(card.identity.id))
+            }
+        }
+
+    override suspend fun getCards(): Result<List<Card>> =
+        kotlin.runCatching {
+            database
+                .cardDao()
+                .getCards()
+                .takeIf { it.isNotEmpty() }
+                ?.distinctBy { it.card.identity.name }
+                ?.map { it.toCard() } ?: throw Exception("No items stored in database")
+        }
 }

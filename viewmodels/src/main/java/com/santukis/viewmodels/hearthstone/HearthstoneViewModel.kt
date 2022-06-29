@@ -9,15 +9,17 @@ import com.santukis.entities.hearthstone.*
 import com.santukis.usecases.UseCase
 import com.santukis.viewmodels.entities.CardCollectionState
 import com.santukis.viewmodels.entities.CardDetailState
-import com.santukis.viewmodels.mappers.toErrorMessage
+import com.santukis.viewmodels.entities.UiState
+import com.santukis.viewmodels.mappers.toUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.concurrent.CancellationException
 
 class HearthstoneViewModel(
-    private val loadDeck: UseCase<DeckRequest, Flow<Result<Deck>>>,
-    private val searchCards: UseCase<SearchCardsRequest, Flow<Result<List<Card>>>>
+    private val loadDeckUseCase: UseCase<DeckRequest, Flow<Result<Deck>>>,
+    private val searchCardsUseCase: UseCase<SearchCardsRequest, Flow<Result<List<Card>>>>
 ) : ViewModel() {
 
     private var searchJob: Job? = null
@@ -28,27 +30,25 @@ class HearthstoneViewModel(
     var cardDetailState by mutableStateOf(CardDetailState())
         private set
 
+    var uiState by mutableStateOf(UiState())
+        private set
+
     fun loadDeck(deckCode: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            loadDeck(
+            loadDeckUseCase(
                 DeckRequest(
                     regionality = Regionality.Europe(EuropeLocale.Spanish()),
                     deckCode = deckCode
                 )
             )
                 .onStart {
-                    cardCollectionState = cardCollectionState.copy(isLoading = true)
+                    uiState = uiState.copy(isLoading = true)
                 }
                 .single()
                 .onSuccess { deck ->
-                    cardCollectionState = CardCollectionState(cards = deck.cards)
+                    cardCollectionState = cardCollectionState.copy(cards = deck.cards)
                 }
-                .onFailure {
-                    cardCollectionState = cardCollectionState.copy(
-                        isLoading = false,
-                        errorMessage = it.toErrorMessage()
-                    )
-                }
+                .onFailure { error -> uiState = error.toUiState(uiState) }
         }
     }
 
@@ -57,24 +57,28 @@ class HearthstoneViewModel(
             loadRelatedCards(selectedCard)
             cardDetailState.copy(card = selectedCard)
 
-        } ?: cardDetailState.copy(card = null)
+        } ?: cardDetailState.copy(card = null, relatedCards = listOf())
     }
 
-    fun searchCards(itemCount: Int) {
-        search(
+    fun loadMoreItems(itemCount: Int) {
+        searchCards(
             cardRequest = SearchCardsRequest(
                 regionality = Regionality.Europe(EuropeLocale.Spanish()),
                 spellSchool = SpellSchool(identity = Identity(id = 1, slug = "arcane")),
                 itemCount = itemCount
             ),
             onSuccess = { cards ->
-                cardCollectionState = cardCollectionState.copy(isLoading = false, cards = cards.toList())
+                cardCollectionState = cardCollectionState.copy(cards = cards.toList())
+
+                if (itemCount == 0) {
+                    cardDetailState = cardDetailState.copy(card = cards.first())
+                }
             }
         )
     }
 
     private fun loadRelatedCards(selectedCard: Card) {
-        search(
+        searchCards(
             SearchCardsRequest(
                 regionality = Regionality.Europe(EuropeLocale.Spanish()),
                 keyword = selectedCard.keywords.firstOrNull(),
@@ -88,30 +92,19 @@ class HearthstoneViewModel(
         )
     }
 
-    private fun search(cardRequest: SearchCardsRequest, onSuccess: (List<Card>) -> Unit = {}) {
-        searchJob?.cancel()
+    private fun searchCards(cardRequest: SearchCardsRequest, onSuccess: (List<Card>) -> Unit = {}) {
+        searchJob?.cancel(CancellationException("New Search required"))
 
         searchJob = viewModelScope.launch(Dispatchers.IO) {
-            searchCards(cardRequest)
+            searchCardsUseCase(cardRequest)
                 .onStart {
-                    cardCollectionState = cardCollectionState.copy(isLoading = true)
+                    uiState = uiState.copy(isLoading = true)
                 }
-                .catch {
-                    cardCollectionState = cardCollectionState.copy(
-                        isLoading = false,
-                        errorMessage = it.toErrorMessage()
-                    )
-                }
-                .takeWhile { it.isSuccess }
+                .catch { error -> uiState = error.toUiState(uiState) }
                 .collect { result ->
                     result
                         .onSuccess { cards -> onSuccess(cards) }
-                        .onFailure {
-                            cardCollectionState = cardCollectionState.copy(
-                                isLoading = false,
-                                errorMessage = it.toErrorMessage()
-                            )
-                        }
+                        .onFailure { error -> uiState = error.toUiState(uiState) }
                 }
         }
     }

@@ -6,6 +6,7 @@ import com.santukis.datasources.entities.dto.HearthstoneErrorDTO
 import com.santukis.datasources.entities.dto.MetadataResponse
 import com.santukis.datasources.entities.dto.requests.DeckRequestDTO
 import com.santukis.datasources.mappers.toDeckRequestDTO
+import com.santukis.datasources.mappers.toPagingKey
 import com.santukis.datasources.mappers.toSearchCardsRequestDTO
 import com.santukis.datasources.remote.HttpClient
 import com.santukis.datasources.remote.PagingSource
@@ -41,8 +42,9 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
     override suspend fun searchCards(searchCardsRequest: SearchCardsRequest): Result<List<Card>> {
         val searchCardsRequestDTO = searchCardsRequest.toSearchCardsRequestDTO()
         val searchEndpoint = client.environment.searchCards(searchCardsRequest.regionality.region)
+        val pagingKey = searchCardsRequest.toPagingKey(searchEndpoint)
 
-        return if (pagingSource.shouldRequestMoreData(searchEndpoint)) {
+        return if (pagingSource.shouldRequestMoreData(pagingKey)) {
 
             client.hearthstoneService.searchCards(
                 baseUrl = searchEndpoint,
@@ -67,7 +69,7 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
             ).unwrapCall<HearthstoneErrorDTO, CardsResponse, List<Card>>(
                 onSuccess = { cardResponse ->
                     pagingSource.updatePagingData(
-                        searchEndpoint,
+                        pagingKey,
                         cardResponse.toPagingData(SEARCH_PAGE_SIZE)
                     )
 

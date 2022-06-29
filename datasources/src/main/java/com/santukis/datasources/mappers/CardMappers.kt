@@ -55,7 +55,7 @@ fun SearchCardsRequest.toSqliteQuery(): SupportSQLiteQuery {
     }
 
     keyword?.let {
-        statements.add("INNER JOIN (SELECT cardId FROM cardsToKeywords WHERE keywordId = ${it.identity.id}) ON cardId = id")
+        statements.add("id IN (SELECT cardId FROM cardsToKeywords WHERE keywordId = ${it.identity.id})")
     }
 
     spellSchool?.let {
@@ -74,6 +74,24 @@ fun SearchCardsRequest.toSqliteQuery(): SupportSQLiteQuery {
 
     return SimpleSQLiteQuery(query)
 }
+
+fun SearchCardsRequest.toPagingKey(endpoint: String): String =
+    endpoint
+        .plus(regionality.region.value)
+        .plus(regionality.locale.value)
+        .plus(set?.identity?.slug?.takeIfNotEmpty())
+        .plus(cardClass?.identity?.slug?.takeIfNotEmpty())
+        .plus(cardStats?.manaCost?.takeIfNotDefault())
+        .plus(cardStats?.health?.takeIfNotDefault())
+        .plus(cardStats?.attack?.takeIfNotDefault())
+        .plus(collectible.name)
+        .plus(rarity?.identity?.slug?.takeIfNotEmpty())
+        .plus(type?.identity?.slug?.takeIfNotEmpty())
+        .plus(minionType?.identity?.slug?.takeIfNotEmpty())
+        .plus(keyword?.identity?.slug?.takeIfNotEmpty())
+        .plus(filter.takeIfNotEmpty())
+        .plus(gameMode?.identity?.slug?.takeIfNotEmpty())
+        .plus(spellSchool?.identity?.slug?.takeIfNotEmpty())
 
 fun Int?.toSimplifiedIdentity(): Identity = Identity(id = this.orDefault())
 

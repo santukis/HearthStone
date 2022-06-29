@@ -27,3 +27,22 @@ fun LazyListState.OnEndReached(
             }
     }
 }
+
+@Composable
+fun LazyListState.ScrollListener(
+    onScrollStateChanged : (Boolean) -> Unit
+) {
+    val isScrolling = remember {
+        derivedStateOf {
+            isScrollInProgress
+        }
+    }
+
+    LaunchedEffect(isScrolling) {
+        snapshotFlow { isScrolling.value }
+            .distinctUntilChanged()
+            .collect { isScrolling ->
+                onScrollStateChanged(isScrolling)
+            }
+    }
+}

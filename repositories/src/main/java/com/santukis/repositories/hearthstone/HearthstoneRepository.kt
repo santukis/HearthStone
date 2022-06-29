@@ -32,11 +32,18 @@ class HearthstoneRepository(
             val response = object : LocalRemoteStrategy<Regionality, Metadata>() {
                 override suspend fun shouldLoadFromLocal(input: Regionality): Boolean = true
 
-                override suspend fun loadFromLocal(input: Regionality): Result<Metadata> = localHearthstoneDataSource.getMetadata(input)
+                override suspend fun loadFromLocal(input: Regionality): Result<Metadata> =
+                    localHearthstoneDataSource.getMetadata(input)
 
-                override suspend fun loadFromRemote(input: Regionality, localResult: Metadata?): Result<Metadata> = remoteHearthstoneDataSource.getMetadata(input)
+                override suspend fun loadFromRemote(
+                    input: Regionality,
+                    localResult: Metadata?
+                ): Result<Metadata> = remoteHearthstoneDataSource.getMetadata(input)
 
-                override suspend fun shouldUpdateFromRemote(input: Regionality, localOutput: Metadata): Boolean = false
+                override suspend fun shouldUpdateFromRemote(
+                    input: Regionality,
+                    localOutput: Metadata
+                ): Boolean = false
 
                 override suspend fun saveIntoLocal(output: Metadata) {
                     localHearthstoneDataSource.saveMetadata(output)
@@ -53,11 +60,18 @@ class HearthstoneRepository(
             val response = object : LocalRemoteStrategy<DeckRequest, Deck>() {
                 override suspend fun shouldLoadFromLocal(input: DeckRequest): Boolean = true
 
-                override suspend fun loadFromLocal(input: DeckRequest): Result<Deck> = localHearthstoneDataSource.getDeck(input)
+                override suspend fun loadFromLocal(input: DeckRequest): Result<Deck> =
+                    localHearthstoneDataSource.getDeck(input)
 
-                override suspend fun shouldUpdateFromRemote(input: DeckRequest, localOutput: Deck): Boolean = false
+                override suspend fun shouldUpdateFromRemote(
+                    input: DeckRequest,
+                    localOutput: Deck
+                ): Boolean = false
 
-                override suspend fun loadFromRemote(input: DeckRequest, localResult: Deck?): Result<Deck> = remoteHearthstoneDataSource.getDeck(input)
+                override suspend fun loadFromRemote(
+                    input: DeckRequest,
+                    localResult: Deck?
+                ): Result<Deck> = remoteHearthstoneDataSource.getDeck(input)
 
                 override suspend fun saveIntoLocal(output: Deck) {
                     localHearthstoneDataSource.saveDeck(output)
@@ -81,10 +95,15 @@ class HearthstoneRepository(
                     return localResult
                 }
 
-                override suspend fun shouldUpdateFromRemote(input: SearchCardsRequest, localOutput: List<Card>): Boolean =
-                    true
+                override suspend fun shouldUpdateFromRemote(
+                    input: SearchCardsRequest,
+                    localOutput: List<Card>
+                ): Boolean = true
 
-                override suspend fun loadFromRemote(input: SearchCardsRequest, localResult: List<Card>?): Result<List<Card>> =
+                override suspend fun loadFromRemote(
+                    input: SearchCardsRequest,
+                    localResult: List<Card>?
+                ): Result<List<Card>> =
                     remoteHearthstoneDataSource.searchCards(input.copy(itemCount = localResult?.size ?: 0))
 
                 override suspend fun saveIntoLocal(output: List<Card>) {

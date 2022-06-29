@@ -1,17 +1,22 @@
 package com.santukis.hearthstone.collection.components
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -19,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.santukis.hearthstone.R
 import com.santukis.hearthstone.core.animations.zoom
 import com.santukis.viewmodels.entities.CardCollectionState
 import com.santukis.viewmodels.hearthstone.HearthstoneViewModel
@@ -27,12 +33,15 @@ import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import com.santukis.hearthstone.core.components.*
 import com.santukis.hearthstone.theme.WhiteTransparent
 import com.santukis.viewmodels.entities.CardDetailState
+import com.santukis.viewmodels.entities.UiState
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun CardCollection(
     viewModel: HearthstoneViewModel
 ) {
+    val uiState = viewModel.uiState
     val collectionUiState = viewModel.cardCollectionState
     val cardDetailUiState = viewModel.cardDetailState
 
@@ -41,10 +50,11 @@ fun CardCollection(
     }
 
     val onEndReached: (Int) -> Unit = { itemCount ->
-        viewModel.searchCards(itemCount)
+        viewModel.loadMoreItems(itemCount)
     }
 
     CardCollectionContent(
+        uiState = uiState,
         cardCollectionState = collectionUiState,
         cardDetailState = cardDetailUiState,
         onCardSelected = onCardSelected,
@@ -56,139 +66,228 @@ fun CardCollection(
 @Composable
 fun CardCollectionContent(
     modifier: Modifier = Modifier,
+    uiState: UiState,
     cardCollectionState: CardCollectionState,
     cardDetailState: CardDetailState,
     onCardSelected: (Int) -> Unit = {},
     onEndReached: (Int) -> Unit = {}
 ) {
 
-    val scaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = rememberBottomSheetState(BottomSheetValue.Collapsed)
-    )
+    Box(modifier = modifier) {
+        val scope = rememberCoroutineScope()
 
-    BottomSheetScaffold(
-        modifier = modifier.fillMaxSize(),
-        scaffoldState = scaffoldState,
-        backgroundColor = MaterialTheme.colors.primaryVariant,
-        sheetContent = {
-            SheetContent {
+        val scaffoldState = rememberBottomSheetScaffoldState(
+            bottomSheetState = rememberBottomSheetState(BottomSheetValue.Collapsed),
+            drawerState = rememberDrawerState(DrawerValue.Closed)
+        )
+
+        BottomSheetScaffold(
+            modifier = modifier.fillMaxSize(),
+            scaffoldState = scaffoldState,
+            backgroundColor = MaterialTheme.colors.primaryVariant,
+            sheetContent = {
                 Column(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Divider(
-                        modifier = Modifier
-                            .width(75.dp)
-                            .padding(16.dp)
-                            .clickable {
-                            },
-                        color = Color.Gray,
-                        thickness = 2.dp
-                    )
-                    Text(
-                        text = cardDetailState.card?.identity?.name.orEmpty(),
-                        modifier = Modifier
+                    Row(
+                        modifier = modifier
+                            .padding(8.dp)
                             .fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 24.sp,
-                            shadow = Shadow(
-                                color = Color.Gray,
-                                offset = Offset(x = 0f, y = 0f),
-                                blurRadius = 5f
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Button(
+                            onClick = { /*TODO onAddClick */ },
+                            shape = CircleShape,
+                            modifier = Modifier
+                                .size(40.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.White
+                            ),
+                            contentPadding = PaddingValues(0.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Add,
+                                contentDescription = "favorite"
                             )
-                        ),
-                        fontWeight = FontWeight.Bold,
-                    )
+                        }
 
-                    Text(
-                        text = "Related Cards",
+                        Divider(
+                            modifier = Modifier
+                                .width(75.dp)
+                                .padding(16.dp)
+                                .clickable {
+                                    scope.launch {
+                                        if (scaffoldState.bottomSheetState.isCollapsed) {
+                                            scaffoldState.bottomSheetState.expand()
+
+                                        } else {
+                                            scaffoldState.bottomSheetState.collapse()
+                                        }
+                                    }
+                                },
+                            color = Color.White,
+                            thickness = 2.dp
+                        )
+
+                        Button(
+                            onClick = { /*TODO onFavouriteClick */ },
+                            shape = CircleShape,
+                            modifier = Modifier
+                                .size(40.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.White
+                            ),
+                            contentPadding = PaddingValues(0.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Favorite,
+                                contentDescription = "favorite"
+                            )
+                        }
+                    }
+
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
-                        textAlign = TextAlign.Start,
-                        style = TextStyle(
-                            fontSize = 16.sp
-                        ),
-                        fontWeight = FontWeight.Bold,
-                    )
+                            .background(WhiteTransparent)
+                            .fillMaxHeight()
+                            .verticalScroll(rememberScrollState())
+                    ) {
 
-
-                    LazyRow {
-                        items(cardDetailState.relatedCards.size) { index ->
-
-                            val card = cardDetailState.relatedCards[index]
-
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                            ) {
-
-                                AsyncImage(
-                                    model = card.images.image,
-                                    contentDescription = "",
-                                    modifier = Modifier.fillParentMaxWidth(fraction = 0.5f)
+                        Text(
+                            text = cardDetailState.card?.identity?.name.orEmpty(),
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            style = TextStyle(
+                                fontSize = 24.sp,
+                                shadow = Shadow(
+                                    color = Color.Gray,
+                                    offset = Offset(x = 0f, y = 0f),
+                                    blurRadius = 5f
                                 )
+                            ),
+                            fontWeight = FontWeight.Bold,
+                        )
+
+                        if (cardDetailState.relatedCards.isNotEmpty()) {
+                            Text(
+                                text = stringResource(id = R.string.related_cards),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp),
+                                textAlign = TextAlign.Start,
+                                style = TextStyle(
+                                    fontSize = 16.sp
+                                ),
+                                fontWeight = FontWeight.Bold,
+                            )
+
+                            LazyRow {
+                                items(cardDetailState.relatedCards.size) { index ->
+                                    val card = cardDetailState.relatedCards[index]
+
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(250.dp),
+                                    ) {
+                                        AsyncImage(
+                                            model = card.images.image,
+                                            contentDescription = "",
+                                            modifier = Modifier.fillParentMaxWidth(fraction = 0.5f)
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
                 }
+            },
+            sheetPeekHeight = 125.dp,
+            sheetElevation = 0.dp,
+            sheetBackgroundColor = Color.Transparent,
+            drawerContent = {
+                Box {
+                    Text(text = "Sample Text")
+                }
             }
-        },
-        sheetPeekHeight = 80.dp,
-        sheetElevation = 8.dp,
-        sheetBackgroundColor = WhiteTransparent
-    ) {
-
-        val listState = rememberLazyListState()
-
-        listState.OnEndReached(
-            onEndReached = {
-                onEndReached(it)
-            }
-        )
-
-        LazyRow(
-            state = listState,
-            flingBehavior = rememberSnapperFlingBehavior(lazyListState = listState)
         ) {
-            items(cardCollectionState.cards.size) { index ->
 
-                val card = cardCollectionState.cards[index]
+            val listState = rememberLazyListState()
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                ) {
-
-                    Text(
-                        text = "$index",
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .padding(16.dp)
-                    )
-
-                    AsyncImage(
-                        model = card.images.image,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .fillParentMaxWidth()
-                            .align(Alignment.TopCenter)
-                            .graphicsLayer {
-                                zoom(
-                                    listState = listState,
-                                    page = index
-                                )
-                            }
-                    )
+            listState.OnEndReached(
+                onEndReached = {
+                    onEndReached(it)
                 }
+            )
 
-                if (listState.isScrollInProgress) {
-                    onCardSelected(-1)
+            listState.ScrollListener(
+                onScrollStateChanged = { scrolling ->
+                    onCardSelected(if (scrolling) -1 else listState.firstVisibleItemIndex)
+                }
+            )
 
-                } else {
-                    onCardSelected(listState.firstVisibleItemIndex)
+            LazyRow(
+                state = listState,
+                flingBehavior = rememberSnapperFlingBehavior(lazyListState = listState)
+            ) {
+                items(cardCollectionState.cards.size) { index ->
+
+                    val card = cardCollectionState.cards[index]
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                    ) {
+
+                        AsyncImage(
+                            model = card.images.image,
+                            contentDescription = "",
+                            modifier = Modifier
+                                .fillParentMaxWidth()
+                                .graphicsLayer {
+                                    zoom(
+                                        listState = listState,
+                                        page = index
+                                    )
+                                }
+                        )
+                    }
                 }
             }
+        }
+
+        Button(
+            onClick = {
+                scope.launch {
+                    if (scaffoldState.drawerState.isOpen) {
+                        scaffoldState.drawerState.close()
+
+                    } else {
+                        scaffoldState.drawerState.open()
+                    }
+                }
+            },
+            shape = CircleShape,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(8.dp)
+                .size(40.dp),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.White
+            ),
+            contentPadding = PaddingValues(0.dp)
+        ) {
+
+            Icon(
+                imageVector = Icons.Filled.Menu,
+                contentDescription = "menu",
+            )
         }
     }
 }
@@ -197,6 +296,7 @@ fun CardCollectionContent(
 @Composable
 fun CardCollectionContentPreview() {
     CardCollectionContent(
+        uiState = UiState(),
         cardCollectionState = CardCollectionState(),
         cardDetailState = CardDetailState()
     )

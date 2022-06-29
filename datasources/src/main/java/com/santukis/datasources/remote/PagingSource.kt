@@ -26,7 +26,7 @@ data class PagingData(
 ) {
 
     fun shouldRequestMoreData(): Boolean =
-        currentPage <= pageCount
+        currentPage < pageCount
                 || getNextPage() <= pageCount
 
     fun getNextPage(): Int =
