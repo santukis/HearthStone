@@ -40,11 +40,11 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
     }
 
     override suspend fun searchCards(searchCardsRequest: SearchCardsRequest): Result<List<Card>> {
-        val searchCardsRequestDTO = searchCardsRequest.toSearchCardsRequestDTO()
         val searchEndpoint = client.environment.searchCards(searchCardsRequest.regionality.region)
         val pagingKey = searchCardsRequest.toPagingKey(searchEndpoint)
 
         return if (pagingSource.shouldRequestMoreData(pagingKey)) {
+            val searchCardsRequestDTO = searchCardsRequest.toSearchCardsRequestDTO()
 
             client.hearthstoneService.searchCards(
                 baseUrl = searchEndpoint,
