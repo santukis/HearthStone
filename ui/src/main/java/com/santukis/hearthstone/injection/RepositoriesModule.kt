@@ -7,10 +7,12 @@ import com.santukis.hearthstone.injection.RepositoriesConstants.HEARTHSTONE_REPO
 import com.santukis.hearthstone.injection.RepositoriesConstants.LOAD_METADATA_GATEWAY
 import com.santukis.hearthstone.injection.RepositoriesConstants.REPOSITORIES_MODULE_NAME
 import com.santukis.hearthstone.injection.RepositoriesConstants.SEARCH_CARDS_GATEWAY
+import com.santukis.hearthstone.injection.RepositoriesConstants.UPDATE_CARD_FAVOURITE_GATEWAY
 import com.santukis.repositories.hearthstone.HearthstoneRepository
 import com.santukis.usecases.hearthstone.GetDeckGateway
 import com.santukis.usecases.hearthstone.LoadMetadataGateway
 import com.santukis.usecases.hearthstone.SearchCardsGateway
+import com.santukis.usecases.hearthstone.UpdateCardFavouriteGateway
 import org.kodein.di.*
 
 object RepositoriesConstants {
@@ -19,6 +21,7 @@ object RepositoriesConstants {
     const val GET_DECK_GATEWAY = "getDeckGateway"
     const val SEARCH_CARDS_GATEWAY = "searchCardsGateway"
     const val LOAD_METADATA_GATEWAY = "loadMetadata"
+    const val UPDATE_CARD_FAVOURITE_GATEWAY = "updateFavourite"
 }
 
 fun repositories() = DI.Module(
@@ -41,6 +44,10 @@ fun repositories() = DI.Module(
     }
 
     bind<LoadMetadataGateway>(tag = LOAD_METADATA_GATEWAY) with singleton {
+        instance(tag = HEARTHSTONE_REPOSITORY)
+    }
+
+    bind<UpdateCardFavouriteGateway>(tag = UPDATE_CARD_FAVOURITE_GATEWAY) with singleton {
         instance(tag = HEARTHSTONE_REPOSITORY)
     }
 }

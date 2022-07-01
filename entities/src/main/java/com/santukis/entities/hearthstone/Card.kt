@@ -14,5 +14,6 @@ data class Card(
     val images: CardImage = CardImage(),
     val keywords: List<Keyword> = emptyList(),
     val childIds: List<Int> = emptyList(),
-    val parentId: Int = -1
+    val parentId: Int = -1,
+    val isFavourite: Boolean = false
 )

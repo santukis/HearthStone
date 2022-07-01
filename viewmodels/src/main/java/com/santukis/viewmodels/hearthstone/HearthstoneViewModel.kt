@@ -19,7 +19,8 @@ import java.util.concurrent.CancellationException
 
 class HearthstoneViewModel(
     private val loadDeckUseCase: UseCase<DeckRequest, Flow<Result<Deck>>>,
-    private val searchCardsUseCase: UseCase<SearchCardsRequest, Flow<Result<List<Card>>>>
+    private val searchCardsUseCase: UseCase<SearchCardsRequest, Flow<Result<List<Card>>>>,
+    private val updateCardFavouriteUseCase: UseCase<Card, Result<Card>>
 ) : ViewModel() {
 
     private var searchJob: Job? = null
@@ -52,12 +53,19 @@ class HearthstoneViewModel(
         }
     }
 
-    fun onCardSelected(card: Int) {
-        cardDetailState = cardCollectionState.cards.getOrNull(card)?.let { selectedCard ->
+    fun onCardSelected(cardIndex: Int) {
+        cardDetailState = cardCollectionState.cards.getOrNull(cardIndex)?.let { selectedCard ->
             loadRelatedCards(selectedCard)
-            cardDetailState.copy(card = selectedCard)
+            cardDetailState.copy(
+                card = selectedCard,
+                cardIndex = cardIndex
+            )
 
-        } ?: cardDetailState.copy(card = null, relatedCards = listOf())
+        } ?: cardDetailState.copy(
+            card = null,
+            cardIndex = -1,
+            relatedCards = listOf()
+        )
     }
 
     fun loadMoreItems(itemCount: Int) {
@@ -71,10 +79,33 @@ class HearthstoneViewModel(
                 cardCollectionState = cardCollectionState.copy(cards = cards.toList())
 
                 if (itemCount == 0) {
-                    cardDetailState = cardDetailState.copy(card = cards.first())
+                    cardDetailState = cardDetailState.copy(
+                        card = cards.first(),
+                        cardIndex = 0
+                    )
                 }
             }
         )
+    }
+
+    fun updateCardFavourite() {
+        viewModelScope.launch(Dispatchers.IO) {
+            cardCollectionState.cards.getOrNull(cardDetailState.cardIndex)?.let { selectedCard ->
+                updateCardFavouriteUseCase(selectedCard)
+                    .onSuccess { updatedCard ->
+                        cardDetailState = cardDetailState.copy(card = updatedCard)
+                        cardCollectionState = cardCollectionState.copy(
+                            cards = cardCollectionState.cards.toMutableList().apply {
+                                set(cardDetailState.cardIndex, updatedCard)
+                            }
+                        )
+                    }
+                    .onFailure { error ->
+                        uiState = error.toUiState(uiState)
+                    }
+
+            }
+        }
     }
 
     private fun loadRelatedCards(selectedCard: Card) {

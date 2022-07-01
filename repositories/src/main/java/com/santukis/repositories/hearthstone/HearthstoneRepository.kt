@@ -2,10 +2,12 @@ package com.santukis.repositories.hearthstone
 
 import com.santukis.entities.hearthstone.*
 import com.santukis.repositories.strategies.LocalRemoteStrategy
+import com.santukis.repositories.strategies.LocalStrategy
 import com.santukis.repositories.strategies.emitIfSuccess
 import com.santukis.usecases.hearthstone.GetDeckGateway
 import com.santukis.usecases.hearthstone.LoadMetadataGateway
 import com.santukis.usecases.hearthstone.SearchCardsGateway
+import com.santukis.usecases.hearthstone.UpdateCardFavouriteGateway
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +21,8 @@ class HearthstoneRepository(
 ) :
     GetDeckGateway,
     LoadMetadataGateway,
-    SearchCardsGateway {
+    SearchCardsGateway,
+    UpdateCardFavouriteGateway {
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -113,5 +116,13 @@ class HearthstoneRepository(
 
             emit(response)
         }
+    }
+
+    override suspend fun setCardFavourite(card: Card): Result<Card> {
+        return object : LocalStrategy<Card, Card>() {
+            override suspend fun loadFromLocal(input: Card): Result<Card> {
+                return localHearthstoneDataSource.setCardFavourite(card)
+            }
+        }.execute(card)
     }
 }

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.santukis.hearthstone.injection.UseCasesConstants.GET_DECK_USECASE
-import com.santukis.hearthstone.injection.UseCasesConstants.LOAD_METADATA_USECASE
 import com.santukis.hearthstone.injection.UseCasesConstants.SEARCH_CARDS_USECASE
+import com.santukis.hearthstone.injection.UseCasesConstants.UPDATE_FAVOURITE_USECASE
 import com.santukis.hearthstone.injection.ViewModelsConstants.VIEWMODELS_MODULE_NAME
 import com.santukis.viewmodels.hearthstone.HearthstoneViewModel
 import org.kodein.di.*
@@ -24,7 +24,8 @@ fun viewModels() = DI.Module(
     bind<ViewModel>(tag = HearthstoneViewModel::class.java.simpleName) with provider {
         HearthstoneViewModel(
             instance(tag = GET_DECK_USECASE),
-            instance(tag = SEARCH_CARDS_USECASE)
+            instance(tag = SEARCH_CARDS_USECASE),
+            instance(tag = UPDATE_FAVOURITE_USECASE)
         )
     }
 }

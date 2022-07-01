@@ -25,9 +25,10 @@ import com.santukis.datasources.local.daos.*
         SpellSchoolDB::class,
         ArenaDB::class,
         DeckDB::class,
-        DeckDBToCardDB::class
+        DeckDBToCardDB::class,
+        FavouriteDB::class
     ],
-    exportSchema = true, version = 1
+    exportSchema = true, version = 3
 )
 @TypeConverters(Converters::class)
 abstract class HearthstoneDatabase: RoomDatabase() {
@@ -63,6 +64,8 @@ abstract class HearthstoneDatabase: RoomDatabase() {
     abstract fun deckDao(): DeckDao
 
     abstract fun deckToCardDao(): DeckToCardDao
+
+    abstract fun favouriteDao(): FavouriteDao
 
     companion object {
         @Volatile

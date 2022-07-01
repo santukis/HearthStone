@@ -18,4 +18,6 @@ interface HearthstoneDataSource {
     suspend fun getMetadata(regionality: Regionality): Result<Metadata> = defaultError()
 
     suspend fun saveMetadata(metadata: Metadata): Result<Unit> = defaultError()
+
+    suspend fun setCardFavourite(card: Card): Result<Card> = defaultError()
 }

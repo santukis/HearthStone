@@ -76,31 +76,31 @@ data class CardDetailDB(
         entity = CardClassDB::class,
         parentColumn = "classId",
         entityColumn = "id"
-    ) val cardClass: CardClassDB?,
+    ) val cardClass: CardClassDB? = null,
 
     @Relation(
         entity = CardTypeDB::class,
         parentColumn = "cardTypeId",
         entityColumn = "id"
-    ) val cardType: CardTypeDetailDB?,
+    ) val cardType: CardTypeDetailDB? = null,
 
     @Relation(
         entity = CardSetDB::class,
         parentColumn = "cardSetId",
         entityColumn = "id"
-    ) val cardSet: CardSetDB?,
+    ) val cardSet: CardSetDB? = null,
 
     @Relation(
         entity = RarityDB::class,
         parentColumn = "rarityId",
         entityColumn = "id"
-    ) val rarity: RarityDB?,
+    ) val rarity: RarityDB? = null,
 
     @Relation(
         entity = SpellSchoolDB::class,
         parentColumn = "spellSchoolId",
         entityColumn = "id"
-    ) val spellSchool: SpellSchoolDB?,
+    ) val spellSchool: SpellSchoolDB? = null,
 
     @Relation(
         entity = KeywordDB::class,
@@ -111,7 +111,13 @@ data class CardDetailDB(
             parentColumn = "cardId",
             entityColumn = "keywordId"
         )
-    ) val keywords: List<KeywordDetailDB> = emptyList()
+    ) val keywords: List<KeywordDetailDB> = emptyList(),
+
+    @Relation(
+        entity = FavouriteDB::class,
+        parentColumn = "id",
+        entityColumn = "cardId"
+    ) val favouriteId: FavouriteDB? = null
 ) {
 
     fun toCard(): Card =
@@ -128,6 +134,7 @@ data class CardDetailDB(
             cardText = card.cardText.toCardText(),
             images = card.image.toCardImage(),
             keywords = keywords.map { it.toKeyword() },
-            childIds = card.childIds
+            childIds = card.childIds,
+            isFavourite = favouriteId?.cardId == card.identity.id
         )
 }

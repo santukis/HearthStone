@@ -2,4 +2,5 @@
     <string name="app_name">HearthStone</string>
 
     <string name="related_cards">Related Cards</string>
+    <string name="filters">Card Filters</string>
 </resources>

@@ -87,4 +87,30 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase): Hear
                 ?.distinctBy { it.card.identity.name }
                 ?.map { it.toCard() } ?: throw Exception("No items stored in database")
         }
+
+    override suspend fun setCardFavourite(card: Card): Result<Card> =
+        kotlin.runCatching {
+            val updated = database
+                .favouriteDao()
+                .updateCardFavourite(card.identity.id)
+
+            return if (updated) {
+                getCard(card.identity.id)
+
+            } else {
+                Result.failure(Exception("Unable to update favourite"))
+            }
+        }
+
+    private fun getCard(cardId: Int): Result<Card> =
+        kotlin.runCatching {
+            val card = database
+                .cardDao()
+                .getCard(cardId)
+                ?.toCard()
+
+            return card?.let {
+                Result.success(it)
+            } ?: Result.failure(Exception("Unable to get Card from Database"))
+        }
 }

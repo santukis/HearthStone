@@ -45,12 +45,16 @@ fun CardCollection(
     val collectionUiState = viewModel.cardCollectionState
     val cardDetailUiState = viewModel.cardDetailState
 
-    val onCardSelected: (Int) -> Unit = { card ->
-        viewModel.onCardSelected(card)
+    val onCardSelected: (Int) -> Unit = { cardIndex ->
+        viewModel.onCardSelected(cardIndex)
     }
 
     val onEndReached: (Int) -> Unit = { itemCount ->
         viewModel.loadMoreItems(itemCount)
+    }
+
+    val onFavouriteClick: () -> Unit = {
+        viewModel.updateCardFavourite()
     }
 
     CardCollectionContent(
@@ -58,6 +62,7 @@ fun CardCollection(
         cardCollectionState = collectionUiState,
         cardDetailState = cardDetailUiState,
         onCardSelected = onCardSelected,
+        onFavouriteClick = onFavouriteClick,
         onEndReached = onEndReached
     )
 }
@@ -70,6 +75,7 @@ fun CardCollectionContent(
     cardCollectionState: CardCollectionState,
     cardDetailState: CardDetailState,
     onCardSelected: (Int) -> Unit = {},
+    onFavouriteClick: () -> Unit = {},
     onEndReached: (Int) -> Unit = {}
 ) {
 
@@ -99,6 +105,7 @@ fun CardCollectionContent(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+
                         Button(
                             onClick = { /*TODO onAddClick */ },
                             shape = CircleShape,
@@ -109,9 +116,10 @@ fun CardCollectionContent(
                             ),
                             contentPadding = PaddingValues(0.dp)
                         ) {
+
                             Icon(
                                 imageVector = Icons.Filled.Add,
-                                contentDescription = "favorite"
+                                contentDescription = "add"
                             )
                         }
 
@@ -134,7 +142,9 @@ fun CardCollectionContent(
                         )
 
                         Button(
-                            onClick = { /*TODO onFavouriteClick */ },
+                            onClick = {
+                                onFavouriteClick()
+                            },
                             shape = CircleShape,
                             modifier = Modifier
                                 .size(40.dp),
@@ -143,9 +153,18 @@ fun CardCollectionContent(
                             ),
                             contentPadding = PaddingValues(0.dp)
                         ) {
+
+                            val icon = if (cardDetailState.card?.isFavourite == true) {
+                                Icons.Filled.Favorite
+
+                            } else {
+                                Icons.Filled.FavoriteBorder
+                            }
+
                             Icon(
-                                imageVector = Icons.Filled.Favorite,
-                                contentDescription = "favorite"
+                                imageVector = icon,
+                                contentDescription = "favorite",
+                                tint = MaterialTheme.colors.primary
                             )
                         }
                     }
@@ -194,12 +213,12 @@ fun CardCollectionContent(
                                     Box(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .height(250.dp),
+                                            .height(350.dp),
                                     ) {
                                         AsyncImage(
                                             model = card.images.image,
                                             contentDescription = "",
-                                            modifier = Modifier.fillParentMaxWidth(fraction = 0.5f)
+                                            modifier = Modifier.fillParentMaxWidth(fraction = 0.7f)
                                         )
                                     }
                                 }
@@ -213,7 +232,14 @@ fun CardCollectionContent(
             sheetBackgroundColor = Color.Transparent,
             drawerContent = {
                 Box {
-                    Text(text = "Sample Text")
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        text = stringResource(id = R.string.filters),
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         ) {
@@ -242,7 +268,8 @@ fun CardCollectionContent(
 
                     Box(
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxSize()
+                            .height(500.dp),
                     ) {
 
                         AsyncImage(
