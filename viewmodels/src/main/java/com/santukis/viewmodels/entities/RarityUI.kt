@@ -1,13 +1,19 @@
 package com.santukis.viewmodels.entities
 
 import com.santukis.entities.hearthstone.Rarity
+import com.santukis.viewmodels.R
 
-data class RarityUI(
-    val rarity: Rarity
-) {
 
-    fun rarity(): TextUI =
-        TextUI(
-            text = rarity.identity.name
-        )
-}
+fun Rarity.getDrawable(): Int =
+    when (identity.slug) {
+        "common" -> R.drawable.common
+        "rare" -> R.drawable.rare
+        "epic" -> R.drawable.epic
+        "legendary" -> R.drawable.legendary
+        else -> R.drawable.empty
+    }
+
+fun Rarity.getText(): TextUI =
+    TextUI(
+        text = identity.name,
+    )

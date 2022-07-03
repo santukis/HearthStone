@@ -1,5 +1,6 @@
 package com.santukis.hearthstone.collection.components
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -12,12 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +36,7 @@ import com.santukis.hearthstone.core.components.*
 import com.santukis.hearthstone.theme.WhiteTransparent
 import com.santukis.viewmodels.entities.CardDetailState
 import com.santukis.viewmodels.entities.UiState
+import com.santukis.viewmodels.entities.getDrawable
 import kotlinx.coroutines.launch
 
 
@@ -110,7 +113,7 @@ fun CardCollectionContent(
                             onClick = { /*TODO onAddClick */ },
                             shape = CircleShape,
                             modifier = Modifier
-                                .size(40.dp),
+                                .size(48.dp),
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = Color.White
                             ),
@@ -119,7 +122,8 @@ fun CardCollectionContent(
 
                             Icon(
                                 imageVector = Icons.Filled.Add,
-                                contentDescription = "add"
+                                contentDescription = "add",
+                                tint = MaterialTheme.colors.primary
                             )
                         }
 
@@ -147,7 +151,7 @@ fun CardCollectionContent(
                             },
                             shape = CircleShape,
                             modifier = Modifier
-                                .size(40.dp),
+                                .size(48.dp),
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = Color.White
                             ),
@@ -172,54 +176,78 @@ fun CardCollectionContent(
                     Column(
                         modifier = Modifier
                             .background(WhiteTransparent)
-                            .fillMaxHeight()
-                            .verticalScroll(rememberScrollState())
+                            .fillMaxSize()
+                            .padding(16.dp)
+                            .verticalScroll(rememberScrollState()),
                     ) {
 
-                        Text(
-                            text = cardDetailState.card?.identity?.name.orEmpty(),
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                            style = TextStyle(
-                                fontSize = 24.sp,
-                                shadow = Shadow(
-                                    color = Color.Gray,
-                                    offset = Offset(x = 0f, y = 0f),
-                                    blurRadius = 5f
-                                )
-                            ),
-                            fontWeight = FontWeight.Bold,
-                        )
-
-                        if (cardDetailState.relatedCards.isNotEmpty()) {
+                        cardDetailState.card?.let { card ->
                             Text(
-                                text = stringResource(id = R.string.related_cards),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp),
-                                textAlign = TextAlign.Start,
+                                text = card.identity.name,
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center,
                                 style = TextStyle(
-                                    fontSize = 16.sp
-                                ),
-                                fontWeight = FontWeight.Bold,
+                                    fontSize = 30.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = FontFamily.Serif
+                                )
                             )
 
-                            LazyRow {
-                                items(cardDetailState.relatedCards.size) { index ->
-                                    val card = cardDetailState.relatedCards[index]
+                            Text(
+                                text = stringResource(id = R.string.rarity),
+                                modifier = Modifier.padding(top = 16.dp),
+                                style = TextStyle(
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Bold
+                                ),
+                            )
 
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(350.dp),
-                                    ) {
-                                        AsyncImage(
-                                            model = card.images.image,
-                                            contentDescription = "",
-                                            modifier = Modifier.fillParentMaxWidth(fraction = 0.7f)
-                                        )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+
+                                Text(
+                                    text = card.rarity.identity.name,
+                                    style = TextStyle(
+                                        fontSize = 16.sp
+                                    )
+                                )
+
+                                Image(
+                                    painter = painterResource(card.rarity.getDrawable()),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .padding(horizontal = 8.dp)
+                                        .size(24.dp)
+                                )
+                            }
+
+                            if (cardDetailState.relatedCards.isNotEmpty()) {
+                                Text(
+                                    text = stringResource(id = R.string.related_cards),
+                                    modifier = Modifier.padding(top = 16.dp),
+                                    textAlign = TextAlign.Start,
+                                    style = TextStyle(
+                                        fontSize = 24.sp,
+                                        fontWeight = FontWeight.Bold
+                                    ),
+                                )
+
+                                LazyRow {
+                                    items(cardDetailState.relatedCards.size) { index ->
+                                        val relatedCard = cardDetailState.relatedCards[index]
+
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(350.dp),
+                                        ) {
+                                            AsyncImage(
+                                                model = relatedCard.images.image,
+                                                contentDescription = "",
+                                                modifier = Modifier.fillParentMaxWidth(fraction = 0.7f)
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -266,25 +294,20 @@ fun CardCollectionContent(
 
                     val card = cardCollectionState.cards[index]
 
-                    Box(
+                    AsyncImage(
+                        model = card.images.image,
+                        contentDescription = "",
                         modifier = Modifier
-                            .fillMaxSize()
-                            .height(500.dp),
-                    ) {
-
-                        AsyncImage(
-                            model = card.images.image,
-                            contentDescription = "",
-                            modifier = Modifier
-                                .fillParentMaxWidth()
-                                .graphicsLayer {
-                                    zoom(
-                                        listState = listState,
-                                        page = index
-                                    )
-                                }
-                        )
-                    }
+                            .fillParentMaxWidth()
+                            .fillParentMaxHeight(0.8f)
+                            .padding(top = 10.dp)
+                            .graphicsLayer {
+                                zoom(
+                                    listState = listState,
+                                    page = index
+                                )
+                            }
+                    )
                 }
             }
         }
@@ -304,7 +327,7 @@ fun CardCollectionContent(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(8.dp)
-                .size(40.dp),
+                .size(48.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.White
             ),
@@ -315,6 +338,31 @@ fun CardCollectionContent(
                 imageVector = Icons.Filled.Menu,
                 contentDescription = "menu",
             )
+        }
+
+        AnimatedVisibility(
+            visible = scaffoldState.drawerState.isClosed
+                    && scaffoldState.bottomSheetState.isCollapsed,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+
+                Image(
+                    painter = painterResource(id = com.santukis.viewmodels.R.drawable.hunter_icon),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .size(51.dp)
+                        .clip(CircleShape)
+                        .clickable { /* TODO onClass Clicked */ }
+                )
+            }
         }
     }
 }

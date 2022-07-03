@@ -3,4 +3,5 @@
 
     <string name="related_cards">Related Cards</string>
     <string name="filters">Card Filters</string>
+    <string name="rarity">Rarity</string>
 </resources>
