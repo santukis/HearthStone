@@ -67,10 +67,6 @@ class HearthstoneViewModel(
             shouldShowCardClassList = !cardFilterState.shouldShowCardClassList
         )
 
-        searchCardsRequest = searchCardsRequest.copy(
-            cardClass = cardClass
-        )
-
         cardCollectionState = cardCollectionState.copy(
             cards = emptyList()
         )
@@ -84,9 +80,17 @@ class HearthstoneViewModel(
         )
     }
 
+    fun onManaCostSelected(cost: Int) {
+        cardFilterState = cardFilterState.copy(
+            selectedCardStats = cardFilterState.selectedCardStats.copy(manaCost = cost)
+        )
+
+        loadMoreItems()
+    }
+
     fun loadMoreItems() {
         searchCards(
-            cardRequest = searchCardsRequest,
+            cardRequest = buildSearchCardRequest(),
             onSuccess = { cards ->
                 cardCollectionState = cardCollectionState.copy(cards = cards.toList())
             }
@@ -158,5 +162,14 @@ class HearthstoneViewModel(
                         .onFailure { error -> uiState = error.toUiState(uiState) }
                 }
         }
+    }
+
+    private fun buildSearchCardRequest(): SearchCardsRequest {
+        searchCardsRequest = searchCardsRequest.copy(
+            cardClass = cardFilterState.selectedCardClass,
+            cardStats = cardFilterState.selectedCardStats
+        )
+
+        return searchCardsRequest.copy()
     }
 }

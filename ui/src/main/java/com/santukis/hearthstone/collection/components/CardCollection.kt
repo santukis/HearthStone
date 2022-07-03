@@ -5,9 +5,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -44,7 +42,6 @@ import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import com.santukis.hearthstone.core.components.*
 import com.santukis.hearthstone.theme.WhiteTransparent
-import com.santukis.hearthstone.theme.hearthstoneFont
 import com.santukis.viewmodels.entities.*
 import kotlinx.coroutines.launch
 
@@ -78,6 +75,10 @@ fun CardCollection(
         viewModel.onSelectedCardClassSelected()
     }
 
+    val onManaCostSelected: (Int) -> Unit = { cost ->
+        viewModel.onManaCostSelected(cost)
+    }
+
     CardCollectionContent(
         uiState = uiState,
         cardCollectionState = collectionState,
@@ -87,11 +88,12 @@ fun CardCollection(
         onFavouriteClick = onFavouriteClick,
         onCardClassSelected = onCardClassSelected,
         onSelectedCardClassClick = onSelectedCardClassClick,
+        onManaCostSelected = onManaCostSelected,
         onEndReached = onEndReached
     )
 }
 
-@OptIn(ExperimentalSnapperApi::class, ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalSnapperApi::class, ExperimentalMaterialApi::class, ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun CardCollectionContent(
     modifier: Modifier = Modifier,
@@ -103,6 +105,7 @@ fun CardCollectionContent(
     onFavouriteClick: () -> Unit = {},
     onCardClassSelected: (CardClass) -> Unit = {},
     onSelectedCardClassClick: () -> Unit = {},
+    onManaCostSelected: (Int) -> Unit = {},
     onEndReached: () -> Unit = {}
 ) {
 
@@ -223,7 +226,10 @@ fun CardCollectionContent(
                                         painter = painterResource(com.santukis.viewmodels.R.drawable.mana),
                                         contentDescription = "",
                                         modifier = Modifier
-                                            .align(Alignment.CenterStart)
+                                            .align(Alignment.TopStart)
+                                            .padding(
+                                                top = 8.dp
+                                            )
                                             .size(48.dp)
                                     )
 
@@ -231,15 +237,11 @@ fun CardCollectionContent(
                                         text = cardDetailState.getManaCost(),
                                         color = Color.White,
                                         modifier = Modifier
-                                            .align(Alignment.CenterStart)
+                                            .align(Alignment.TopStart)
                                             .padding(
-                                                start = 14.dp
+                                                start = 12.dp
                                             ),
-                                        style = TextStyle(
-                                            fontSize = 40.sp,
-                                            fontWeight = FontWeight.Bold,
-                                            fontFamily = hearthstoneFont
-                                        )
+                                        style = MaterialTheme.typography.h3
                                     )
 
                                     Text(
@@ -260,8 +262,7 @@ fun CardCollectionContent(
                                     text = card.cardText.flavorText,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(top = 8.dp)
-                                    ,
+                                        .padding(top = 8.dp),
                                     textAlign = TextAlign.Center,
                                     style = TextStyle(
                                         fontSize = 16.sp,
@@ -344,20 +345,83 @@ fun CardCollectionContent(
                 BottomSheetScaffoldDefaults.SheetPeekHeight
 
             } else {
-                (with(LocalDensity.current) { (peekHeightPx + 80.dp.toPx()) / density  }).dp
+                (with(LocalDensity.current) { (peekHeightPx + 80.dp.toPx()) / density }).dp
             },
             sheetElevation = 0.dp,
             sheetBackgroundColor = Color.Transparent,
             drawerContent = {
-                Box {
+                Column {
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp),
                         text = stringResource(id = R.string.filters),
                         textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.body1
+                        style = MaterialTheme.typography.h6
                     )
+                    
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        
+                        Text(
+                            text = stringResource(id = R.string.mana_cost),
+                            style = MaterialTheme.typography.h6,
+                        )
+                        
+                        Text(
+                            text = stringResource(id = R.string.clear),
+                            modifier = Modifier
+                                .clickable { onManaCostSelected(-1) },
+                            style = MaterialTheme.typography.body2
+                        )
+                    }
+                    
+                    LazyVerticalGrid(
+                        cells = GridCells.Adaptive(minSize = 64.dp),
+                        modifier = Modifier
+                            .padding(
+                                top = 8.dp,
+                                start = 8.dp
+                            )
+                    ) {
+                        items(11) { cost ->
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clickable {
+                                        onManaCostSelected(cost)
+                                    }
+                            ) {
+                                Image(
+                                    painter = painterResource(com.santukis.viewmodels.R.drawable.mana),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .align(Alignment.TopStart)
+                                        .padding(
+                                            top = 8.dp
+                                        )
+                                        .size(48.dp)
+                                )
+
+                                AutoSizeText(
+                                    text = cost.toString(),
+                                    color = cardFilterState.getManaCostColor(cost),
+                                    modifier = Modifier
+                                        .align(Alignment.CenterStart)
+                                        .padding(
+                                            start = 12.dp
+                                        )
+                                        .width(32.dp),
+                                    textStyle = MaterialTheme.typography.h3
+                                )
+                            }
+                        }
+                    }
                 }
             },
             drawerBackgroundColor = WhiteTransparent
