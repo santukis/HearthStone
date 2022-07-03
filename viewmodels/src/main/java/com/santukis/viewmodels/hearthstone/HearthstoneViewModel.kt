@@ -9,6 +9,7 @@ import com.santukis.entities.hearthstone.*
 import com.santukis.usecases.UseCase
 import com.santukis.viewmodels.entities.CardCollectionState
 import com.santukis.viewmodels.entities.CardDetailState
+import com.santukis.viewmodels.entities.CardFilterState
 import com.santukis.viewmodels.entities.UiState
 import com.santukis.viewmodels.mappers.toUiState
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.CancellationException
 
 class HearthstoneViewModel(
-    private val loadDeckUseCase: UseCase<DeckRequest, Flow<Result<Deck>>>,
+    private val loadMetadata: UseCase<Regionality, Flow<Result<Metadata>>>,
     private val searchCardsUseCase: UseCase<SearchCardsRequest, Flow<Result<List<Card>>>>,
     private val updateCardFavouriteUseCase: UseCase<Card, Result<Card>>
 ) : ViewModel() {
@@ -31,26 +32,18 @@ class HearthstoneViewModel(
     var cardDetailState by mutableStateOf(CardDetailState())
         private set
 
+    var cardFilterState by mutableStateOf(CardFilterState())
+        private set
+
     var uiState by mutableStateOf(UiState())
         private set
 
-    fun loadDeck(deckCode: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            loadDeckUseCase(
-                DeckRequest(
-                    regionality = Regionality.Europe(EuropeLocale.Spanish()),
-                    deckCode = deckCode
-                )
-            )
-                .onStart {
-                    uiState = uiState.copy(isLoading = true)
-                }
-                .single()
-                .onSuccess { deck ->
-                    cardCollectionState = cardCollectionState.copy(cards = deck.cards)
-                }
-                .onFailure { error -> uiState = error.toUiState(uiState) }
-        }
+    private var searchCardsRequest: SearchCardsRequest = SearchCardsRequest(
+        regionality = Regionality.Europe(EuropeLocale.Spanish())
+    )
+
+    init {
+        loadMetadata()
     }
 
     fun onCardSelected(cardIndex: Int) {
@@ -68,22 +61,34 @@ class HearthstoneViewModel(
         )
     }
 
-    fun loadMoreItems(itemCount: Int) {
+    fun onCardClassSelected(cardClass: CardClass) {
+        cardFilterState = cardFilterState.copy(
+            selectedCardClass = cardClass,
+            shouldShowCardClassList = !cardFilterState.shouldShowCardClassList
+        )
+
+        searchCardsRequest = searchCardsRequest.copy(
+            cardClass = cardClass
+        )
+
+        cardCollectionState = cardCollectionState.copy(
+            cards = emptyList()
+        )
+
+        loadMoreItems()
+    }
+
+    fun onSelectedCardClassSelected() {
+        cardFilterState = cardFilterState.copy(
+            shouldShowCardClassList = !cardFilterState.shouldShowCardClassList
+        )
+    }
+
+    fun loadMoreItems() {
         searchCards(
-            cardRequest = SearchCardsRequest(
-                regionality = Regionality.Europe(EuropeLocale.Spanish()),
-                spellSchool = SpellSchool(identity = Identity(id = 1, slug = "arcane")),
-                itemCount = itemCount
-            ),
+            cardRequest = searchCardsRequest,
             onSuccess = { cards ->
                 cardCollectionState = cardCollectionState.copy(cards = cards.toList())
-
-                if (itemCount == 0) {
-                    cardDetailState = cardDetailState.copy(
-                        card = cards.first(),
-                        cardIndex = 0
-                    )
-                }
             }
         )
     }
@@ -108,12 +113,27 @@ class HearthstoneViewModel(
         }
     }
 
+    private fun loadMetadata() {
+        viewModelScope.launch(Dispatchers.Main) {
+            loadMetadata(Regionality.Europe(EuropeLocale.Spanish()))
+                .flowOn(Dispatchers.IO)
+                .collect { result ->
+                    result.onSuccess { metadata ->
+                        cardFilterState = cardFilterState.copy(
+                            metadata = metadata,
+                            selectedCardClass = metadata.classes.firstOrNull()
+                        )
+                    }
+                }
+        }
+    }
+
     private fun loadRelatedCards(selectedCard: Card) {
         searchCards(
             SearchCardsRequest(
                 regionality = Regionality.Europe(EuropeLocale.Spanish()),
-                keyword = selectedCard.keywords.firstOrNull(),
-                cardStats = selectedCard.cardStats,
+                keyword = selectedCard.keywords.takeIf { it.isNotEmpty() }?.random(),
+                cardStats = CardStats(manaCost = selectedCard.cardStats.manaCost),
                 cardClass = selectedCard.cardClass,
                 type = selectedCard.cardType
             ),

@@ -5,20 +5,49 @@ import com.santukis.datasources.mappers.*
 import com.santukis.entities.hearthstone.*
 import com.santukis.repositories.hearthstone.HearthstoneDataSource
 
-class RoomHearthstoneDataSource(private val database: HearthstoneDatabase): HearthstoneDataSource {
+class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : HearthstoneDataSource {
+
+    override suspend fun getMetadata(regionality: Regionality): Result<Metadata> =
+        kotlin.runCatching {
+            database.runInTransaction<Metadata> {
+                val sets = database.cardSetDao().getCardSets().map { it.toCardSet() }
+                val gameModes = database.gameModeDao().getGameModes().map { it.toGameMode() }
+                val arenaIds = database.arenaDao().getArenaIds().map { it.id }
+                val types = database.cardTypeDao().getCardTypes().map { it.toCardType() }
+                val rarities = database.rarityDao().getRarities().map { it.toRarity() }
+                val classes = database.cardClassDao().getCardClasses().map { it.toCardClass() }
+                val minionTypes = database.minionTypeDao().getMinionTypes().map { it.toMinionType() }
+                val spellSchools = database.spellSchoolDao().getSpellSchools().map { it.toSpellSchool() }
+                val keywords = database.keywordDao().getKeywords().map { it.toKeyword() }
+
+                Metadata(
+                    sets = sets,
+                    gameModes = gameModes,
+                    arenaIds = arenaIds,
+                    types = types,
+                    rarities = rarities,
+                    classes = classes,
+                    minionTypes = minionTypes,
+                    spellSchools = spellSchools,
+                    keywords = keywords
+                )
+            }
+        }
 
     override suspend fun saveMetadata(metadata: Metadata): Result<Unit> =
         kotlin.runCatching {
-            database.cardSetDao().saveItems(metadata.sets.map { it.toCardSetDB() })
-            database.gameModeDao().saveItems(metadata.gameModes.map { it.toGameModeDB() })
-            database.arenaDao().saveItems(metadata.arenaIds.map { it.toArenaDB() })
-            database.rarityDao().saveItems(metadata.rarities.map { it.toRarityDB() })
-            database.cardClassDao().saveItems(metadata.classes.map { it.toCardClassDB() })
-            database.spellSchoolDao().saveItems(metadata.spellSchools.map { it.toSpellSchoolDB() })
+            database.runInTransaction {
+                database.cardSetDao().saveItems(metadata.sets.map { it.toCardSetDB() })
+                database.gameModeDao().saveItems(metadata.gameModes.map { it.toGameModeDB() })
+                database.arenaDao().saveItems(metadata.arenaIds.map { it.toArenaDB() })
+                database.rarityDao().saveItems(metadata.rarities.map { it.toRarityDB() })
+                database.cardClassDao().saveItems(metadata.classes.map { it.toCardClassDB() })
+                database.spellSchoolDao().saveItems(metadata.spellSchools.map { it.toSpellSchoolDB() })
 
-            saveCardTypes(metadata.types)
-            saveMinionTypes(metadata.minionTypes)
-            saveKeywords(metadata.keywords)
+                saveCardTypes(metadata.types)
+                saveMinionTypes(metadata.minionTypes)
+                saveKeywords(metadata.keywords)
+            }
         }
 
     private fun saveCardTypes(cardTypes: List<CardType>) {

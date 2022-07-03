@@ -4,6 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -15,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -22,21 +25,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.santukis.entities.hearthstone.CardClass
 import com.santukis.hearthstone.R
 import com.santukis.hearthstone.core.animations.zoom
-import com.santukis.viewmodels.entities.CardCollectionState
 import com.santukis.viewmodels.hearthstone.HearthstoneViewModel
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import com.santukis.hearthstone.core.components.*
 import com.santukis.hearthstone.theme.WhiteTransparent
-import com.santukis.viewmodels.entities.CardDetailState
-import com.santukis.viewmodels.entities.UiState
-import com.santukis.viewmodels.entities.getDrawable
+import com.santukis.viewmodels.entities.*
 import kotlinx.coroutines.launch
 
 
@@ -45,41 +47,56 @@ fun CardCollection(
     viewModel: HearthstoneViewModel
 ) {
     val uiState = viewModel.uiState
-    val collectionUiState = viewModel.cardCollectionState
-    val cardDetailUiState = viewModel.cardDetailState
+    val collectionState = viewModel.cardCollectionState
+    val cardDetailState = viewModel.cardDetailState
+    val cardFilterState = viewModel.cardFilterState
 
     val onCardSelected: (Int) -> Unit = { cardIndex ->
         viewModel.onCardSelected(cardIndex)
     }
 
-    val onEndReached: (Int) -> Unit = { itemCount ->
-        viewModel.loadMoreItems(itemCount)
+    val onEndReached: () -> Unit = {
+        viewModel.loadMoreItems()
     }
 
     val onFavouriteClick: () -> Unit = {
         viewModel.updateCardFavourite()
     }
 
+    val onCardClassSelected: (CardClass) -> Unit = { cardClass ->
+        viewModel.onCardClassSelected(cardClass)
+    }
+
+    val onSelectedCardClassClick: () -> Unit = {
+        viewModel.onSelectedCardClassSelected()
+    }
+
     CardCollectionContent(
         uiState = uiState,
-        cardCollectionState = collectionUiState,
-        cardDetailState = cardDetailUiState,
+        cardCollectionState = collectionState,
+        cardDetailState = cardDetailState,
+        cardFilterState = cardFilterState,
         onCardSelected = onCardSelected,
         onFavouriteClick = onFavouriteClick,
+        onCardClassSelected = onCardClassSelected,
+        onSelectedCardClassClick = onSelectedCardClassClick,
         onEndReached = onEndReached
     )
 }
 
-@OptIn(ExperimentalSnapperApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalSnapperApi::class, ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun CardCollectionContent(
     modifier: Modifier = Modifier,
     uiState: UiState,
     cardCollectionState: CardCollectionState,
     cardDetailState: CardDetailState,
+    cardFilterState: CardFilterState,
     onCardSelected: (Int) -> Unit = {},
     onFavouriteClick: () -> Unit = {},
-    onEndReached: (Int) -> Unit = {}
+    onCardClassSelected: (CardClass) -> Unit = {},
+    onSelectedCardClassClick: () -> Unit = {},
+    onEndReached: () -> Unit = {}
 ) {
 
     Box(modifier = modifier) {
@@ -177,14 +194,15 @@ fun CardCollectionContent(
                         modifier = Modifier
                             .background(WhiteTransparent)
                             .fillMaxSize()
-                            .padding(16.dp)
                             .verticalScroll(rememberScrollState()),
                     ) {
 
                         cardDetailState.card?.let { card ->
                             Text(
                                 text = card.identity.name,
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 8.dp),
                                 textAlign = TextAlign.Center,
                                 style = TextStyle(
                                     fontSize = 30.sp,
@@ -195,7 +213,10 @@ fun CardCollectionContent(
 
                             Text(
                                 text = stringResource(id = R.string.rarity),
-                                modifier = Modifier.padding(top = 16.dp),
+                                modifier = Modifier.padding(
+                                    top = 16.dp,
+                                    start = 16.dp
+                                ),
                                 style = TextStyle(
                                     fontSize = 24.sp,
                                     fontWeight = FontWeight.Bold
@@ -203,6 +224,10 @@ fun CardCollectionContent(
                             )
 
                             Row(
+                                modifier = Modifier.padding(
+                                    top = 8.dp,
+                                    start = 16.dp
+                                ),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
 
@@ -214,7 +239,7 @@ fun CardCollectionContent(
                                 )
 
                                 Image(
-                                    painter = painterResource(card.rarity.getDrawable()),
+                                    painter = painterResource(cardDetailState.getRarityDrawable()),
                                     contentDescription = "",
                                     modifier = Modifier
                                         .padding(horizontal = 8.dp)
@@ -225,7 +250,10 @@ fun CardCollectionContent(
                             if (cardDetailState.relatedCards.isNotEmpty()) {
                                 Text(
                                     text = stringResource(id = R.string.related_cards),
-                                    modifier = Modifier.padding(top = 16.dp),
+                                    modifier = Modifier.padding(
+                                        top = 16.dp,
+                                        start = 16.dp
+                                    ),
                                     textAlign = TextAlign.Start,
                                     style = TextStyle(
                                         fontSize = 24.sp,
@@ -233,7 +261,9 @@ fun CardCollectionContent(
                                     ),
                                 )
 
-                                LazyRow {
+                                LazyRow(
+                                    contentPadding = PaddingValues(horizontal = 8.dp)
+                                ) {
                                     items(cardDetailState.relatedCards.size) { index ->
                                         val relatedCard = cardDetailState.relatedCards[index]
 
@@ -269,14 +299,15 @@ fun CardCollectionContent(
                         fontWeight = FontWeight.Bold
                     )
                 }
-            }
+            },
+            drawerBackgroundColor = WhiteTransparent
         ) {
 
             val listState = rememberLazyListState()
 
             listState.OnEndReached(
                 onEndReached = {
-                    onEndReached(it)
+                    onEndReached()
                 }
             )
 
@@ -285,10 +316,10 @@ fun CardCollectionContent(
                     onCardSelected(if (scrolling) -1 else listState.firstVisibleItemIndex)
                 }
             )
-
             LazyRow(
                 state = listState,
-                flingBehavior = rememberSnapperFlingBehavior(lazyListState = listState)
+                flingBehavior = rememberSnapperFlingBehavior(lazyListState = listState),
+                modifier = Modifier.fillMaxSize()
             ) {
                 items(cardCollectionState.cards.size) { index ->
 
@@ -342,7 +373,8 @@ fun CardCollectionContent(
 
         AnimatedVisibility(
             visible = scaffoldState.drawerState.isClosed
-                    && scaffoldState.bottomSheetState.isCollapsed,
+                    && scaffoldState.bottomSheetState.isCollapsed
+                    && cardFilterState.shouldShowCardClass(),
             enter = fadeIn(),
             exit = fadeOut()
         ) {
@@ -354,14 +386,82 @@ fun CardCollectionContent(
             ) {
 
                 Image(
-                    painter = painterResource(id = com.santukis.viewmodels.R.drawable.hunter_icon),
+                    painter = painterResource(id = cardFilterState.getSelectedCardClassDrawable()),
                     contentDescription = "",
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .size(51.dp)
                         .clip(CircleShape)
-                        .clickable { /* TODO onClass Clicked */ }
+                        .border(
+                            width = 2.dp,
+                            brush = SolidColor(Color.White),
+                            shape = CircleShape
+                        )
+                        .clickable { onSelectedCardClassClick() }
                 )
+            }
+        }
+
+        AnimatedVisibility(
+            visible = scaffoldState.drawerState.isClosed
+                    && scaffoldState.bottomSheetState.isCollapsed
+                    && cardFilterState.shouldShowCardClassList,
+            enter = fadeIn() + scaleIn(
+                transformOrigin = TransformOrigin(
+                    pivotFractionY = 0.15f,
+                    pivotFractionX = 0.95f
+                )
+            ),
+            exit = fadeOut() + scaleOut(
+                transformOrigin = TransformOrigin(
+                    pivotFractionY = 0.15f,
+                    pivotFractionX = 0.95f
+                )
+            )
+        ) {
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = 64.dp,
+                        start = 8.dp,
+                        end = 8.dp
+                    )
+            ) {
+
+                LazyRow {
+                    items(cardFilterState.getCardClasses()) { cardClass ->
+                        Column(
+                            modifier = Modifier
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.SpaceEvenly,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = painterResource(id = cardClass.getDrawable()),
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .size(51.dp)
+                                    .clip(CircleShape)
+                                    .clickable {
+                                        onCardClassSelected(cardClass)
+                                    }
+                            )
+
+                            Text(
+                                modifier = Modifier
+                                    .widthIn(max = 50.dp),
+                                text = cardClass.identity.name,
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 12.sp,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -373,6 +473,7 @@ fun CardCollectionContentPreview() {
     CardCollectionContent(
         uiState = UiState(),
         cardCollectionState = CardCollectionState(),
-        cardDetailState = CardDetailState()
+        cardDetailState = CardDetailState(),
+        cardFilterState = CardFilterState()
     )
 }

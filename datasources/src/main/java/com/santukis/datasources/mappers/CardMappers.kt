@@ -72,6 +72,8 @@ fun SearchCardsRequest.toSqliteQuery(): SupportSQLiteQuery {
         query += " WHERE ".plus(it.joinToString(separator = " AND "))
     }
 
+    query += " ORDER BY id"
+
     return SimpleSQLiteQuery(query)
 }
 

@@ -8,12 +8,8 @@ import com.santukis.usecases.hearthstone.GetDeckGateway
 import com.santukis.usecases.hearthstone.LoadMetadataGateway
 import com.santukis.usecases.hearthstone.SearchCardsGateway
 import com.santukis.usecases.hearthstone.UpdateCardFavouriteGateway
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.launch
 
 class HearthstoneRepository(
     private val remoteHearthstoneDataSource: HearthstoneDataSource,
@@ -24,13 +20,7 @@ class HearthstoneRepository(
     SearchCardsGateway,
     UpdateCardFavouriteGateway {
 
-    init {
-        CoroutineScope(Dispatchers.IO).launch {
-            loadMetadata(Regionality.Europe(EuropeLocale.Spanish())).single()
-        }
-    }
-
-    override suspend fun loadMetadata(regionality: Regionality): Flow<Result<Unit>> {
+    override suspend fun loadMetadata(regionality: Regionality): Flow<Result<Metadata>> {
         return flow {
             val response = object : LocalRemoteStrategy<Regionality, Metadata>() {
                 override suspend fun shouldLoadFromLocal(input: Regionality): Boolean = true
@@ -54,7 +44,7 @@ class HearthstoneRepository(
 
             }.execute(regionality)
 
-            emit(response.map { })
+            emit(response)
         }
     }
 

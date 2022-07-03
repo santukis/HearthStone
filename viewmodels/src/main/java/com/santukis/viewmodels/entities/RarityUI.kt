@@ -4,8 +4,8 @@ import com.santukis.entities.hearthstone.Rarity
 import com.santukis.viewmodels.R
 
 
-fun Rarity.getDrawable(): Int =
-    when (identity.slug) {
+fun Rarity?.getDrawable(): Int =
+    when (this?.identity?.slug) {
         "common" -> R.drawable.common
         "rare" -> R.drawable.rare
         "epic" -> R.drawable.epic
@@ -13,7 +13,7 @@ fun Rarity.getDrawable(): Int =
         else -> R.drawable.empty
     }
 
-fun Rarity.getText(): TextUI =
+fun Rarity?.getText(): TextUI =
     TextUI(
-        text = identity.name,
+        text = this?.identity?.name.orEmpty(),
     )

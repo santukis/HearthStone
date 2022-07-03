@@ -39,7 +39,7 @@ fun useCases() = DI.Module(
         SearchCards(instance(SEARCH_CARDS_GATEWAY))
     }
 
-    bind<UseCase<Regionality, Flow<Result<Unit>>>>(tag = LOAD_METADATA_USECASE) with provider {
+    bind<UseCase<Regionality, Flow<Result<Metadata>>>>(tag = LOAD_METADATA_USECASE) with provider {
         LoadMetadata(instance(LOAD_METADATA_GATEWAY))
     }
 
