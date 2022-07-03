@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.santukis.hearthstone.collection.components.CardCollection
 import com.santukis.hearthstone.injection.viewModel
-import com.santukis.hearthstone.theme.CleanArchitectureTheme
+import com.santukis.hearthstone.theme.HearthstoneTheme
 import com.santukis.viewmodels.hearthstone.HearthstoneViewModel
 import org.kodein.di.DI
 import org.kodein.di.DIAware
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity(), DIAware {
         super.onCreate(savedInstanceState)
 
         setContent {
-            CleanArchitectureTheme {
+            HearthstoneTheme {
                 CardCollection(hearthstoneViewModel)
             }
         }

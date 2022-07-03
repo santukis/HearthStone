@@ -11,4 +11,6 @@ data class CardDetailState(
     fun getRarityDrawable(): Int = card?.rarity.getDrawable()
 
     fun getRarityText(): TextUI = card?.rarity.getText()
+
+    fun getManaCost(): String = card?.cardStats?.manaCost?.toString().orEmpty()
 }

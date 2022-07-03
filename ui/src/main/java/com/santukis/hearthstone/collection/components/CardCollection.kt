@@ -1,5 +1,7 @@
 package com.santukis.hearthstone.collection.components
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -11,6 +13,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,16 +23,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import coil.compose.AsyncImage
 import com.santukis.entities.hearthstone.CardClass
 import com.santukis.hearthstone.R
@@ -38,6 +44,7 @@ import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import com.santukis.hearthstone.core.components.*
 import com.santukis.hearthstone.theme.WhiteTransparent
+import com.santukis.hearthstone.theme.hearthstoneFont
 import com.santukis.viewmodels.entities.*
 import kotlinx.coroutines.launch
 
@@ -106,6 +113,8 @@ fun CardCollectionContent(
             bottomSheetState = rememberBottomSheetState(BottomSheetValue.Collapsed),
             drawerState = rememberDrawerState(DrawerValue.Closed)
         )
+
+        var peekHeightPx by remember { mutableStateOf(0) }
 
         BottomSheetScaffold(
             modifier = modifier.fillMaxSize(),
@@ -198,18 +207,70 @@ fun CardCollectionContent(
                     ) {
 
                         cardDetailState.card?.let { card ->
-                            Text(
-                                text = card.identity.name,
+                            Column(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 8.dp),
-                                textAlign = TextAlign.Center,
-                                style = TextStyle(
-                                    fontSize = 30.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    fontFamily = FontFamily.Serif
+                                    .padding(
+                                        top = 8.dp,
+                                        start = 16.dp,
+                                        end = 16.dp
+                                    )
+                                    .onGloballyPositioned {
+                                        peekHeightPx = it.size.height
+                                    }
+                            ) {
+                                Box {
+                                    Image(
+                                        painter = painterResource(com.santukis.viewmodels.R.drawable.mana),
+                                        contentDescription = "",
+                                        modifier = Modifier
+                                            .align(Alignment.CenterStart)
+                                            .size(48.dp)
+                                    )
+
+                                    Text(
+                                        text = cardDetailState.getManaCost(),
+                                        color = Color.White,
+                                        modifier = Modifier
+                                            .align(Alignment.CenterStart)
+                                            .padding(
+                                                start = 14.dp
+                                            ),
+                                        style = TextStyle(
+                                            fontSize = 40.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            fontFamily = hearthstoneFont
+                                        )
+                                    )
+
+                                    Text(
+                                        text = card.identity.name,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(
+                                                start = 50.dp,
+                                                end = 50.dp
+                                            ),
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.h4,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
+
+                                Text(
+                                    text = card.cardText.flavorText,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 8.dp)
+                                    ,
+                                    textAlign = TextAlign.Center,
+                                    style = TextStyle(
+                                        fontSize = 16.sp,
+                                        fontFamily = FontFamily.Serif,
+                                        fontStyle = FontStyle.Italic
+                                    )
                                 )
-                            )
+                            }
+
 
                             Text(
                                 text = stringResource(id = R.string.rarity),
@@ -217,10 +278,7 @@ fun CardCollectionContent(
                                     top = 16.dp,
                                     start = 16.dp
                                 ),
-                                style = TextStyle(
-                                    fontSize = 24.sp,
-                                    fontWeight = FontWeight.Bold
-                                ),
+                                style = MaterialTheme.typography.h5,
                             )
 
                             Row(
@@ -255,10 +313,7 @@ fun CardCollectionContent(
                                         start = 16.dp
                                     ),
                                     textAlign = TextAlign.Start,
-                                    style = TextStyle(
-                                        fontSize = 24.sp,
-                                        fontWeight = FontWeight.Bold
-                                    ),
+                                    style = MaterialTheme.typography.h5,
                                 )
 
                                 LazyRow(
@@ -285,7 +340,12 @@ fun CardCollectionContent(
                     }
                 }
             },
-            sheetPeekHeight = 125.dp,
+            sheetPeekHeight = if (peekHeightPx == 0) {
+                BottomSheetScaffoldDefaults.SheetPeekHeight
+
+            } else {
+                (with(LocalDensity.current) { (peekHeightPx + 80.dp.toPx()) / density  }).dp
+            },
             sheetElevation = 0.dp,
             sheetBackgroundColor = Color.Transparent,
             drawerContent = {
@@ -296,7 +356,7 @@ fun CardCollectionContent(
                             .padding(16.dp),
                         text = stringResource(id = R.string.filters),
                         textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.body1
                     )
                 }
             },

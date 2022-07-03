@@ -26,7 +26,7 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun CleanArchitectureTheme(
+fun HearthstoneTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
