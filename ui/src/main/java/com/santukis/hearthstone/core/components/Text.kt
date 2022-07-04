@@ -1,6 +1,5 @@
 package com.santukis.hearthstone.core.components
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.material.Text
@@ -36,6 +35,7 @@ fun AutoSizeText(
             if (textLayoutResult.didOverflowWidth) {
                 scaledTextStyle =
                     scaledTextStyle.copy(fontSize = scaledTextStyle.fontSize * 0.9)
+
             } else {
                 readyToDraw = true
             }

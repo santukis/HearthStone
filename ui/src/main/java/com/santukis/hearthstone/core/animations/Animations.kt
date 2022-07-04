@@ -1,8 +1,11 @@
 package com.santukis.hearthstone.core.animations
 
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material.BottomSheetScaffoldState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.graphics.GraphicsLayerScope
 import androidx.compose.ui.util.lerp
+import com.santukis.hearthstone.core.components.currentBottomSheetFraction
 
 fun GraphicsLayerScope.zoom(
     listState: LazyListState,
@@ -29,4 +32,11 @@ fun GraphicsLayerScope.zoom(
         scaleX = scale
         scaleY = scale
     }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+fun GraphicsLayerScope.alpha(
+    scaffoldState: BottomSheetScaffoldState,
+) {
+    alpha = 1f - scaffoldState.currentBottomSheetFraction
 }

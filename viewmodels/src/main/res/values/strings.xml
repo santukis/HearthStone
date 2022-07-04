@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="mana_cost_filter">Mana cost: %s</string>
+    <string name="rarity_filter">Rarity: %s</string>
 </resources>

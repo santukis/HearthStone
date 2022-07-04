@@ -3,7 +3,7 @@ package com.santukis.hearthstone
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.santukis.hearthstone.collection.components.CardCollection
+import com.santukis.hearthstone.collection.components.CardCollectionScreen
 import com.santukis.hearthstone.injection.viewModel
 import com.santukis.hearthstone.theme.HearthstoneTheme
 import com.santukis.viewmodels.hearthstone.HearthstoneViewModel
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity(), DIAware {
 
         setContent {
             HearthstoneTheme {
-                CardCollection(hearthstoneViewModel)
+                CardCollectionScreen(hearthstoneViewModel)
             }
         }
     }

@@ -33,6 +33,7 @@ dependencies {
     implementation Dependencies.Androidx.composeMaterial
     implementation Dependencies.Androidx.composeMaterialIcons
     implementation Dependencies.Androidx.composeMaterialIconsExtended
+    implementation Dependencies.Androidx.composeConstraintLayout
     implementation Dependencies.Androidx.composeUtil
     implementation Dependencies.Androidx.lifecycleViewModelCompose
 

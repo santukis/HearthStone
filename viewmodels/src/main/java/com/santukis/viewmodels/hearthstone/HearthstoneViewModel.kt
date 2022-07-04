@@ -87,22 +87,43 @@ class HearthstoneViewModel(
     fun onManaCostSelected(cost: Int) {
         cardFilterState = cardFilterState.copy(
             selectedCardStats = cardFilterState.selectedCardStats.copy(manaCost = cost),
-            activeFilters = cardFilterState.updateActiveFilters(FilterUI(R.string.mana_cost_filter, cost.toString()))
+            activeFilters = cardFilterState.updateActiveFilters(
+                FilterUI(
+                    key = R.string.mana_cost_filter,
+                    value = cost.toString()
+                )
+            )
         )
 
         loadMoreItems()
     }
 
-    fun loadMoreItems() {
-        searchCards(
-            cardRequest = buildSearchCardRequest(),
-            onSuccess = { cards ->
-                cardCollectionState = cardCollectionState.copy(cards = cards.toList())
-            }
+    fun onCardRaritySelected(rarity: Rarity?) {
+        cardFilterState = cardFilterState.copy(
+            selectedCardRarity = rarity,
+            activeFilters = cardFilterState.updateActiveFilters(
+                FilterUI(
+                    key = R.string.rarity_filter,
+                    value = rarity?.identity?.name ?: CardFilterState.UNSELECTED
+                )
+            )
         )
+
+        loadMoreItems()
     }
 
-    fun updateCardFavourite() {
+    fun onRemoveFilterClick(filter: Int) {
+        when (filter) {
+            R.string.mana_cost_filter -> onManaCostSelected(-1)
+            R.string.rarity_filter -> onCardRaritySelected(null)
+        }
+    }
+
+    fun onEndReached() {
+        loadMoreItems()
+    }
+
+    fun onFavouriteClick() {
         viewModelScope.launch(Dispatchers.IO) {
             cardCollectionState.cards.getOrNull(cardDetailState.cardIndex)?.let { selectedCard ->
                 updateCardFavouriteUseCase(selectedCard)
@@ -120,6 +141,15 @@ class HearthstoneViewModel(
 
             }
         }
+    }
+
+    private fun loadMoreItems() {
+        searchCards(
+            cardRequest = buildSearchCardRequest(),
+            onSuccess = { cards ->
+                cardCollectionState = cardCollectionState.copy(cards = cards.toList())
+            }
+        )
     }
 
     private fun loadMetadata() {
@@ -172,7 +202,8 @@ class HearthstoneViewModel(
     private fun buildSearchCardRequest(): SearchCardsRequest {
         searchCardsRequest = searchCardsRequest.copy(
             cardClass = cardFilterState.selectedCardClass,
-            cardStats = cardFilterState.selectedCardStats
+            cardStats = cardFilterState.selectedCardStats,
+            rarity = cardFilterState.selectedCardRarity
         )
 
         return searchCardsRequest.copy()

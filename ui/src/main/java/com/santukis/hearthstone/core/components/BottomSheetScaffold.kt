@@ -1,8 +1,10 @@
 package com.santukis.hearthstone.core.components
 
-import androidx.compose.material.BottomSheetScaffoldState
-import androidx.compose.material.BottomSheetValue
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterialApi::class)
 val BottomSheetScaffoldState.currentBottomSheetFraction: Float
@@ -18,3 +20,13 @@ val BottomSheetScaffoldState.currentBottomSheetFraction: Float
             else -> 1f - fraction
         }
     }
+
+@Composable
+fun Int.transformToDp(): Dp {
+    return if (this == 0) {
+        BottomSheetScaffoldDefaults.SheetPeekHeight
+
+    } else {
+        (with(LocalDensity.current) { (this@transformToDp + 80.dp.toPx()) / density }).dp
+    }
+}
