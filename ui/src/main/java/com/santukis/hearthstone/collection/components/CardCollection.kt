@@ -7,6 +7,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -72,7 +73,7 @@ fun CardCollection(
     }
 
     val onSelectedCardClassClick: () -> Unit = {
-        viewModel.onSelectedCardClassSelected()
+        viewModel.onSelectedCardClassClick()
     }
 
     val onManaCostSelected: (Int) -> Unit = { cost ->
@@ -117,12 +118,95 @@ fun CardCollectionContent(
             drawerState = rememberDrawerState(DrawerValue.Closed)
         )
 
-        var peekHeightPx by remember { mutableStateOf(0) }
+        var sheetPeekHeight by remember { mutableStateOf(0) }
 
         BottomSheetScaffold(
             modifier = modifier.fillMaxSize(),
             scaffoldState = scaffoldState,
             backgroundColor = MaterialTheme.colors.primaryVariant,
+            topBar = {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Button(
+                        onClick = {
+                            scope.launch {
+                                scaffoldState.drawerState.open()
+                            }
+                        },
+                        shape = CircleShape,
+                        modifier = Modifier
+                            .size(48.dp)
+                            .graphicsLayer {
+                                alpha = 1f - scaffoldState.currentBottomSheetFraction
+                            }
+                        ,
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Color.White
+                        ),
+                        contentPadding = PaddingValues(0.dp)
+                    ) {
+
+                        Icon(
+                            imageVector = Icons.Filled.Menu,
+                            contentDescription = "menu",
+                        )
+                    }
+
+                    LazyRow(
+                        modifier = Modifier
+                            .graphicsLayer {
+                                alpha = 1f - scaffoldState.currentBottomSheetFraction
+                            }
+                    ) {
+                        items(cardFilterState.getActiveFilters()) { filter ->
+                            Row(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(size = 30.dp))
+                                    .background(MaterialTheme.colors.secondary)
+
+                            ) {
+                                Text(
+                                    modifier = Modifier.padding(8.dp),
+                                    text = stringResource(
+                                        id = filter.key,
+                                        filter.value
+                                    ),
+                                    style = MaterialTheme.typography.subtitle1
+                                )
+                            }
+                        }
+                    }
+
+                    Button(
+                        onClick = {
+                            onSelectedCardClassClick()
+                        },
+                        shape = CircleShape,
+                        modifier = Modifier
+                            .size(48.dp)
+                            .graphicsLayer {
+                                alpha = 1f - scaffoldState.currentBottomSheetFraction
+                            }
+                        ,
+                        contentPadding = PaddingValues(0.dp)
+                    ) {
+
+                        Image(
+                            painter = painterResource(id = cardFilterState.getSelectedCardClassDrawable()),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(48.dp)
+                                .clip(CircleShape)
+                        )
+                    }
+                }
+            },
             sheetContent = {
                 Column(
                     modifier = modifier
@@ -218,7 +302,7 @@ fun CardCollectionContent(
                                         end = 16.dp
                                     )
                                     .onGloballyPositioned {
-                                        peekHeightPx = it.size.height
+                                        sheetPeekHeight = it.size.height
                                     }
                             ) {
                                 Box {
@@ -341,14 +425,15 @@ fun CardCollectionContent(
                     }
                 }
             },
-            sheetPeekHeight = if (peekHeightPx == 0) {
+            sheetPeekHeight = if (sheetPeekHeight == 0) {
                 BottomSheetScaffoldDefaults.SheetPeekHeight
 
             } else {
-                (with(LocalDensity.current) { (peekHeightPx + 80.dp.toPx()) / density }).dp
+                (with(LocalDensity.current) { (sheetPeekHeight + 80.dp.toPx()) / density }).dp
             },
             sheetElevation = 0.dp,
             sheetBackgroundColor = Color.Transparent,
+            drawerElevation = 20.dp,
             drawerContent = {
                 Column {
                     Text(
@@ -359,7 +444,7 @@ fun CardCollectionContent(
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.h6
                     )
-                    
+
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
@@ -367,12 +452,12 @@ fun CardCollectionContent(
                             .fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        
+
                         Text(
                             text = stringResource(id = R.string.mana_cost),
                             style = MaterialTheme.typography.h6,
                         )
-                        
+
                         Text(
                             text = stringResource(id = R.string.clear),
                             modifier = Modifier
@@ -380,7 +465,7 @@ fun CardCollectionContent(
                             style = MaterialTheme.typography.body2
                         )
                     }
-                    
+
                     LazyVerticalGrid(
                         cells = GridCells.Adaptive(minSize = 64.dp),
                         modifier = Modifier
@@ -454,8 +539,8 @@ fun CardCollectionContent(
                         contentDescription = "",
                         modifier = Modifier
                             .fillParentMaxWidth()
-                            .fillParentMaxHeight(0.8f)
-                            .padding(top = 10.dp)
+                            .fillParentMaxHeight(0.65f)
+                            .padding(top = 64.dp)
                             .graphicsLayer {
                                 zoom(
                                     listState = listState,
@@ -464,65 +549,6 @@ fun CardCollectionContent(
                             }
                     )
                 }
-            }
-        }
-
-        Button(
-            onClick = {
-                scope.launch {
-                    if (scaffoldState.drawerState.isOpen) {
-                        scaffoldState.drawerState.close()
-
-                    } else {
-                        scaffoldState.drawerState.open()
-                    }
-                }
-            },
-            shape = CircleShape,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(8.dp)
-                .size(48.dp),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.White
-            ),
-            contentPadding = PaddingValues(0.dp)
-        ) {
-
-            Icon(
-                imageVector = Icons.Filled.Menu,
-                contentDescription = "menu",
-            )
-        }
-
-        AnimatedVisibility(
-            visible = scaffoldState.drawerState.isClosed
-                    && scaffoldState.bottomSheetState.isCollapsed
-                    && cardFilterState.shouldShowCardClass(),
-            enter = fadeIn(),
-            exit = fadeOut()
-        ) {
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-
-                Image(
-                    painter = painterResource(id = cardFilterState.getSelectedCardClassDrawable()),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .size(51.dp)
-                        .clip(CircleShape)
-                        .border(
-                            width = 2.dp,
-                            brush = SolidColor(Color.White),
-                            shape = CircleShape
-                        )
-                        .clickable { onSelectedCardClassClick() }
-                )
             }
         }
 

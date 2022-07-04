@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mana_cost_filter">Mana cost: %s</string>
+</resources>

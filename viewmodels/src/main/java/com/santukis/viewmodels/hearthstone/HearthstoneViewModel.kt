@@ -7,10 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.santukis.entities.hearthstone.*
 import com.santukis.usecases.UseCase
-import com.santukis.viewmodels.entities.CardCollectionState
-import com.santukis.viewmodels.entities.CardDetailState
-import com.santukis.viewmodels.entities.CardFilterState
-import com.santukis.viewmodels.entities.UiState
+import com.santukis.viewmodels.R
+import com.santukis.viewmodels.entities.*
 import com.santukis.viewmodels.mappers.toUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -67,6 +65,12 @@ class HearthstoneViewModel(
             shouldShowCardClassList = !cardFilterState.shouldShowCardClassList
         )
 
+        cardDetailState = cardDetailState.copy(
+            card = null,
+            cardIndex = -1,
+            relatedCards = emptyList()
+        )
+
         cardCollectionState = cardCollectionState.copy(
             cards = emptyList()
         )
@@ -74,7 +78,7 @@ class HearthstoneViewModel(
         loadMoreItems()
     }
 
-    fun onSelectedCardClassSelected() {
+    fun onSelectedCardClassClick() {
         cardFilterState = cardFilterState.copy(
             shouldShowCardClassList = !cardFilterState.shouldShowCardClassList
         )
@@ -82,7 +86,8 @@ class HearthstoneViewModel(
 
     fun onManaCostSelected(cost: Int) {
         cardFilterState = cardFilterState.copy(
-            selectedCardStats = cardFilterState.selectedCardStats.copy(manaCost = cost)
+            selectedCardStats = cardFilterState.selectedCardStats.copy(manaCost = cost),
+            activeFilters = cardFilterState.updateActiveFilters(FilterUI(R.string.mana_cost_filter, cost.toString()))
         )
 
         loadMoreItems()
