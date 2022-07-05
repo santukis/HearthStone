@@ -161,6 +161,9 @@ class HearthstoneViewModel(
                         ?: cards.getOrNull(cards.lastIndex),
                     relatedCards = emptyList()
                 )
+            },
+            onError = {
+                cardCollectionState = cardCollectionState.copy(cards = emptyList())
             }
         )
     }
@@ -195,7 +198,11 @@ class HearthstoneViewModel(
         )
     }
 
-    private fun searchCards(cardRequest: SearchCardsRequest, onSuccess: (List<Card>) -> Unit = {}) {
+    private fun searchCards(
+        cardRequest: SearchCardsRequest,
+        onSuccess: (List<Card>) -> Unit = {},
+        onError: (Throwable) -> Unit = {}
+    ) {
         searchJob?.cancel(CancellationException("New Search required"))
 
         searchJob = viewModelScope.launch(Dispatchers.IO) {
@@ -207,7 +214,7 @@ class HearthstoneViewModel(
                 .collect { result ->
                     result
                         .onSuccess { cards -> onSuccess(cards) }
-                        .onFailure { error -> uiState = error.toUiState(uiState) }
+                        .onFailure { error -> onError(error) }
                 }
         }
     }
