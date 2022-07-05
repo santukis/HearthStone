@@ -164,6 +164,7 @@ class HearthstoneViewModel(
             },
             onError = {
                 cardCollectionState = cardCollectionState.copy(cards = emptyList())
+                cardDetailState = cardDetailState.reset()
             }
         )
     }
