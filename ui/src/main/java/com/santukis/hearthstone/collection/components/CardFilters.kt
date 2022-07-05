@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.santukis.entities.hearthstone.Rarity
+import com.santukis.entities.hearthstone.SpellSchool
 import com.santukis.hearthstone.R
 import com.santukis.hearthstone.core.components.AutoSizeText
 import com.santukis.viewmodels.entities.CardFilterState
@@ -30,7 +31,8 @@ fun CardFilters(
     cardFilterState: CardFilterState,
     modifier: Modifier = Modifier,
     onManaCostSelected: (Int) -> Unit = {},
-    onCardRaritySelected: (Rarity?) -> Unit = {},
+    onCardRaritySelected: (Rarity) -> Unit = {},
+    onSpellSchoolSelected: (SpellSchool) -> Unit = {},
     onClearFilterClick: (Int) -> Unit = {},
     onCloseFiltersClick: () -> Unit = {}
 ) {
@@ -159,6 +161,37 @@ fun CardFilters(
                         style = MaterialTheme.typography.subtitle1
                     )
                 }
+            }
+        }
+
+        FilterHeader(
+            headerName = R.string.spell_school,
+            onClearFilterClick = {
+                onClearFilterClick(com.santukis.viewmodels.R.string.spell_school_filter)
+            }
+        )
+
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(count = 2),
+            modifier = Modifier
+                .padding(
+                    top = 8.dp,
+                    start = 8.dp
+                )
+        ) {
+            items(cardFilterState.getSpellSchools()) { spellSchool ->
+
+                Text(
+                    text = spellSchool.identity.name,
+                    color = cardFilterState.getSpellSchoolColor(spellSchool),
+                    modifier = Modifier
+                        .padding(
+                            vertical = 12.dp,
+                            horizontal = 8.dp
+                        )
+                        .clickable { onSpellSchoolSelected(spellSchool) },
+                    style = MaterialTheme.typography.subtitle1
+                )
             }
         }
     }

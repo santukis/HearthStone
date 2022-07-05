@@ -104,10 +104,25 @@ class HearthstoneViewModel(
         loadMoreItems()
     }
 
+    fun onSpellSchoolSelected(spellSchool: SpellSchool?) {
+        cardFilterState = cardFilterState.copy(
+            selectedSpellSchool = spellSchool,
+            activeFilters = cardFilterState.updateActiveFilters(
+                FilterUI(
+                    key = R.string.spell_school_filter,
+                    value = spellSchool?.identity?.name ?: CardFilterState.UNSELECTED
+                )
+            )
+        )
+
+        loadMoreItems()
+    }
+
     fun onRemoveFilterClick(filter: Int) {
         when (filter) {
             R.string.mana_cost_filter -> onManaCostSelected(-1)
             R.string.rarity_filter -> onCardRaritySelected(null)
+            R.string.spell_school_filter -> onSpellSchoolSelected(null)
         }
     }
 
@@ -201,7 +216,8 @@ class HearthstoneViewModel(
         searchCardsRequest = searchCardsRequest.copy(
             cardClass = cardFilterState.selectedCardClass,
             cardStats = cardFilterState.selectedCardStats,
-            rarity = cardFilterState.selectedCardRarity
+            rarity = cardFilterState.selectedCardRarity,
+            spellSchool = cardFilterState.selectedSpellSchool
         )
 
         return searchCardsRequest.copy()

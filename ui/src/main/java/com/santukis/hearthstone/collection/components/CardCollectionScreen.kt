@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.*
 import coil.compose.AsyncImage
 import com.santukis.entities.hearthstone.CardClass
 import com.santukis.entities.hearthstone.Rarity
+import com.santukis.entities.hearthstone.SpellSchool
 import com.santukis.hearthstone.core.animations.zoom
 import com.santukis.viewmodels.hearthstone.HearthstoneViewModel
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
@@ -65,8 +66,12 @@ fun CardCollectionScreen(
         viewModel.onManaCostSelected(cost)
     }
 
-    val onCardRaritySelected: (Rarity?) -> Unit = { rarity ->
+    val onCardRaritySelected: (Rarity) -> Unit = { rarity ->
         viewModel.onCardRaritySelected(rarity)
+    }
+
+    val onSpellSchoolSelected: (SpellSchool) -> Unit = { spellSchool ->
+        viewModel.onSpellSchoolSelected(spellSchool)
     }
 
     val onRemoveFilterClick: (Int) -> Unit = { filter ->
@@ -84,6 +89,7 @@ fun CardCollectionScreen(
         onSelectedCardClassClick = onSelectedCardClassClick,
         onManaCostSelected = onManaCostSelected,
         onCardRaritySelected = onCardRaritySelected,
+        onSpellSchoolSelected = onSpellSchoolSelected,
         onRemoveFilterClick = onRemoveFilterClick,
         onEndReached = onEndReached
     )
@@ -102,7 +108,8 @@ fun CardCollectionContent(
     onCardClassSelected: (CardClass) -> Unit = {},
     onSelectedCardClassClick: () -> Unit = {},
     onManaCostSelected: (Int) -> Unit = {},
-    onCardRaritySelected: (Rarity?) -> Unit = {},
+    onCardRaritySelected: (Rarity) -> Unit = {},
+    onSpellSchoolSelected: (SpellSchool) -> Unit = {},
     onRemoveFilterClick: (Int) -> Unit = {},
     onEndReached: () -> Unit = {}
 ) {
@@ -147,6 +154,7 @@ fun CardCollectionContent(
                     cardFilterState = cardFilterState,
                     onManaCostSelected = onManaCostSelected,
                     onCardRaritySelected = onCardRaritySelected,
+                    onSpellSchoolSelected = onSpellSchoolSelected,
                     onClearFilterClick = onRemoveFilterClick,
                     onCloseFiltersClick = { coroutineScope.launch { scaffoldState.drawerState.close() } }
                 )

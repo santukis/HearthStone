@@ -1,10 +1,7 @@
 package com.santukis.viewmodels.entities
 
 import androidx.compose.ui.graphics.Color
-import com.santukis.entities.hearthstone.CardClass
-import com.santukis.entities.hearthstone.CardStats
-import com.santukis.entities.hearthstone.Metadata
-import com.santukis.entities.hearthstone.Rarity
+import com.santukis.entities.hearthstone.*
 
 data class CardFilterState(
     private val metadata: Metadata? = null,
@@ -12,6 +9,7 @@ data class CardFilterState(
     val selectedCardClass: CardClass? = null,
     val selectedCardStats: CardStats = CardStats(),
     val selectedCardRarity: Rarity? = null,
+    val selectedSpellSchool: SpellSchool? = null,
     val shouldShowCardClassList: Boolean = false
 ) {
 
@@ -22,6 +20,8 @@ data class CardFilterState(
     fun getCardClasses(): List<CardClass> = metadata?.classes.orEmpty()
 
     fun getRarities(): List<Rarity> = metadata?.rarities.orEmpty()
+
+    fun getSpellSchools(): List<SpellSchool> = metadata?.spellSchools.orEmpty()
 
     fun getSelectedCardClassDrawable(): Int = selectedCardClass.getDrawable()
 
@@ -36,6 +36,14 @@ data class CardFilterState(
     fun getRarityNameColor(rarity: Rarity): Color =
         if (selectedCardRarity == rarity) {
             Color.Blue
+
+        } else {
+            Color.Unspecified
+        }
+
+    fun getSpellSchoolColor(spellSchool: SpellSchool): Color =
+        if (selectedSpellSchool == spellSchool) {
+            Color.Red
 
         } else {
             Color.Unspecified
