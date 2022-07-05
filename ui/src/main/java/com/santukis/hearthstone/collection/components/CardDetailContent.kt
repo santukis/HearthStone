@@ -1,5 +1,6 @@
 package com.santukis.hearthstone.collection.components
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -17,17 +18,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.santukis.datasources.mappers.takeIfNotEmpty
+import com.santukis.hearthstone.core.components.HtmlText
 import com.santukis.hearthstone.theme.WhiteTransparent
 import com.santukis.viewmodels.R
 import com.santukis.viewmodels.entities.CardDetailState
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -36,107 +37,44 @@ fun CardDetailContent(
     scaffoldState: BottomSheetScaffoldState,
     cardDetailState: CardDetailState,
     modifier: Modifier = Modifier,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     onFavouriteClick: () -> Unit = {},
     onHeaderHeightChange: (Int) -> Unit = {}
 ) {
-    val scope = rememberCoroutineScope()
-
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Transparent),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            modifier = modifier
-                .padding(8.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
 
-            Button(
-                onClick = { /*TODO onAddClick */ },
-                shape = CircleShape,
-                modifier = Modifier
-                    .size(48.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White
-                ),
-                contentPadding = PaddingValues(0.dp)
-            ) {
-
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "add",
-                    tint = MaterialTheme.colors.primary
-                )
-            }
-
-            Divider(
-                modifier = Modifier
-                    .width(75.dp)
-                    .padding(16.dp)
-                    .clickable {
-                        scope.launch {
-                            if (scaffoldState.bottomSheetState.isCollapsed) {
-                                scaffoldState.bottomSheetState.expand()
-
-                            } else {
-                                scaffoldState.bottomSheetState.collapse()
-                            }
-                        }
-                    },
-                color = Color.White,
-                thickness = 2.dp
-            )
-
-            Button(
-                onClick = {
-                    onFavouriteClick()
-                },
-                shape = CircleShape,
-                modifier = Modifier
-                    .size(48.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White
-                ),
-                contentPadding = PaddingValues(0.dp)
-            ) {
-
-                val icon = if (cardDetailState.card?.isFavourite == true) {
-                    Icons.Filled.Favorite
-
-                } else {
-                    Icons.Filled.FavoriteBorder
-                }
-
-                Icon(
-                    imageVector = icon,
-                    contentDescription = "favorite",
-                    tint = MaterialTheme.colors.primary
-                )
-            }
-        }
+        CardDetailActionBar(
+            scaffoldState = scaffoldState,
+            cardDetailState = cardDetailState,
+            coroutineScope = coroutineScope,
+            onFavouriteClick = onFavouriteClick
+        )
 
         Column(
             modifier = Modifier
                 .background(WhiteTransparent)
                 .fillMaxSize()
+                .padding(
+                    top = 8.dp
+                )
                 .verticalScroll(rememberScrollState()),
         ) {
 
             cardDetailState.card?.let { card ->
                 Column(
                     modifier = Modifier
-                        .padding(
-                            top = 8.dp,
-                            start = 16.dp,
-                            end = 16.dp
-                        )
                         .onGloballyPositioned {
                             onHeaderHeightChange(it.size.height)
                         }
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp
+                        )
                 ) {
                     Box {
                         Image(
@@ -144,9 +82,7 @@ fun CardDetailContent(
                             contentDescription = "",
                             modifier = Modifier
                                 .align(Alignment.TopStart)
-                                .padding(
-                                    top = 8.dp
-                                )
+                                .padding(top = 8.dp)
                                 .size(48.dp)
                         )
 
@@ -166,6 +102,7 @@ fun CardDetailContent(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(
+                                    top = 8.dp,
                                     start = 50.dp,
                                     end = 50.dp
                                 ),
@@ -181,61 +118,85 @@ fun CardDetailContent(
                             .fillMaxWidth()
                             .padding(top = 8.dp),
                         textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontFamily = FontFamily.Serif,
-                            fontStyle = FontStyle.Italic
-                        )
+                        style = MaterialTheme.typography.body1,
+                        fontStyle = FontStyle.Italic
                     )
                 }
 
-
-                Text(
-                    text = stringResource(id = com.santukis.hearthstone.R.string.rarity),
-                    modifier = Modifier.padding(
-                        top = 16.dp,
-                        start = 16.dp
-                    ),
-                    style = MaterialTheme.typography.h5,
-                )
-
-                Row(
-                    modifier = Modifier.padding(
-                        top = 8.dp,
-                        start = 16.dp
-                    ),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Text(
-                        text = card.rarity.identity.name,
-                        style = TextStyle(
-                            fontSize = 16.sp
-                        )
-                    )
-
-                    Image(
-                        painter = painterResource(cardDetailState.getRarityDrawable()),
-                        contentDescription = "",
+                card.cardText.ruleText.takeIfNotEmpty()?.let { text ->
+                    HtmlText(
+                        html = card.cardText.ruleText,
                         modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .size(24.dp)
+                            .fillMaxWidth()
+                            .padding(
+                                top = 16.dp,
+                                start = 16.dp,
+                                end = 16.dp
+                            ),
+                        font = R.font.belwe_medium_bt
                     )
                 }
+
+                FieldText(field = card.cardSet.identity.name, headerName = com.santukis.hearthstone.R.string.set)
+
+                FieldText(field = card.cardClass.identity.name, headerName = com.santukis.hearthstone.R.string.card_class)
+
+                FieldText(field = card.cardType.identity.name, headerName = com.santukis.hearthstone.R.string.type)
+
+                card.rarity.identity.name.takeIfNotEmpty()?.let { rarity ->
+                    Text(
+                        text = stringResource(id = com.santukis.hearthstone.R.string.rarity),
+                        modifier = Modifier
+                            .padding(
+                                top = 16.dp,
+                                start = 16.dp,
+                                end = 16.dp
+                            ),
+                        style = MaterialTheme.typography.h5,
+                    )
+
+                    Row(
+                        modifier = Modifier
+                            .padding(
+                                top = 8.dp,
+                                start = 16.dp,
+                                end = 16.dp
+                            ),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Text(
+                            text = rarity,
+                            style = MaterialTheme.typography.subtitle1
+                        )
+
+                        Image(
+                            painter = painterResource(cardDetailState.getRarityDrawable()),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .size(24.dp)
+                        )
+                    }
+                }
+
+                FieldText(field = card.spellSchool.identity.name, headerName = com.santukis.hearthstone.R.string.spell_school)
 
                 if (cardDetailState.relatedCards.isNotEmpty()) {
                     Text(
                         text = stringResource(id = com.santukis.hearthstone.R.string.related_cards),
-                        modifier = Modifier.padding(
-                            top = 16.dp,
-                            start = 16.dp
+                        modifier = Modifier
+                            .padding(
+                                top = 16.dp,
+                                start = 16.dp,
+                                end = 16.dp
                         ),
                         textAlign = TextAlign.Start,
                         style = MaterialTheme.typography.h5,
                     )
 
                     LazyRow(
-                        contentPadding = PaddingValues(horizontal = 8.dp)
+                        contentPadding = PaddingValues(horizontal = 16.dp),
                     ) {
                         items(cardDetailState.relatedCards.size) { index ->
                             val relatedCard = cardDetailState.relatedCards[index]
@@ -256,5 +217,117 @@ fun CardDetailContent(
                 }
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun CardDetailActionBar(
+    scaffoldState: BottomSheetScaffoldState,
+    cardDetailState: CardDetailState,
+    modifier: Modifier = Modifier,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    onFavouriteClick: () -> Unit = {}
+) {
+    Row(
+        modifier = modifier
+            .padding(8.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        Button(
+            onClick = { /*TODO onAddClick */ },
+            shape = CircleShape,
+            modifier = Modifier
+                .size(48.dp),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.White
+            ),
+            contentPadding = PaddingValues(0.dp)
+        ) {
+
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = "add",
+                tint = MaterialTheme.colors.primary
+            )
+        }
+
+        Divider(
+            modifier = Modifier
+                .width(75.dp)
+                .padding(16.dp)
+                .clickable {
+                    coroutineScope.launch {
+                        if (scaffoldState.bottomSheetState.isCollapsed) {
+                            scaffoldState.bottomSheetState.expand()
+
+                        } else {
+                            scaffoldState.bottomSheetState.collapse()
+                        }
+                    }
+                },
+            color = Color.White,
+            thickness = 2.dp
+        )
+
+        Button(
+            onClick = {
+                onFavouriteClick()
+            },
+            shape = CircleShape,
+            modifier = Modifier
+                .size(48.dp),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.White
+            ),
+            contentPadding = PaddingValues(0.dp)
+        ) {
+
+            val icon = if (cardDetailState.card?.isFavourite == true) {
+                Icons.Filled.Favorite
+
+            } else {
+                Icons.Filled.FavoriteBorder
+            }
+
+            Icon(
+                imageVector = icon,
+                contentDescription = "favorite",
+                tint = MaterialTheme.colors.primary
+            )
+        }
+    }
+}
+
+@Composable
+fun FieldText(
+    field: String,
+    @StringRes headerName: Int
+) {
+    field.takeIfNotEmpty()?.let { fieldText ->
+        Text(
+            text = stringResource(id = headerName),
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                ),
+            style = MaterialTheme.typography.h5,
+        )
+
+        Text(
+            text = fieldText,
+            modifier = Modifier
+                .padding(
+                    top = 8.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                ),
+            style = MaterialTheme.typography.subtitle1,
+        )
     }
 }

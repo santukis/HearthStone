@@ -3,7 +3,11 @@
 
     <string name="related_cards">Related Cards</string>
     <string name="filters">Card Filters</string>
+    <string name="card_class">Class</string>
+    <string name="type">Type</string>
+    <string name="set">Set</string>
     <string name="rarity">Rarity</string>
     <string name="mana_cost">Mana Cost</string>
+    <string name="spell_school">SpellSchool</string>
     <string name="clear">Clear</string>
 </resources>

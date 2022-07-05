@@ -1,22 +1,19 @@
 package com.santukis.hearthstone.collection.components
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.outlined.Circle
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -32,6 +29,7 @@ import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import com.santukis.hearthstone.core.components.*
 import com.santukis.hearthstone.theme.WhiteTransparent
 import com.santukis.viewmodels.entities.*
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -109,6 +107,8 @@ fun CardCollectionContent(
     onEndReached: () -> Unit = {}
 ) {
 
+    val coroutineScope = rememberCoroutineScope()
+
     Box(modifier = modifier) {
         val scaffoldState = rememberBottomSheetScaffoldState(
             bottomSheetState = rememberBottomSheetState(BottomSheetValue.Collapsed),
@@ -125,6 +125,7 @@ fun CardCollectionContent(
                 CardCollectionTopBar(
                     scaffoldState = scaffoldState,
                     cardFilterState = cardFilterState,
+                    coroutineScope = coroutineScope,
                     onSelectedCardClassClick = onSelectedCardClassClick,
                     onRemoveFilterClick = onRemoveFilterClick
                 )
@@ -133,6 +134,7 @@ fun CardCollectionContent(
                 CardDetailContent(
                     scaffoldState = scaffoldState,
                     cardDetailState = cardDetailState,
+                    coroutineScope = coroutineScope,
                     onFavouriteClick = onFavouriteClick,
                     onHeaderHeightChange = { sheetPeekHeight = it }
                 )
@@ -145,7 +147,8 @@ fun CardCollectionContent(
                     cardFilterState = cardFilterState,
                     onManaCostSelected = onManaCostSelected,
                     onCardRaritySelected = onCardRaritySelected,
-                    onClearFilterClick = onRemoveFilterClick
+                    onClearFilterClick = onRemoveFilterClick,
+                    onCloseFiltersClick = { coroutineScope.launch { scaffoldState.drawerState.close() } }
                 )
             },
             drawerElevation = 20.dp,
@@ -177,6 +180,8 @@ fun CardCollection(
 ) {
     val listState = rememberLazyListState()
 
+    var visibleImageIndex by remember { mutableStateOf(0) }
+
     listState.OnEndReached(
         onEndReached = {
             onEndReached()
@@ -188,29 +193,82 @@ fun CardCollection(
             onCardSelected(if (scrolling) -1 else listState.firstVisibleItemIndex)
         }
     )
-    LazyRow(
-        state = listState,
-        flingBehavior = rememberSnapperFlingBehavior(lazyListState = listState),
-        modifier = modifier.fillMaxSize()
+
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(
+                bottom = 175.dp
+            )
     ) {
-        items(cardCollectionState.cards.size) { index ->
 
-            val card = cardCollectionState.cards[index]
+        LazyRow(
+            state = listState,
+            flingBehavior = rememberSnapperFlingBehavior(lazyListState = listState),
+            modifier = modifier
+                .fillMaxSize()
+        ) {
+            items(cardCollectionState.cards.size) { index ->
+                val card = cardCollectionState.cards[index]
 
-            AsyncImage(
-                model = card.images.image,
-                contentDescription = "",
-                modifier = Modifier
-                    .fillParentMaxWidth()
-                    .fillParentMaxHeight(0.65f)
-                    .padding(top = 64.dp)
-                    .graphicsLayer {
-                        zoom(
-                            listState = listState,
-                            page = index
+                val cardImageListState = rememberLazyListState()
+
+                LazyColumn(
+                    state = cardImageListState,
+                    modifier = Modifier
+                        .fillParentMaxSize()
+                        .graphicsLayer {
+                            zoom(
+                                listState = listState,
+                                page = index
+                            )
+                        },
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceAround
+
+                ) {
+                    items(card.images.asList()) { image ->
+                        AsyncImage(
+                            model = image,
+                            contentDescription = "",
+                            modifier = Modifier
+                                .fillParentMaxSize(),
                         )
                     }
-            )
+
+                    visibleImageIndex = cardImageListState.firstVisibleItemIndex
+                }
+            }
+        }
+
+        LazyColumn(
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .width(24.dp)
+                .padding(8.dp)
+        ) {
+            cardCollectionState.cards.getOrNull(listState.firstVisibleItemIndex)?.let { card ->
+                items(card.images.asList().size) { index ->
+                    if (visibleImageIndex == index) {
+                        Icon(
+                            imageVector = Icons.Filled.Circle,
+                            contentDescription = "selected Image",
+                            modifier = Modifier
+                                .width(12.dp),
+                            tint = MaterialTheme.colors.primary
+                        )
+
+                    } else {
+                        Icon(
+                            imageVector = Icons.Outlined.Circle,
+                            contentDescription = "unselected Image",
+                            modifier = Modifier
+                                .width(12.dp),
+                            tint = MaterialTheme.colors.primary
+                        )
+                    }
+                }
+            }
         }
     }
 }

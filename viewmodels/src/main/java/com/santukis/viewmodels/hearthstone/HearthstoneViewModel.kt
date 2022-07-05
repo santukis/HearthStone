@@ -52,11 +52,7 @@ class HearthstoneViewModel(
                 cardIndex = cardIndex
             )
 
-        } ?: cardDetailState.copy(
-            card = null,
-            cardIndex = -1,
-            relatedCards = listOf()
-        )
+        } ?: cardDetailState.reset()
     }
 
     fun onCardClassSelected(cardClass: CardClass) {
@@ -65,11 +61,7 @@ class HearthstoneViewModel(
             shouldShowCardClassList = !cardFilterState.shouldShowCardClassList
         )
 
-        cardDetailState = cardDetailState.copy(
-            card = null,
-            cardIndex = -1,
-            relatedCards = emptyList()
-        )
+        cardDetailState = cardDetailState.reset()
 
         cardCollectionState = cardCollectionState.copy(
             cards = emptyList()
@@ -148,6 +140,12 @@ class HearthstoneViewModel(
             cardRequest = buildSearchCardRequest(),
             onSuccess = { cards ->
                 cardCollectionState = cardCollectionState.copy(cards = cards.toList())
+
+                cardDetailState = cardDetailState.copy(
+                    card = cards.getOrNull(cardDetailState.cardIndex)
+                        ?: cards.getOrNull(cards.lastIndex),
+                    relatedCards = emptyList()
+                )
             }
         )
     }

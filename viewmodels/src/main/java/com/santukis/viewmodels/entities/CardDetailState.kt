@@ -13,4 +13,11 @@ data class CardDetailState(
     fun getRarityText(): TextUI = card?.rarity.getText()
 
     fun getManaCost(): String = card?.cardStats?.manaCost?.toString().orEmpty()
+
+    fun reset(): CardDetailState =
+        copy(
+            card = null,
+            cardIndex = 0,
+            relatedCards = emptyList()
+        )
 }

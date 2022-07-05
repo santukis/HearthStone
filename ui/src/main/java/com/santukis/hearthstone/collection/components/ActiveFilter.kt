@@ -49,7 +49,7 @@ fun ActiveFilter(
         )
 
         Text(
-            modifier = Modifier.padding(4.dp),
+            modifier = Modifier.padding(end = 8.dp),
             text = stringResource(
                 id = filter.key,
                 filter.value

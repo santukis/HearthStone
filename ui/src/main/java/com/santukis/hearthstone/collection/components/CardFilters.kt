@@ -1,18 +1,19 @@
 package com.santukis.hearthstone.collection.components
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,18 +31,44 @@ fun CardFilters(
     modifier: Modifier = Modifier,
     onManaCostSelected: (Int) -> Unit = {},
     onCardRaritySelected: (Rarity?) -> Unit = {},
-    onClearFilterClick: (Int) -> Unit = {}
+    onClearFilterClick: (Int) -> Unit = {},
+    onCloseFiltersClick: () -> Unit = {}
 ) {
 
-    Column {
-        Text(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            text = stringResource(id = R.string.filters),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.h6
-        )
+    Column(
+        modifier = modifier
+            .padding(8.dp)
+    ) {
+
+        Box {
+
+            Button(
+                onClick = { onCloseFiltersClick() },
+                shape = CircleShape,
+                modifier = modifier
+                    .size(48.dp)
+                    .align(Alignment.TopStart),
+                contentPadding = PaddingValues(0.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.White
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Close,
+                    contentDescription = "Close"
+                )
+            }
+
+            Text(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .align(Alignment.TopCenter),
+                text = stringResource(id = R.string.filters),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.h6
+            )
+        }
 
         FilterHeader(
             headerName = R.string.mana_cost,
@@ -58,6 +85,7 @@ fun CardFilters(
                     start = 8.dp
                 )
         ) {
+
             items(11) { cost ->
                 Box(
                     modifier = Modifier

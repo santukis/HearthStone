@@ -7,10 +7,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -23,7 +22,7 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.santukis.hearthstone.core.animations.alpha
 import com.santukis.viewmodels.entities.CardFilterState
-import com.santukis.viewmodels.entities.FilterUI
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -32,10 +31,10 @@ fun CardCollectionTopBar(
     scaffoldState: BottomSheetScaffoldState,
     cardFilterState: CardFilterState,
     modifier: Modifier = Modifier,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     onSelectedCardClassClick: () -> Unit = {},
     onRemoveFilterClick: (Int) -> Unit = {},
 ) {
-    val scope = rememberCoroutineScope()
 
     BoxWithConstraints(
         modifier = modifier
@@ -73,7 +72,7 @@ fun CardCollectionTopBar(
 
             TopBarButton(
                 onClick = {
-                    scope.launch {
+                    coroutineScope.launch {
                         scaffoldState.drawerState.open()
                     }
                 },
@@ -82,7 +81,7 @@ fun CardCollectionTopBar(
             ) {
 
                 Icon(
-                    imageVector = Icons.Filled.Menu,
+                    imageVector = Icons.Filled.FilterList,
                     contentDescription = "menu",
                 )
 

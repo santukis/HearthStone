@@ -19,8 +19,6 @@ data class CardFilterState(
         const val UNSELECTED = "-1"
     }
 
-    fun shouldShowCardClass(): Boolean = selectedCardClass != null
-
     fun getCardClasses(): List<CardClass> = metadata?.classes.orEmpty()
 
     fun getRarities(): List<Rarity> = metadata?.rarities.orEmpty()
@@ -30,6 +28,7 @@ data class CardFilterState(
     fun getManaCostColor(cost: Int): Color =
         if (selectedCardStats.manaCost == cost) {
             Color.Yellow
+
         } else {
             Color.White
         }
@@ -37,6 +36,7 @@ data class CardFilterState(
     fun getRarityNameColor(rarity: Rarity): Color =
         if (selectedCardRarity == rarity) {
             Color.Blue
+
         } else {
             Color.Unspecified
         }
