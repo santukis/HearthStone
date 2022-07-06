@@ -10,4 +10,5 @@
     <string name="mana_cost">Mana Cost</string>
     <string name="spell_school">SpellSchool</string>
     <string name="clear">Clear</string>
+    <string name="card_set">Set</string>
 </resources>

@@ -3,203 +3,98 @@ package com.santukis.hearthstone.collection.components
 import androidx.annotation.StringRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.santukis.entities.hearthstone.Rarity
-import com.santukis.entities.hearthstone.SpellSchool
+import com.santukis.entities.hearthstone.CardSet
 import com.santukis.hearthstone.R
-import com.santukis.hearthstone.core.components.AutoSizeText
+import com.santukis.hearthstone.core.components.ExpandableContainer
+import com.santukis.hearthstone.core.components.ExpandableState
+import com.santukis.hearthstone.core.components.rememberExpandableState
+import com.santukis.viewmodels.entities.CardFilter
 import com.santukis.viewmodels.entities.CardFilterState
-import com.santukis.viewmodels.entities.getDrawable
+import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_SET
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CardFilters(
     cardFilterState: CardFilterState,
     modifier: Modifier = Modifier,
-    onManaCostSelected: (Int) -> Unit = {},
-    onCardRaritySelected: (Rarity) -> Unit = {},
-    onSpellSchoolSelected: (SpellSchool) -> Unit = {},
+    onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ ->},
     onClearFilterClick: (Int) -> Unit = {},
     onCloseFiltersClick: () -> Unit = {}
 ) {
 
-    Column(
+    LazyColumn(
         modifier = modifier
-            .padding(8.dp)
+            .fillMaxSize()
     ) {
-
-        Box {
-
-            Button(
-                onClick = { onCloseFiltersClick() },
-                shape = CircleShape,
-                modifier = modifier
-                    .size(48.dp)
-                    .align(Alignment.TopStart),
-                contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Close,
-                    contentDescription = "Close"
-                )
-            }
-
-            Text(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .align(Alignment.TopCenter),
-                text = stringResource(id = R.string.filters),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h6
+        item {
+            CardFiltersHeader(
+                onCloseFiltersClick = onCloseFiltersClick
             )
         }
 
-        FilterHeader(
-            headerName = R.string.mana_cost,
-            onClearFilterClick = {
-                onClearFilterClick(com.santukis.viewmodels.R.string.mana_cost_filter)
-            }
-        )
+        cardFilterState.cardFilters.forEach { entry ->
+            createCardFilterRow(
+                filter = entry,
+                cardFilterState = cardFilterState,
+                onFilterSelected = onFilterSelected,
+                onClearFilterClick = onClearFilterClick
+            )
+        }
+    }
+}
 
-        LazyVerticalGrid(
-            cells = GridCells.Adaptive(minSize = 64.dp),
-            modifier = Modifier
-                .padding(
-                    top = 8.dp,
-                    start = 8.dp
-                )
+@Composable
+fun CardFiltersHeader(
+    modifier: Modifier = Modifier,
+    onCloseFiltersClick: () -> Unit = {}
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+
+    ) {
+        Button(
+            onClick = { onCloseFiltersClick() },
+            shape = CircleShape,
+            modifier = modifier
+                .size(48.dp)
+                .align(Alignment.TopStart),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.White
+            )
         ) {
-
-            items(11) { cost ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable {
-                            onManaCostSelected(cost)
-                        }
-                ) {
-                    Image(
-                        painter = painterResource(com.santukis.viewmodels.R.drawable.mana),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(
-                                top = 8.dp
-                            )
-                            .size(48.dp)
-                    )
-
-                    AutoSizeText(
-                        text = cost.toString(),
-                        color = cardFilterState.getManaCostColor(cost),
-                        modifier = Modifier
-                            .align(Alignment.CenterStart)
-                            .padding(
-                                start = 12.dp
-                            )
-                            .width(32.dp),
-                        textStyle = MaterialTheme.typography.h3
-                    )
-                }
-            }
+            Icon(
+                imageVector = Icons.Filled.Close,
+                contentDescription = "Close"
+            )
         }
 
-        FilterHeader(
-            headerName = R.string.rarity,
-            onClearFilterClick = {
-                onClearFilterClick(com.santukis.viewmodels.R.string.rarity_filter)
-            }
+        Text(
+            modifier = modifier
+                .align(Alignment.Center),
+            text = stringResource(id = R.string.filters),
+            style = MaterialTheme.typography.h6
         )
-
-        LazyVerticalGrid(
-            cells = GridCells.Fixed(count = 2),
-            modifier = Modifier
-                .padding(
-                    top = 8.dp,
-                    start = 8.dp
-                )
-        ) {
-            items(cardFilterState.getRarities()) { rarity ->
-                Row(
-                    modifier = Modifier
-                        .clickable {
-                            onCardRaritySelected(rarity)
-                        },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(rarity.getDrawable()),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .padding(top = 8.dp)
-                            .size(32.dp)
-                    )
-
-                    Text(
-                        text = rarity.identity.name,
-                        color = cardFilterState.getRarityNameColor(rarity),
-                        modifier = Modifier
-                            .padding(start = 12.dp),
-                        style = MaterialTheme.typography.subtitle1
-                    )
-                }
-            }
-        }
-
-        FilterHeader(
-            headerName = R.string.spell_school,
-            onClearFilterClick = {
-                onClearFilterClick(com.santukis.viewmodels.R.string.spell_school_filter)
-            }
-        )
-
-        LazyVerticalGrid(
-            cells = GridCells.Fixed(count = 2),
-            modifier = Modifier
-                .padding(
-                    top = 8.dp,
-                    start = 8.dp
-                )
-        ) {
-            items(cardFilterState.getSpellSchools()) { spellSchool ->
-
-                Text(
-                    text = spellSchool.identity.name,
-                    color = cardFilterState.getSpellSchoolColor(spellSchool),
-                    modifier = Modifier
-                        .padding(
-                            vertical = 12.dp,
-                            horizontal = 8.dp
-                        )
-                        .clickable { onSpellSchoolSelected(spellSchool) },
-                    style = MaterialTheme.typography.subtitle1
-                )
-            }
-        }
     }
 }
 
 @Composable
 fun FilterHeader(
     @StringRes headerName: Int,
+    expandableState: ExpandableState,
     modifier: Modifier = Modifier,
     onClearFilterClick: () -> Unit = {}
 ) {
@@ -216,11 +111,90 @@ fun FilterHeader(
             style = MaterialTheme.typography.h6,
         )
 
+        Spacer(modifier = Modifier.weight(fill = true, weight = 1f))
+
         Text(
             text = stringResource(id = R.string.clear),
             modifier = Modifier
+                .padding(all = 8.dp)
                 .clickable { onClearFilterClick() },
             style = MaterialTheme.typography.body2
+        )
+
+        Icon(
+            imageVector = if (expandableState.isExpanded) {
+                Icons.Filled.ArrowDropUp
+            } else {
+                Icons.Filled.ArrowDropDown
+            },
+            contentDescription = "Expand/Contract icon",
+            modifier = Modifier
+                .clickable {
+                    if (expandableState.isExpanded) {
+                        expandableState.collapse()
+
+                    } else {
+                        expandableState.expand()
+                    }
+                }
+        )
+    }
+}
+
+fun LazyListScope.createCardFilterRow(
+    filter: Map.Entry<Int, List<CardFilter<*>>>,
+    cardFilterState: CardFilterState,
+    onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
+    onClearFilterClick: (Int) -> Unit = {}
+) {
+    when (filter.key) {
+        CARD_SET -> createCardSetFilterRow(
+            filterList = filter.value.filterIsInstance<CardFilter<CardSet>>(),
+            cardFilterState = cardFilterState,
+            onFilterSelected = onFilterSelected,
+            onClearFilterClick = { onClearFilterClick(CARD_SET) }
+        )
+    }
+}
+
+private fun LazyListScope.createCardSetFilterRow(
+    filterList: List<CardFilter<CardSet>>,
+    cardFilterState: CardFilterState,
+    onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
+    onClearFilterClick: () -> Unit = {}
+) {
+
+    item {
+        val expandableState = rememberExpandableState()
+
+        ExpandableContainer(
+            expandableState = expandableState,
+            headerContent = {
+                FilterHeader(
+                    headerName = R.string.card_set,
+                    expandableState = expandableState,
+                    onClearFilterClick = onClearFilterClick,
+                )
+                Divider()
+            },
+            expandedContent = {
+                filterList.forEach { filter ->
+                    Text(
+                        text = filter.getName(),
+                        modifier = Modifier
+                            .padding(
+                                horizontal = 12.dp,
+                                vertical = 8.dp
+                            )
+                            .clickable {
+                                onFilterSelected(CARD_SET, filter)
+                            },
+                        color = cardFilterState.getFilterColor(CARD_SET, filter),
+                        style = MaterialTheme.typography.subtitle1
+                    )
+
+                }
+            }
         )
     }
 }

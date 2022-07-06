@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.santukis.entities.hearthstone.*
 import com.santukis.usecases.UseCase
-import com.santukis.viewmodels.R
 import com.santukis.viewmodels.entities.*
+import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_CLASS
 import com.santukis.viewmodels.mappers.toUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -57,7 +57,10 @@ class HearthstoneViewModel(
 
     fun onCardClassSelected(cardClass: CardClass) {
         cardFilterState = cardFilterState.copy(
-            selectedCardClass = cardClass,
+            activeFilters = cardFilterState.updateActiveFilters(
+                key = CARD_CLASS,
+                filter = cardClass.asCardFilter()
+            ),
             shouldShowCardClassList = !cardFilterState.shouldShowCardClassList
         )
 
@@ -76,54 +79,20 @@ class HearthstoneViewModel(
         )
     }
 
-    fun onManaCostSelected(cost: Int) {
+    fun onFilterSelected(key: Int, filter: CardFilter<*>) {
         cardFilterState = cardFilterState.copy(
-            selectedCardStats = cardFilterState.selectedCardStats.copy(manaCost = cost),
-            activeFilters = cardFilterState.updateActiveFilters(
-                FilterUI(
-                    key = R.string.mana_cost_filter,
-                    value = cost.toString()
-                )
-            )
-        )
-
-        loadMoreItems()
-    }
-
-    fun onCardRaritySelected(rarity: Rarity?) {
-        cardFilterState = cardFilterState.copy(
-            selectedCardRarity = rarity,
-            activeFilters = cardFilterState.updateActiveFilters(
-                FilterUI(
-                    key = R.string.rarity_filter,
-                    value = rarity?.identity?.name ?: CardFilterState.UNSELECTED
-                )
-            )
-        )
-
-        loadMoreItems()
-    }
-
-    fun onSpellSchoolSelected(spellSchool: SpellSchool?) {
-        cardFilterState = cardFilterState.copy(
-            selectedSpellSchool = spellSchool,
-            activeFilters = cardFilterState.updateActiveFilters(
-                FilterUI(
-                    key = R.string.spell_school_filter,
-                    value = spellSchool?.identity?.name ?: CardFilterState.UNSELECTED
-                )
-            )
+            activeFilters = cardFilterState.updateActiveFilters(key, filter)
         )
 
         loadMoreItems()
     }
 
     fun onRemoveFilterClick(filter: Int) {
-        when (filter) {
-            R.string.mana_cost_filter -> onManaCostSelected(-1)
-            R.string.rarity_filter -> onCardRaritySelected(null)
-            R.string.spell_school_filter -> onSpellSchoolSelected(null)
-        }
+        cardFilterState = cardFilterState.copy(
+            activeFilters = cardFilterState.updateActiveFilters(filter, null)
+        )
+
+        loadMoreItems()
     }
 
     fun onEndReached() {
@@ -177,7 +146,12 @@ class HearthstoneViewModel(
                     result.onSuccess { metadata ->
                         cardFilterState = cardFilterState.copy(
                             metadata = metadata,
-                            selectedCardClass = metadata.classes.firstOrNull()
+                            cardFilters = metadata.asCardFilters(),
+                            activeFilters = cardFilterState
+                                .updateActiveFilters(
+                                    key = CARD_CLASS,
+                                    filter = metadata.classes.firstOrNull()?.asCardFilter()
+                                )
                         )
                     }
                 }
@@ -221,12 +195,7 @@ class HearthstoneViewModel(
     }
 
     private fun buildSearchCardRequest(): SearchCardsRequest {
-        searchCardsRequest = searchCardsRequest.copy(
-            cardClass = cardFilterState.selectedCardClass,
-            cardStats = cardFilterState.selectedCardStats,
-            rarity = cardFilterState.selectedCardRarity,
-            spellSchool = cardFilterState.selectedSpellSchool
-        )
+        searchCardsRequest = cardFilterState.buildSearchCardsRequest(searchCardsRequest)
 
         return searchCardsRequest.copy()
     }

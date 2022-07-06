@@ -15,16 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.santukis.hearthstone.R
 import com.santukis.hearthstone.theme.HearthstoneTheme
-import com.santukis.viewmodels.entities.FilterUI
+import com.santukis.viewmodels.entities.CardFilter
 
 @Composable
 fun ActiveFilter(
-    filter: FilterUI<Int, String>,
+    filter: CardFilter<*>,
     modifier: Modifier = Modifier,
     onRemoveFilterClick: () -> Unit = {}
 ) {
@@ -50,10 +48,7 @@ fun ActiveFilter(
 
         Text(
             modifier = Modifier.padding(end = 8.dp),
-            text = stringResource(
-                id = filter.key,
-                filter.value
-            ),
+            text = filter.getName(),
             style = MaterialTheme.typography.subtitle1
         )
     }
@@ -63,6 +58,6 @@ fun ActiveFilter(
 @Composable
 fun ActiveFilterPreview() {
     HearthstoneTheme {
-        ActiveFilter(filter = FilterUI(R.string.mana_cost, "10"))
+
     }
 }

@@ -2,65 +2,55 @@ package com.santukis.viewmodels.entities
 
 import androidx.compose.ui.graphics.Color
 import com.santukis.entities.hearthstone.*
+import com.santukis.viewmodels.R
 
 data class CardFilterState(
     private val metadata: Metadata? = null,
-    private val activeFilters: Map<Int, FilterUI<Int, String>> = mapOf(),
-    val selectedCardClass: CardClass? = null,
-    val selectedCardStats: CardStats = CardStats(),
-    val selectedCardRarity: Rarity? = null,
-    val selectedSpellSchool: SpellSchool? = null,
+    val cardFilters: Map<Int, List<CardFilter<*>>> = emptyMap(),
+    val activeFilters: Map<Int, CardFilter<*>> = mapOf(),
     val shouldShowCardClassList: Boolean = false
 ) {
 
     companion object {
-        const val UNSELECTED = "-1"
+        const val CARD_SET = 1
+        const val GAME_MODE = 2
+        const val CARD_TYPE = 3
+        const val RARITY = 4
+        const val CARD_CLASS = 5
+        const val MINION_TYPE = 6
+        const val SPELL_SCHOOL = 7
+        const val KEYWORD = 8
+        const val CARD_STATS = 9
     }
 
     fun getCardClasses(): List<CardClass> = metadata?.classes.orEmpty()
 
-    fun getRarities(): List<Rarity> = metadata?.rarities.orEmpty()
+    fun getSelectedCardClassDrawable(): Int =
+        (activeFilters[CARD_CLASS]?.getFilter() as? CardClass)?.getDrawable() ?: R.drawable.no_class
 
-    fun getSpellSchools(): List<SpellSchool> = metadata?.spellSchools.orEmpty()
+    fun getFilterColor(key: Int, filter: CardFilter<*>): Color {
+        val selectedFilter = activeFilters[key]
 
-    fun getSelectedCardClassDrawable(): Int = selectedCardClass.getDrawable()
-
-    fun getManaCostColor(cost: Int): Color =
-        if (selectedCardStats.manaCost == cost) {
-            Color.Yellow
-
-        } else {
-            Color.White
-        }
-
-    fun getRarityNameColor(rarity: Rarity): Color =
-        if (selectedCardRarity == rarity) {
-            Color.Blue
+        return if (selectedFilter?.getId() == filter.getId()) {
+            filter.getSelectedColor()
 
         } else {
-            Color.Unspecified
+            filter.getUnselectedColor()
         }
-
-    fun getSpellSchoolColor(spellSchool: SpellSchool): Color =
-        if (selectedSpellSchool == spellSchool) {
-            Color.Red
-
-        } else {
-            Color.Unspecified
-        }
-
-    fun updateActiveFilters(filterUI: FilterUI<Int, String>): Map<Int, FilterUI<Int, String>> {
-        val updatedFilters = when (filterUI.value) {
-            UNSELECTED -> activeFilters.filterNot { it.key == filterUI.key }
-            else -> activeFilters.toMutableMap().apply {
-                set(filterUI.key, filterUI)
-            }
-        }
-
-        return updatedFilters
     }
 
-    fun getActiveFilters(): List<FilterUI<Int, String>> {
-        return activeFilters.values.toList()
+    fun updateActiveFilters(key: Int, filter: CardFilter<*>?): Map<Int, CardFilter<*>> =
+        when (filter) {
+            null -> activeFilters.toMutableMap().apply { remove(key) }
+            else -> activeFilters.toMutableMap().apply { set(key, filter) }
+        }
+
+    fun buildSearchCardsRequest(searchCardsRequest: SearchCardsRequest): SearchCardsRequest {
+        return searchCardsRequest.copy(
+            cardClass = activeFilters[CARD_CLASS]?.getFilter() as? CardClass,
+            set = activeFilters[CARD_SET]?.getFilter() as? CardSet,
+            rarity = activeFilters[RARITY]?.getFilter() as? Rarity,
+            spellSchool = activeFilters[SPELL_SCHOOL]?.getFilter() as? SpellSchool,
+        )
     }
 }

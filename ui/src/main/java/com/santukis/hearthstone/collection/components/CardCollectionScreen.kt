@@ -21,8 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import coil.compose.AsyncImage
 import com.santukis.entities.hearthstone.CardClass
-import com.santukis.entities.hearthstone.Rarity
-import com.santukis.entities.hearthstone.SpellSchool
 import com.santukis.hearthstone.core.animations.zoom
 import com.santukis.viewmodels.hearthstone.HearthstoneViewModel
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
@@ -62,16 +60,8 @@ fun CardCollectionScreen(
         viewModel.onSelectedCardClassClick()
     }
 
-    val onManaCostSelected: (Int) -> Unit = { cost ->
-        viewModel.onManaCostSelected(cost)
-    }
-
-    val onCardRaritySelected: (Rarity) -> Unit = { rarity ->
-        viewModel.onCardRaritySelected(rarity)
-    }
-
-    val onSpellSchoolSelected: (SpellSchool) -> Unit = { spellSchool ->
-        viewModel.onSpellSchoolSelected(spellSchool)
+    val onFilterSelected: (Int, CardFilter<*>) -> Unit = { key, filter ->
+        viewModel.onFilterSelected(key, filter)
     }
 
     val onRemoveFilterClick: (Int) -> Unit = { filter ->
@@ -87,9 +77,7 @@ fun CardCollectionScreen(
         onFavouriteClick = onFavouriteClick,
         onCardClassSelected = onCardClassSelected,
         onSelectedCardClassClick = onSelectedCardClassClick,
-        onManaCostSelected = onManaCostSelected,
-        onCardRaritySelected = onCardRaritySelected,
-        onSpellSchoolSelected = onSpellSchoolSelected,
+        onFilterSelected = onFilterSelected,
         onRemoveFilterClick = onRemoveFilterClick,
         onEndReached = onEndReached
     )
@@ -107,9 +95,7 @@ fun CardCollectionContent(
     onFavouriteClick: () -> Unit = {},
     onCardClassSelected: (CardClass) -> Unit = {},
     onSelectedCardClassClick: () -> Unit = {},
-    onManaCostSelected: (Int) -> Unit = {},
-    onCardRaritySelected: (Rarity) -> Unit = {},
-    onSpellSchoolSelected: (SpellSchool) -> Unit = {},
+    onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
     onRemoveFilterClick: (Int) -> Unit = {},
     onEndReached: () -> Unit = {}
 ) {
@@ -152,9 +138,7 @@ fun CardCollectionContent(
             drawerContent = {
                 CardFilters(
                     cardFilterState = cardFilterState,
-                    onManaCostSelected = onManaCostSelected,
-                    onCardRaritySelected = onCardRaritySelected,
-                    onSpellSchoolSelected = onSpellSchoolSelected,
+                    onFilterSelected = onFilterSelected,
                     onClearFilterClick = onRemoveFilterClick,
                     onCloseFiltersClick = { coroutineScope.launch { scaffoldState.drawerState.close() } }
                 )
