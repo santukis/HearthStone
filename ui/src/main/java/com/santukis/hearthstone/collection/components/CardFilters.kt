@@ -1,9 +1,10 @@
 package com.santukis.hearthstone.collection.components
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -34,18 +35,17 @@ fun CardFilters(
     onCloseFiltersClick: () -> Unit = {}
 ) {
 
-    LazyColumn(
+    Column(
         modifier = modifier
             .fillMaxSize()
+            .background(Color.White)
     ) {
-        item {
-            CardFiltersHeader(
-                onCloseFiltersClick = onCloseFiltersClick
-            )
-        }
+        CardFiltersHeader(
+            onCloseFiltersClick = onCloseFiltersClick
+        )
 
         cardFilterState.cardFilters.forEach { entry ->
-            createCardFilterRow(
+            CardFilterRowFactory(
                 filter = entry,
                 cardFilterState = cardFilterState,
                 onFilterSelected = onFilterSelected,
@@ -103,6 +103,7 @@ fun FilterHeader(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
+            .background(Color.White)
             .padding(16.dp)
     ) {
 
@@ -141,14 +142,15 @@ fun FilterHeader(
     }
 }
 
-fun LazyListScope.createCardFilterRow(
+@Composable
+fun CardFilterRowFactory(
     filter: Map.Entry<Int, List<CardFilter<*>>>,
     cardFilterState: CardFilterState,
     onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
     onClearFilterClick: (Int) -> Unit = {}
 ) {
     when (filter.key) {
-        CARD_SET -> createCardSetFilterRow(
+        CARD_SET -> CardSetFilterRow(
             filterList = filter.value.filterIsInstance<CardFilter<CardSet>>(),
             cardFilterState = cardFilterState,
             onFilterSelected = onFilterSelected,
@@ -157,44 +159,45 @@ fun LazyListScope.createCardFilterRow(
     }
 }
 
-private fun LazyListScope.createCardSetFilterRow(
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun CardSetFilterRow(
     filterList: List<CardFilter<CardSet>>,
     cardFilterState: CardFilterState,
     onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
     onClearFilterClick: () -> Unit = {}
 ) {
 
-    item {
-        val expandableState = rememberExpandableState()
+    val expandableState = rememberExpandableState()
 
-        ExpandableContainer(
-            expandableState = expandableState,
-            headerContent = {
+    ExpandableContainer(
+        expandableState = expandableState,
+        headerContent = {
+            stickyHeader {
                 FilterHeader(
                     headerName = R.string.card_set,
                     expandableState = expandableState,
                     onClearFilterClick = onClearFilterClick,
                 )
                 Divider()
-            },
-            expandedContent = {
-                filterList.forEach { filter ->
-                    Text(
-                        text = filter.getName(),
-                        modifier = Modifier
-                            .padding(
-                                horizontal = 12.dp,
-                                vertical = 8.dp
-                            )
-                            .clickable {
-                                onFilterSelected(CARD_SET, filter)
-                            },
-                        color = cardFilterState.getFilterColor(CARD_SET, filter),
-                        style = MaterialTheme.typography.subtitle1
-                    )
-
-                }
             }
-        )
-    }
+        },
+        expandedContent = {
+            items(filterList) { filter ->
+                Text(
+                    text = filter.getName(),
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 12.dp,
+                            vertical = 8.dp
+                        )
+                        .clickable {
+                            onFilterSelected(CARD_SET, filter)
+                        },
+                    color = cardFilterState.getFilterColor(CARD_SET, filter),
+                    style = MaterialTheme.typography.subtitle1
+                )
+            }
+        }
+    )
 }
