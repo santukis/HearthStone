@@ -118,10 +118,8 @@ class HearthstoneViewModel(
                 )
             },
             onError = {
-                if (it.message != "No items stored in database") {
-                    cardCollectionState = cardCollectionState.copy(cards = emptyList())
-                    cardDetailState = cardDetailState.reset()
-                }
+                cardCollectionState = cardCollectionState.copy(cards = emptyList())
+                cardDetailState = cardDetailState.reset()
             }
         )
     }

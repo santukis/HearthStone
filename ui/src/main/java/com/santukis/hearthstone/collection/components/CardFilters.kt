@@ -1,9 +1,11 @@
 package com.santukis.hearthstone.collection.components
 
 import androidx.annotation.StringRes
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -18,13 +20,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.santukis.entities.hearthstone.CardSet
+import com.santukis.entities.hearthstone.CardType
+import com.santukis.entities.hearthstone.GameMode
+import com.santukis.entities.hearthstone.SpellSchool
 import com.santukis.hearthstone.R
 import com.santukis.hearthstone.core.components.ExpandableContainer
 import com.santukis.hearthstone.core.components.ExpandableState
+import com.santukis.hearthstone.core.components.ExpandedValue
 import com.santukis.hearthstone.core.components.rememberExpandableState
 import com.santukis.viewmodels.entities.CardFilter
 import com.santukis.viewmodels.entities.CardFilterState
 import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_SET
+import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_TYPE
+import com.santukis.viewmodels.entities.CardFilterState.Companion.GAME_MODE
+import com.santukis.viewmodels.entities.CardFilterState.Companion.SPELL_SCHOOL
 
 @Composable
 fun CardFilters(
@@ -35,17 +44,19 @@ fun CardFilters(
     onCloseFiltersClick: () -> Unit = {}
 ) {
 
-    Column(
+    LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
-        CardFiltersHeader(
-            onCloseFiltersClick = onCloseFiltersClick
-        )
+        item {
+            CardFiltersHeader(
+                onCloseFiltersClick = onCloseFiltersClick
+            )
+        }
 
         cardFilterState.cardFilters.forEach { entry ->
-            CardFilterRowFactory(
+            cardFilterRowFactory(
                 filter = entry,
                 cardFilterState = cardFilterState,
                 onFilterSelected = onFilterSelected,
@@ -94,8 +105,8 @@ fun CardFiltersHeader(
 @Composable
 fun FilterHeader(
     @StringRes headerName: Int,
-    expandableState: ExpandableState,
     modifier: Modifier = Modifier,
+    expandableState: ExpandableState = rememberExpandableState(),
     onClearFilterClick: () -> Unit = {}
 ) {
     Row(
@@ -135,62 +146,76 @@ fun FilterHeader(
     }
 }
 
-@Composable
-fun CardFilterRowFactory(
+fun LazyListScope.cardFilterRowFactory(
     filter: Map.Entry<Int, List<CardFilter<*>>>,
     cardFilterState: CardFilterState,
     onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
     onClearFilterClick: (Int) -> Unit = {}
 ) {
     when (filter.key) {
-        CARD_SET -> CardSetFilterRow(
-            filterList = filter.value.filterIsInstance<CardFilter<CardSet>>(),
+        CARD_TYPE -> defaultExpandableRow(
+            filter = filter as Map.Entry<Int, List<CardFilter<CardType>>>,
+            headerName = R.string.card_types,
+            cardFilterState = cardFilterState,
+            onFilterSelected = onFilterSelected,
+            onClearFilterClick = { onClearFilterClick(CARD_TYPE) }
+        )
+        CARD_SET -> defaultExpandableRow(
+            filter = filter as Map.Entry<Int, List<CardFilter<CardSet>>>,
+            headerName = R.string.card_set,
             cardFilterState = cardFilterState,
             onFilterSelected = onFilterSelected,
             onClearFilterClick = { onClearFilterClick(CARD_SET) }
+        )
+        SPELL_SCHOOL -> defaultExpandableRow(
+            filter = filter as Map.Entry<Int, List<CardFilter<SpellSchool>>>,
+            headerName = R.string.spell_school,
+            cardFilterState = cardFilterState,
+            onFilterSelected = onFilterSelected,
+            onClearFilterClick = { onClearFilterClick(SPELL_SCHOOL) }
         )
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun CardSetFilterRow(
-    filterList: List<CardFilter<CardSet>>,
+private fun <FilterType> LazyListScope.defaultExpandableRow(
+    filter: Map.Entry<Int, List<CardFilter<FilterType>>>,
+    @StringRes headerName: Int,
     cardFilterState: CardFilterState,
     onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
     onClearFilterClick: () -> Unit = {}
 ) {
 
-    val expandableState = rememberExpandableState()
+    item {
+        val expandableState = rememberExpandableState()
 
-    ExpandableContainer(
-        expandableState = expandableState,
-        headerContent = {
-            stickyHeader {
+        ExpandableContainer(
+            expandableState = expandableState,
+            headerContent = {
                 FilterHeader(
-                    headerName = R.string.card_set,
+                    headerName = headerName,
                     expandableState = expandableState,
                     onClearFilterClick = onClearFilterClick,
                 )
                 Divider()
+            },
+            expandedContent = {
+                filter.value.forEach { filterItem ->
+                    Text(
+                        text = filterItem.getName(),
+                        modifier = Modifier
+                            .padding(
+                                horizontal = 12.dp,
+                                vertical = 8.dp
+                            )
+                            .clickable {
+                                onFilterSelected(filter.key, filterItem)
+                            },
+                        color = cardFilterState.getFilterColor(filter.key, filterItem),
+                        style = MaterialTheme.typography.subtitle1
+                    )
+                }
             }
-        },
-        expandedContent = {
-            items(filterList) { filter ->
-                Text(
-                    text = filter.getName(),
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 12.dp,
-                            vertical = 8.dp
-                        )
-                        .clickable {
-                            onFilterSelected(CARD_SET, filter)
-                        },
-                    color = cardFilterState.getFilterColor(CARD_SET, filter),
-                    style = MaterialTheme.typography.subtitle1
-                )
-            }
-        }
-    )
+        )
+    }
 }

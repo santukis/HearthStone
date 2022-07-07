@@ -64,10 +64,6 @@ fun SearchCardsRequest.toSqliteQuery(): SupportSQLiteQuery {
 
     filter.takeIfNotEmpty()?.let { statements.add("ruleText LIKE '%' || $it || '%'") }
 
-    gameMode?.let {
-        statements.add("")
-    }
-
     statements.takeIf { it.isNotEmpty() }?.let {
         query += " WHERE ".plus(it.joinToString(separator = " AND "))
     }

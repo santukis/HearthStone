@@ -41,8 +41,9 @@ fun GameMode.asCardFilter(): CardFilter<GameMode> =
 
         override fun getFilter(): GameMode = this@asCardFilter
 
-        override fun getName(): String =
-            identity.name
+        override fun getName(): String = identity.name
+
+        override fun getSelectedColor(): Color = Color.Green
     }
 
 fun CardType.asCardFilter(): CardFilter<CardType> =
@@ -51,8 +52,9 @@ fun CardType.asCardFilter(): CardFilter<CardType> =
 
         override fun getFilter(): CardType = this@asCardFilter
 
-        override fun getName(): String =
-            identity.name
+        override fun getName(): String = identity.name
+
+        override fun getSelectedColor(): Color = Color.Magenta
     }
 
 fun Rarity.asCardFilter(): CardFilter<Rarity> =
@@ -61,8 +63,7 @@ fun Rarity.asCardFilter(): CardFilter<Rarity> =
 
         override fun getFilter(): Rarity = this@asCardFilter
 
-        override fun getName(): String =
-            identity.name
+        override fun getName(): String = identity.name
     }
 
 fun CardClass.asCardFilter(): CardFilter<CardClass> =
@@ -71,8 +72,7 @@ fun CardClass.asCardFilter(): CardFilter<CardClass> =
 
         override fun getFilter(): CardClass = this@asCardFilter
 
-        override fun getName(): String =
-            identity.name
+        override fun getName(): String = identity.name
     }
 
 fun MinionType.asCardFilter(): CardFilter<MinionType> =
@@ -81,8 +81,7 @@ fun MinionType.asCardFilter(): CardFilter<MinionType> =
 
         override fun getFilter(): MinionType = this@asCardFilter
 
-        override fun getName(): String =
-            identity.name
+        override fun getName(): String = identity.name
     }
 
 fun SpellSchool.asCardFilter(): CardFilter<SpellSchool> =
@@ -91,8 +90,9 @@ fun SpellSchool.asCardFilter(): CardFilter<SpellSchool> =
 
         override fun getFilter(): SpellSchool = this@asCardFilter
 
-        override fun getName(): String =
-            identity.name
+        override fun getName(): String = identity.name
+
+        override fun getSelectedColor(): Color = Color.Blue
     }
 
 fun Keyword.asCardFilter(): CardFilter<Keyword> =
@@ -101,8 +101,7 @@ fun Keyword.asCardFilter(): CardFilter<Keyword> =
 
         override fun getFilter(): Keyword = this@asCardFilter
 
-        override fun getName(): String =
-            identity.name
+        override fun getName(): String = identity.name
     }
 
 fun Metadata.asCardFilters(): Map<Int, List<CardFilter<*>>> {

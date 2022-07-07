@@ -11,4 +11,6 @@
     <string name="spell_school">SpellSchool</string>
     <string name="clear">Clear</string>
     <string name="card_set">Set</string>
+    <string name="game_mode">Game Modes</string>
+    <string name="card_types">Card Types</string>
 </resources>

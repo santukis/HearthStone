@@ -1,10 +1,9 @@
 package com.santukis.hearthstone.core.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.*
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -14,10 +13,10 @@ import androidx.compose.ui.Modifier
 fun ExpandableContainer(
     modifier: Modifier = Modifier,
     expandableState: ExpandableState = rememberExpandableState(),
-    headerContent: LazyListScope.() -> Unit,
-    expandedContent: LazyListScope.() -> Unit,
+    headerContent: @Composable ColumnScope.() -> Unit,
+    expandedContent: @Composable ColumnScope.() -> Unit,
 ) {
-    LazyColumn(
+    Column(
         modifier = modifier
             .fillMaxWidth()
             .animateContentSize(),
@@ -25,8 +24,8 @@ fun ExpandableContainer(
     ) {
         headerContent()
 
-        if (expandableState.isExpanded) {
-            expandedContent()
+        AnimatedVisibility(visible = expandableState.isExpanded) {
+            Column(content = expandedContent)
         }
     }
 }

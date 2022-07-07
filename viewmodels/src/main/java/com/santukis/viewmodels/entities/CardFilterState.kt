@@ -50,6 +50,7 @@ data class CardFilterState(
             set = activeFilters[CARD_SET]?.getFilter() as? CardSet,
             rarity = activeFilters[RARITY]?.getFilter() as? Rarity,
             spellSchool = activeFilters[SPELL_SCHOOL]?.getFilter() as? SpellSchool,
+            type = activeFilters[CARD_TYPE]?.getFilter() as? CardType
         )
     }
 }
