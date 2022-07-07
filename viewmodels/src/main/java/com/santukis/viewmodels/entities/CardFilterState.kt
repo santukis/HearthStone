@@ -7,8 +7,7 @@ import com.santukis.viewmodels.R
 data class CardFilterState(
     private val metadata: Metadata? = null,
     val cardFilters: Map<Int, List<CardFilter<*>>> = emptyMap(),
-    val activeFilters: Map<Int, CardFilter<*>> = mapOf(),
-    val shouldShowCardClassList: Boolean = false
+    val activeFilters: Map<Int, CardFilter<*>> = mapOf()
 ) {
 
     companion object {

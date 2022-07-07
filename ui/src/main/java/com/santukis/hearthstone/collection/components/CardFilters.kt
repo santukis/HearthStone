@@ -130,14 +130,7 @@ fun FilterHeader(
             },
             contentDescription = "Expand/Contract icon",
             modifier = Modifier
-                .clickable {
-                    if (expandableState.isExpanded) {
-                        expandableState.collapse()
-
-                    } else {
-                        expandableState.expand()
-                    }
-                }
+                .clickable { expandableState.toggle() }
         )
     }
 }

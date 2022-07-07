@@ -56,27 +56,13 @@ class HearthstoneViewModel(
     }
 
     fun onCardClassSelected(cardClass: CardClass) {
-        cardFilterState = cardFilterState.copy(
-            activeFilters = cardFilterState.updateActiveFilters(
-                key = CARD_CLASS,
-                filter = cardClass.asCardFilter()
-            ),
-            shouldShowCardClassList = !cardFilterState.shouldShowCardClassList
-        )
-
         cardDetailState = cardDetailState.reset()
 
         cardCollectionState = cardCollectionState.copy(
             cards = emptyList()
         )
 
-        loadMoreItems()
-    }
-
-    fun onSelectedCardClassClick() {
-        cardFilterState = cardFilterState.copy(
-            shouldShowCardClassList = !cardFilterState.shouldShowCardClassList
-        )
+        onFilterSelected(CARD_CLASS, cardClass.asCardFilter())
     }
 
     fun onFilterSelected(key: Int, filter: CardFilter<*>) {
@@ -132,8 +118,10 @@ class HearthstoneViewModel(
                 )
             },
             onError = {
-                cardCollectionState = cardCollectionState.copy(cards = emptyList())
-                cardDetailState = cardDetailState.reset()
+                if (it.message != "No items stored in database") {
+                    cardCollectionState = cardCollectionState.copy(cards = emptyList())
+                    cardDetailState = cardDetailState.reset()
+                }
             }
         )
     }

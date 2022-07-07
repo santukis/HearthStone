@@ -21,6 +21,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.santukis.hearthstone.core.animations.alpha
+import com.santukis.hearthstone.core.components.VisibleState
+import com.santukis.hearthstone.core.components.rememberVisibleState
 import com.santukis.viewmodels.entities.CardFilterState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -31,8 +33,8 @@ fun CardCollectionTopBar(
     scaffoldState: BottomSheetScaffoldState,
     cardFilterState: CardFilterState,
     modifier: Modifier = Modifier,
+    visibleState: VisibleState = rememberVisibleState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onSelectedCardClassClick: () -> Unit = {},
     onRemoveFilterClick: (Int) -> Unit = {},
 ) {
 
@@ -88,9 +90,7 @@ fun CardCollectionTopBar(
             }
 
             TopBarButton(
-                onClick = {
-                    onSelectedCardClassClick()
-                },
+                onClick = { visibleState.toggle() },
                 scaffoldState = scaffoldState,
                 modifier = Modifier.layoutId("endButton")
             ) {

@@ -58,7 +58,7 @@ class ExpandableState(
         get() = currentValue == ExpandedValue.Collapsed
 
 
-    var currentValue: ExpandedValue by mutableStateOf(initialValue)
+    private var currentValue: ExpandedValue by mutableStateOf(initialValue)
         private set
 
     fun expand() {
@@ -67,6 +67,15 @@ class ExpandableState(
 
     fun collapse() {
         currentValue = ExpandedValue.Collapsed
+    }
+
+    fun toggle() {
+        if (isExpanded) {
+            collapse()
+
+        } else {
+            expand()
+        }
     }
 
     companion object {

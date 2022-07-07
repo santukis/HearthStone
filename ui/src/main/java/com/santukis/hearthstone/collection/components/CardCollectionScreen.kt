@@ -56,10 +56,6 @@ fun CardCollectionScreen(
         viewModel.onCardClassSelected(cardClass)
     }
 
-    val onSelectedCardClassClick: () -> Unit = {
-        viewModel.onSelectedCardClassClick()
-    }
-
     val onFilterSelected: (Int, CardFilter<*>) -> Unit = { key, filter ->
         viewModel.onFilterSelected(key, filter)
     }
@@ -76,7 +72,6 @@ fun CardCollectionScreen(
         onCardSelected = onCardSelected,
         onFavouriteClick = onFavouriteClick,
         onCardClassSelected = onCardClassSelected,
-        onSelectedCardClassClick = onSelectedCardClassClick,
         onFilterSelected = onFilterSelected,
         onRemoveFilterClick = onRemoveFilterClick,
         onEndReached = onEndReached
@@ -94,13 +89,14 @@ fun CardCollectionContent(
     onCardSelected: (Int) -> Unit = {},
     onFavouriteClick: () -> Unit = {},
     onCardClassSelected: (CardClass) -> Unit = {},
-    onSelectedCardClassClick: () -> Unit = {},
     onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
     onRemoveFilterClick: (Int) -> Unit = {},
     onEndReached: () -> Unit = {}
 ) {
 
     val coroutineScope = rememberCoroutineScope()
+
+    val cardClassListVisibleState = rememberVisibleState(initialValue = VisibleValue.Invisible)
 
     Box(modifier = modifier) {
         val scaffoldState = rememberBottomSheetScaffoldState(
@@ -119,7 +115,7 @@ fun CardCollectionContent(
                     scaffoldState = scaffoldState,
                     cardFilterState = cardFilterState,
                     coroutineScope = coroutineScope,
-                    onSelectedCardClassClick = onSelectedCardClassClick,
+                    visibleState = cardClassListVisibleState,
                     onRemoveFilterClick = onRemoveFilterClick
                 )
             },
@@ -157,6 +153,7 @@ fun CardCollectionContent(
         CardClassCollection(
             scaffoldState = scaffoldState,
             cardFilterState = cardFilterState,
+            visibleState = cardClassListVisibleState,
             onCardClassSelected = onCardClassSelected
         )
     }
@@ -271,12 +268,14 @@ fun CardClassCollection(
     scaffoldState: BottomSheetScaffoldState,
     cardFilterState: CardFilterState,
     modifier: Modifier = Modifier,
+    visibleState: VisibleState = rememberVisibleState(),
     onCardClassSelected: (CardClass) -> Unit = {}
 ) {
+
     AnimatedVisibility(
         visible = scaffoldState.drawerState.isClosed
                 && scaffoldState.bottomSheetState.isCollapsed
-                && cardFilterState.shouldShowCardClassList,
+                && visibleState.isVisible,
         enter = fadeIn() + scaleIn(
             transformOrigin = TransformOrigin(
                 pivotFractionY = 0.15f,
@@ -318,6 +317,7 @@ fun CardClassCollection(
                                 .size(51.dp)
                                 .clip(CircleShape)
                                 .clickable {
+                                    visibleState.toggle()
                                     onCardClassSelected(cardClass)
                                 }
                         )
