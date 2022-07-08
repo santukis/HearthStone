@@ -1,7 +1,7 @@
 package com.santukis.datasources.entities.dto
 
 
-import com.santukis.datasources.mappers.orDefault
+import com.santukis.entities.core.orDefault
 import com.santukis.entities.authentication.Token
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

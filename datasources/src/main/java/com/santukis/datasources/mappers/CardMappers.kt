@@ -5,6 +5,9 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import com.santukis.datasources.entities.dbo.*
 import com.santukis.datasources.entities.dto.requests.SearchCardsRequestDTO
 import com.santukis.entities.hearthstone.*
+import com.santukis.entities.core.orDefault
+import com.santukis.entities.core.takeIfNotDefault
+import com.santukis.entities.core.takeIfNotEmpty
 
 fun SearchCardsRequest.toSearchCardsRequestDTO(): SearchCardsRequestDTO =
     SearchCardsRequestDTO(

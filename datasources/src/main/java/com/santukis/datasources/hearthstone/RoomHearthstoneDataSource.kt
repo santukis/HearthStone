@@ -2,6 +2,7 @@ package com.santukis.datasources.hearthstone
 
 import com.santukis.datasources.local.HearthstoneDatabase
 import com.santukis.datasources.mappers.*
+import com.santukis.entities.exceptions.NoMoreData
 import com.santukis.entities.hearthstone.*
 import com.santukis.repositories.hearthstone.HearthstoneDataSource
 
@@ -76,7 +77,7 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : Hea
             database
                 .deckDao()
                 .getDeck(deckRequest.deckCode)
-                ?.toDeck() ?: throw Exception("No items stored in database")
+                ?.toDeck() ?: throw NoMoreData("No items stored in database")
         }
 
     override suspend fun saveDeck(deck: Deck): Result<Unit> =
@@ -96,7 +97,7 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : Hea
                 .searchCards(searchCardsRequest.toSqliteQuery())
                 .takeIf { it.isNotEmpty() }
                 ?.distinctBy { it.card.identity.name }
-                ?.map { it.toCard() } ?: throw Exception("No items stored in database")
+                ?.map { it.toCard() } ?: throw NoMoreData("No items stored in database")
         }
 
     override suspend fun saveCards(cards: List<Card>): Result<Unit> =
@@ -114,7 +115,7 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : Hea
                 .getCards()
                 .takeIf { it.isNotEmpty() }
                 ?.distinctBy { it.card.identity.name }
-                ?.map { it.toCard() } ?: throw Exception("No items stored in database")
+                ?.map { it.toCard() } ?: throw NoMoreData("No items stored in database")
         }
 
     override suspend fun setCardFavourite(card: Card): Result<Card> =

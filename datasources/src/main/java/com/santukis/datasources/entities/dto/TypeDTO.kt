@@ -1,11 +1,9 @@
 package com.santukis.datasources.entities.dto
 
 
-import com.santukis.datasources.mappers.orDefault
+import com.santukis.entities.core.orDefault
 import com.santukis.datasources.mappers.toGameModeList
-import com.santukis.datasources.mappers.toSimplifiedIdentity
 import com.santukis.entities.hearthstone.CardType
-import com.santukis.entities.hearthstone.GameMode
 import com.santukis.entities.hearthstone.Identity
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

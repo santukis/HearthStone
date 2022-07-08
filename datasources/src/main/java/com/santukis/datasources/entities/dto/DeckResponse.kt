@@ -1,6 +1,6 @@
 package com.santukis.datasources.entities.dto
 
-import com.santukis.datasources.mappers.orDefault
+import com.santukis.entities.core.orDefault
 import com.santukis.entities.hearthstone.Card
 import com.santukis.entities.hearthstone.CardClass
 import com.santukis.entities.hearthstone.Deck

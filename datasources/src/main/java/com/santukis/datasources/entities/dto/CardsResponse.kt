@@ -1,7 +1,7 @@
 package com.santukis.datasources.entities.dto
 
 
-import com.santukis.datasources.mappers.orDefault
+import com.santukis.entities.core.orDefault
 import com.santukis.datasources.remote.PagingData
 import com.santukis.entities.hearthstone.Card
 import com.squareup.moshi.Json

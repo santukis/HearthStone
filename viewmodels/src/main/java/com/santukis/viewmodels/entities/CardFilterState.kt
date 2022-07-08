@@ -1,13 +1,14 @@
 package com.santukis.viewmodels.entities
 
 import androidx.compose.ui.graphics.Color
+import com.santukis.entities.core.filterNotNullValues
 import com.santukis.entities.hearthstone.*
 import com.santukis.viewmodels.R
 
 data class CardFilterState(
     private val metadata: Metadata? = null,
     val cardFilters: Map<Int, List<CardFilter<*>>> = emptyMap(),
-    val activeFilters: Map<Int, CardFilter<*>> = mapOf()
+    private val activeFilters: Map<Int, CardFilter<*>?> = mapOf()
 ) {
 
     companion object {
@@ -38,11 +39,10 @@ data class CardFilterState(
         }
     }
 
-    fun updateActiveFilters(key: Int, filter: CardFilter<*>?): Map<Int, CardFilter<*>> =
-        when (filter) {
-            null -> activeFilters.toMutableMap().apply { remove(key) }
-            else -> activeFilters.toMutableMap().apply { set(key, filter) }
-        }
+    fun getActiveFilters(): List<Pair<Int, CardFilter<*>>> = activeFilters.filterNotNullValues().toList()
+
+    fun updateActiveFilters(key: Int, filter: CardFilter<*>?): Map<Int, CardFilter<*>?> =
+        activeFilters.toMutableMap().apply { set(key, filter) }
 
     fun buildSearchCardsRequest(searchCardsRequest: SearchCardsRequest): SearchCardsRequest {
         return searchCardsRequest.copy(

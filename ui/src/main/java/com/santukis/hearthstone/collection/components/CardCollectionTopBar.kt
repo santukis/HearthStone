@@ -112,7 +112,7 @@ fun CardCollectionTopBar(
                     .layoutId("activeFilters")
             ) {
 
-                items(cardFilterState.activeFilters.toList()) { filter ->
+                items(cardFilterState.getActiveFilters()) { filter ->
                     ActiveFilter(
                         filter = filter.second,
                         onRemoveFilterClick = {

@@ -11,6 +11,7 @@ import com.santukis.datasources.mappers.toSearchCardsRequestDTO
 import com.santukis.datasources.remote.HttpClient
 import com.santukis.datasources.remote.PagingSource
 import com.santukis.datasources.remote.unwrapCall
+import com.santukis.entities.exceptions.NoMoreData
 import com.santukis.entities.hearthstone.*
 import com.santukis.repositories.hearthstone.HearthstoneDataSource
 
@@ -81,7 +82,7 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
             )
 
         } else {
-            Result.failure(Exception("No more data"))
+            Result.failure(NoMoreData("No more data"))
         }
     }
 

@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.santukis.datasources.mappers.takeIfNotEmpty
+import com.santukis.entities.core.takeIfNotEmpty
 import com.santukis.hearthstone.core.components.HtmlText
 import com.santukis.hearthstone.theme.WhiteTransparent
 import com.santukis.viewmodels.R

@@ -4,9 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -21,18 +19,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.santukis.entities.hearthstone.CardSet
 import com.santukis.entities.hearthstone.CardType
-import com.santukis.entities.hearthstone.GameMode
 import com.santukis.entities.hearthstone.SpellSchool
 import com.santukis.hearthstone.R
 import com.santukis.hearthstone.core.components.ExpandableContainer
 import com.santukis.hearthstone.core.components.ExpandableState
-import com.santukis.hearthstone.core.components.ExpandedValue
 import com.santukis.hearthstone.core.components.rememberExpandableState
 import com.santukis.viewmodels.entities.CardFilter
 import com.santukis.viewmodels.entities.CardFilterState
 import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_SET
 import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_TYPE
-import com.santukis.viewmodels.entities.CardFilterState.Companion.GAME_MODE
 import com.santukis.viewmodels.entities.CardFilterState.Companion.SPELL_SCHOOL
 
 @Composable
@@ -177,7 +172,6 @@ fun LazyListScope.cardFilterRowFactory(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 private fun <FilterType> LazyListScope.defaultExpandableRow(
     filter: Map.Entry<Int, List<CardFilter<FilterType>>>,
     @StringRes headerName: Int,

@@ -5,6 +5,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.santukis.entities.exceptions.NoMoreData
 import com.santukis.entities.hearthstone.*
 import com.santukis.usecases.UseCase
 import com.santukis.viewmodels.entities.*
@@ -118,8 +119,10 @@ class HearthstoneViewModel(
                 )
             },
             onError = {
-                cardCollectionState = cardCollectionState.copy(cards = emptyList())
-                cardDetailState = cardDetailState.reset()
+                if (it !is NoMoreData) {
+                    cardCollectionState = cardCollectionState.copy(cards = emptyList())
+                    cardDetailState = cardDetailState.reset()
+                }
             }
         )
     }
