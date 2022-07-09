@@ -1,8 +1,5 @@
 package com.santukis.datasources.entities.dto
 
-
-import com.santukis.entities.core.orDefault
-import com.santukis.datasources.remote.PagingData
 import com.santukis.entities.hearthstone.Card
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -23,12 +20,4 @@ data class CardsResponse(
 ) {
 
     fun toCardList(): List<Card> = cards?.map { it.toCard() }.orEmpty()
-
-    fun toPagingData(pageSize: Int) =
-        PagingData(
-            itemCount = cardCount.orDefault(),
-            pageCount = pageCount.orDefault(),
-            currentPage = page.orDefault(),
-            pageSize = pageSize
-        )
 }

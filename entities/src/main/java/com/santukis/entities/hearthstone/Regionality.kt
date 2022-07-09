@@ -9,6 +9,15 @@ sealed class Regionality(
     class Korea : Regionality(Region.KR(), Korean())
     class Taiwan : Regionality(Region.TW(), Mandarin())
     class China : Regionality(Region.CN(), Chinese())
+
+    override fun toString(): String =
+        this::class.simpleName + region.value + locale.value
+
+    override fun equals(other: Any?): Boolean =
+        this.toString() == other?.toString()
+
+    override fun hashCode(): Int =
+        toString().hashCode()
 }
 
 sealed class Region(val value: String) {

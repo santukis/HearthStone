@@ -5,8 +5,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.santukis.entities.core.takeIfNotEmpty
 import com.santukis.entities.exceptions.NoMoreData
 import com.santukis.entities.hearthstone.*
+import com.santukis.entities.paging.PagingRequest
 import com.santukis.usecases.UseCase
 import com.santukis.viewmodels.entities.*
 import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_CLASS
@@ -19,7 +21,7 @@ import java.util.concurrent.CancellationException
 
 class HearthstoneViewModel(
     private val loadMetadata: UseCase<Regionality, Flow<Result<Metadata>>>,
-    private val searchCardsUseCase: UseCase<SearchCardsRequest, Flow<Result<List<Card>>>>,
+    private val searchCardsUseCase: UseCase<PagingRequest<SearchCardsRequest>, Flow<Result<List<Card>>>>,
     private val updateCardFavouriteUseCase: UseCase<Card, Result<Card>>
 ) : ViewModel() {
 
@@ -59,10 +61,6 @@ class HearthstoneViewModel(
     fun onCardClassSelected(cardClass: CardClass) {
         cardDetailState = cardDetailState.reset()
 
-        cardCollectionState = cardCollectionState.copy(
-            cards = emptyList()
-        )
-
         onFilterSelected(CARD_CLASS, cardClass.asCardFilter())
     }
 
@@ -71,7 +69,9 @@ class HearthstoneViewModel(
             activeFilters = cardFilterState.updateActiveFilters(key, filter)
         )
 
-        loadMoreItems()
+        cardCollectionState = cardCollectionState.reset()
+
+        loadMoreItems(shouldRefresh = true)
     }
 
     fun onRemoveFilterClick(filter: Int) {
@@ -79,7 +79,9 @@ class HearthstoneViewModel(
             activeFilters = cardFilterState.updateActiveFilters(filter, null)
         )
 
-        loadMoreItems()
+        cardCollectionState = cardCollectionState.reset()
+
+        loadMoreItems(shouldRefresh = true)
     }
 
     fun onEndReached() {
@@ -106,11 +108,13 @@ class HearthstoneViewModel(
         }
     }
 
-    private fun loadMoreItems() {
+    private fun loadMoreItems(shouldRefresh: Boolean = false) {
         searchCards(
-            cardRequest = buildSearchCardRequest(),
+            cardRequest = buildSearchCardRequest(shouldRefresh),
             onSuccess = { cards ->
-                cardCollectionState = cardCollectionState.copy(cards = cards.toList())
+                cardCollectionState = cardCollectionState.copy(
+                    cards = cardCollectionState.cards.toMutableList().apply { addAll(cards) }
+                )
 
                 cardDetailState = cardDetailState.copy(
                     card = cards.getOrNull(cardDetailState.cardIndex)
@@ -120,7 +124,7 @@ class HearthstoneViewModel(
             },
             onError = {
                 if (it !is NoMoreData) {
-                    cardCollectionState = cardCollectionState.copy(cards = emptyList())
+                    cardCollectionState = cardCollectionState.reset()
                     cardDetailState = cardDetailState.reset()
                 }
             }
@@ -139,22 +143,28 @@ class HearthstoneViewModel(
                             activeFilters = cardFilterState
                                 .updateActiveFilters(
                                     key = CARD_CLASS,
-                                    filter = metadata.classes.firstOrNull()?.asCardFilter()
+                                    filter = null
                                 )
                         )
+
+                        loadMoreItems()
                     }
                 }
         }
     }
 
     private fun loadRelatedCards(selectedCard: Card) {
-        searchCards(
-            SearchCardsRequest(
-                regionality = Regionality.Europe(EuropeLocale.Spanish()),
-                keyword = selectedCard.keywords.takeIf { it.isNotEmpty() }?.random(),
-                cardStats = CardStats(manaCost = selectedCard.cardStats.manaCost),
-                cardClass = selectedCard.cardClass,
-                type = selectedCard.cardType
+        searchJob?.cancel(CancellationException("New Search required"))
+
+        searchJob = searchCards(
+            PagingRequest(
+                request = SearchCardsRequest(
+                    regionality = Regionality.Europe(EuropeLocale.Spanish()),
+                    keyword = selectedCard.keywords.takeIf { it.isNotEmpty() }?.random(),
+                    cardStats = CardStats(manaCost = selectedCard.cardStats.manaCost),
+                    cardClass = selectedCard.cardClass,
+                    type = selectedCard.cardType
+                )
             ),
             onSuccess = { cards ->
                 cardDetailState = cardDetailState.copy(relatedCards = cards.toList())
@@ -163,13 +173,11 @@ class HearthstoneViewModel(
     }
 
     private fun searchCards(
-        cardRequest: SearchCardsRequest,
+        cardRequest: PagingRequest<SearchCardsRequest>,
         onSuccess: (List<Card>) -> Unit = {},
         onError: (Throwable) -> Unit = {}
-    ) {
-        searchJob?.cancel(CancellationException("New Search required"))
-
-        searchJob = viewModelScope.launch(Dispatchers.IO) {
+    ): Job =
+        viewModelScope.launch(Dispatchers.IO) {
             searchCardsUseCase(cardRequest)
                 .onStart {
                     uiState = uiState.copy(isLoading = true)
@@ -181,11 +189,13 @@ class HearthstoneViewModel(
                         .onFailure { error -> onError(error) }
                 }
         }
-    }
 
-    private fun buildSearchCardRequest(): SearchCardsRequest {
+    private fun buildSearchCardRequest(shouldRefresh: Boolean): PagingRequest<SearchCardsRequest> {
         searchCardsRequest = cardFilterState.buildSearchCardsRequest(searchCardsRequest)
 
-        return searchCardsRequest.copy()
+        return PagingRequest(
+            shouldRefresh = shouldRefresh,
+            request = searchCardsRequest.copy()
+        )
     }
 }

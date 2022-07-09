@@ -64,10 +64,5 @@ data class SearchCardsRequest(
      *
      * Results are sorted by [SortFilter.Name] [Order.Ascendent] by default.
      */
-    val sort: SortFilter? = null,
-
-    /**
-     * item already loaded
-     */
-    val itemCount: Int = 0
+    val sort: SortFilter? = null
 )

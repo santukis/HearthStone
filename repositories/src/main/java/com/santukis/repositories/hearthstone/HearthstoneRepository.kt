@@ -1,9 +1,13 @@
 package com.santukis.repositories.hearthstone
 
 import com.santukis.entities.hearthstone.*
+import com.santukis.entities.paging.PagingData
+import com.santukis.entities.paging.PagingRequest
+import com.santukis.entities.paging.PagingResult
+import com.santukis.entities.paging.PagingSource
+import com.santukis.repositories.strategies.LocalRemotePagingStrategy
 import com.santukis.repositories.strategies.LocalRemoteStrategy
 import com.santukis.repositories.strategies.LocalStrategy
-import com.santukis.repositories.strategies.emitIfSuccess
 import com.santukis.usecases.hearthstone.GetDeckGateway
 import com.santukis.usecases.hearthstone.LoadMetadataGateway
 import com.santukis.usecases.hearthstone.SearchCardsGateway
@@ -19,6 +23,12 @@ class HearthstoneRepository(
     LoadMetadataGateway,
     SearchCardsGateway,
     UpdateCardFavouriteGateway {
+
+    companion object {
+        private const val PAGE_SIZE = 25
+    }
+
+    private val pagingSource: PagingSource<String> = PagingSource(pageSize = PAGE_SIZE)
 
     override suspend fun loadMetadata(regionality: Regionality): Flow<Result<Metadata>> {
         return flow {
@@ -76,27 +86,19 @@ class HearthstoneRepository(
         }
     }
 
-    override suspend fun searchCards(cardsRequest: SearchCardsRequest): Flow<Result<List<Card>>> {
+    override suspend fun searchCards(cardsRequest: PagingRequest<SearchCardsRequest>): Flow<Result<List<Card>>> {
         return flow {
-            val response = object : LocalRemoteStrategy<SearchCardsRequest, List<Card>>() {
-                override suspend fun shouldLoadFromLocal(input: SearchCardsRequest): Boolean =
-                    input.itemCount == 0
-
-                override suspend fun loadFromLocal(input: SearchCardsRequest): Result<List<Card>> =
-                    localHearthstoneDataSource
-                        .searchCards(input)
-                        .emitIfSuccess(this@flow)
-
-                override suspend fun shouldUpdateFromRemote(
+            val response = object : LocalRemotePagingStrategy<SearchCardsRequest, List<Card>>(pagingSource) {
+                override suspend fun loadFromLocal(
                     input: SearchCardsRequest,
-                    localOutput: List<Card>
-                ): Boolean = true
+                    pagingData: PagingData
+                ): Result<PagingResult<List<Card>>> =
+                    localHearthstoneDataSource.searchCards(input, pagingData)
 
                 override suspend fun loadFromRemote(
                     input: SearchCardsRequest,
-                    localResult: List<Card>?
-                ): Result<List<Card>> =
-                    remoteHearthstoneDataSource.searchCards(input.copy(itemCount = localResult?.size ?: 0))
+                    pagingData: PagingData
+                ): Result<PagingResult<List<Card>>> = remoteHearthstoneDataSource.searchCards(input, pagingData)
 
                 override suspend fun saveIntoLocal(output: List<Card>) {
                     localHearthstoneDataSource.saveCards(output)

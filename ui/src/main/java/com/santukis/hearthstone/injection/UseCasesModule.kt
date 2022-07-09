@@ -1,6 +1,7 @@
 package com.santukis.hearthstone.injection
 
 import com.santukis.entities.hearthstone.*
+import com.santukis.entities.paging.PagingRequest
 import com.santukis.hearthstone.injection.RepositoriesConstants.GET_DECK_GATEWAY
 import com.santukis.hearthstone.injection.RepositoriesConstants.LOAD_METADATA_GATEWAY
 import com.santukis.hearthstone.injection.RepositoriesConstants.SEARCH_CARDS_GATEWAY
@@ -35,7 +36,7 @@ fun useCases() = DI.Module(
         GetDeck(instance(GET_DECK_GATEWAY))
     }
 
-    bind<UseCase<SearchCardsRequest, Flow<Result<List<Card>>>>>(tag = SEARCH_CARDS_USECASE) with provider {
+    bind<UseCase<PagingRequest<SearchCardsRequest>, Flow<Result<List<Card>>>>>(tag = SEARCH_CARDS_USECASE) with provider {
         SearchCards(instance(SEARCH_CARDS_GATEWAY))
     }
 

@@ -23,4 +23,8 @@ interface CardDao: BaseDao<CardDB> {
     @RawQuery
     fun searchCards(query: SupportSQLiteQuery): List<CardDetailDB>
 
+    @Transaction
+    @RawQuery
+    fun countSearchCards(query: SupportSQLiteQuery): Int
+
 }

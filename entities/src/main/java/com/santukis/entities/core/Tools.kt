@@ -2,6 +2,8 @@ package com.santukis.entities.core
 
 fun String.takeIfNotEmpty(): String? = takeIf { it.isNotEmpty() }
 
+fun <Item> List<Item>.takeIfNotEmpty(): List<Item>? = takeIf { it.isNotEmpty() }
+
 fun Int?.takeIfNotDefault(default: Int = -1): Int? = this?.let {
     if (this != default) {
         this

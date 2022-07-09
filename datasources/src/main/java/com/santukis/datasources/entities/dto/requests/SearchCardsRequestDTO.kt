@@ -85,11 +85,6 @@ data class SearchCardsRequestDTO(
     val spellSchool: String? = null,
 
     /**
-     * item already loaded
-     */
-    val itemCount: Int = 0,
-
-    /**
      * The sort option and direction used to sort the results.
      *
      * Valid values include

@@ -6,22 +6,16 @@ import com.santukis.datasources.entities.dto.HearthstoneErrorDTO
 import com.santukis.datasources.entities.dto.MetadataResponse
 import com.santukis.datasources.entities.dto.requests.DeckRequestDTO
 import com.santukis.datasources.mappers.toDeckRequestDTO
-import com.santukis.datasources.mappers.toPagingKey
 import com.santukis.datasources.mappers.toSearchCardsRequestDTO
 import com.santukis.datasources.remote.HttpClient
-import com.santukis.datasources.remote.PagingSource
 import com.santukis.datasources.remote.unwrapCall
-import com.santukis.entities.exceptions.NoMoreData
+import com.santukis.entities.core.orDefault
 import com.santukis.entities.hearthstone.*
+import com.santukis.entities.paging.PagingData
+import com.santukis.entities.paging.PagingResult
 import com.santukis.repositories.hearthstone.HearthstoneDataSource
 
 class BattlenetHearthstoneDataSource(private val client: HttpClient) : HearthstoneDataSource {
-
-    companion object {
-        private const val SEARCH_PAGE_SIZE = 25
-    }
-
-    private val pagingSource: PagingSource<String> = PagingSource()
 
     override suspend fun getDeck(deckRequest: DeckRequest): Result<Deck> {
         val deckDTO: DeckRequestDTO = deckRequest.toDeckRequestDTO()
@@ -40,50 +34,43 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
         )
     }
 
-    override suspend fun searchCards(searchCardsRequest: SearchCardsRequest): Result<List<Card>> {
+    override suspend fun searchCards(
+        searchCardsRequest: SearchCardsRequest,
+        pagingData: PagingData
+    ): Result<PagingResult<List<Card>>> {
         val searchEndpoint = client.environment.searchCards(searchCardsRequest.regionality.region)
-        val pagingKey = searchCardsRequest.toPagingKey(searchEndpoint)
 
-        return if (pagingSource.shouldRequestMoreData(pagingKey)) {
-            val searchCardsRequestDTO = searchCardsRequest.toSearchCardsRequestDTO()
+        val searchCardsRequestDTO = searchCardsRequest.toSearchCardsRequestDTO()
 
-            client.hearthstoneService.searchCards(
-                baseUrl = searchEndpoint,
-                locale = searchCardsRequestDTO.locale,
-                set = searchCardsRequestDTO.set,
-                classSlug = searchCardsRequestDTO.classSlug,
-                manaCost = searchCardsRequestDTO.manaCost,
-                attack = searchCardsRequestDTO.attack,
-                health = searchCardsRequestDTO.health,
-                collectible = searchCardsRequestDTO.collectible,
-                rarity = searchCardsRequestDTO.rarity,
-                type = searchCardsRequestDTO.type,
-                minionType = searchCardsRequestDTO.minionType,
-                keyword = searchCardsRequestDTO.keyword,
-                textFilter = searchCardsRequestDTO.textFilter,
-                gameMode = searchCardsRequestDTO.gameMode,
-                spellSchool = searchCardsRequestDTO.spellSchool,
-                page = pagingSource.getNextPage(searchEndpoint),
-                pageSize = pagingSource.getPagingSize(searchEndpoint),
-                sort = searchCardsRequestDTO.sort
+        return client.hearthstoneService.searchCards(
+            baseUrl = searchEndpoint,
+            locale = searchCardsRequestDTO.locale,
+            set = searchCardsRequestDTO.set,
+            classSlug = searchCardsRequestDTO.classSlug,
+            manaCost = searchCardsRequestDTO.manaCost,
+            attack = searchCardsRequestDTO.attack,
+            health = searchCardsRequestDTO.health,
+            collectible = searchCardsRequestDTO.collectible,
+            rarity = searchCardsRequestDTO.rarity,
+            type = searchCardsRequestDTO.type,
+            minionType = searchCardsRequestDTO.minionType,
+            keyword = searchCardsRequestDTO.keyword,
+            textFilter = searchCardsRequestDTO.textFilter,
+            gameMode = searchCardsRequestDTO.gameMode,
+            spellSchool = searchCardsRequestDTO.spellSchool,
+            page = maxOf(pagingData.currentPage, 1),
+            pageSize = pagingData.pageSize,
+            sort = searchCardsRequestDTO.sort
 
-            ).unwrapCall<HearthstoneErrorDTO, CardsResponse, List<Card>>(
-                onSuccess = { cardResponse ->
-                    pagingSource.updatePagingData(
-                        pagingKey,
-                        cardResponse.toPagingData(SEARCH_PAGE_SIZE)
-                    )
-
-                    cardResponse.toCardList()
-                },
-                onError = {
-                    it.toException()
-                }
-            )
-
-        } else {
-            Result.failure(NoMoreData("No more data"))
-        }
+        ).unwrapCall<HearthstoneErrorDTO, CardsResponse, PagingResult<List<Card>>>(
+            onSuccess = { cardResponse ->
+                PagingResult(
+                    itemCount = cardResponse.cardCount ?: cardResponse.cards?.size.orDefault(),
+                    item = cardResponse.toCardList()
+                )
+            },
+            onError = { error -> error.toException() }
+        )
     }
 
     override suspend fun getMetadata(regionality: Regionality): Result<Metadata> {

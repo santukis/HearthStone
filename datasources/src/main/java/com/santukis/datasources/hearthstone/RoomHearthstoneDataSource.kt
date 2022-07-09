@@ -2,8 +2,9 @@ package com.santukis.datasources.hearthstone
 
 import com.santukis.datasources.local.HearthstoneDatabase
 import com.santukis.datasources.mappers.*
-import com.santukis.entities.exceptions.NoMoreData
 import com.santukis.entities.hearthstone.*
+import com.santukis.entities.paging.PagingData
+import com.santukis.entities.paging.PagingResult
 import com.santukis.repositories.hearthstone.HearthstoneDataSource
 
 class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : HearthstoneDataSource {
@@ -77,7 +78,7 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : Hea
             database
                 .deckDao()
                 .getDeck(deckRequest.deckCode)
-                ?.toDeck() ?: throw NoMoreData("No items stored in database")
+                ?.toDeck() ?: throw Exception("No items stored in database")
         }
 
     override suspend fun saveDeck(deck: Deck): Result<Unit> =
@@ -90,14 +91,26 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : Hea
             database.cardClassDao().saveItem(deck.cardClass.toCardClassDB())
         }
 
-    override suspend fun searchCards(searchCardsRequest: SearchCardsRequest): Result<List<Card>> =
+    override suspend fun searchCards(
+        searchCardsRequest: SearchCardsRequest,
+        pagingData: PagingData
+    ): Result<PagingResult<List<Card>>> =
         kotlin.runCatching {
-            database
+            val itemCount = database
                 .cardDao()
-                .searchCards(searchCardsRequest.toSqliteQuery())
+                .countSearchCards(searchCardsRequest.toSqliteQuery())
+
+            val cards = database
+                .cardDao()
+                .searchCards(searchCardsRequest.toSqliteQuery(pagingData))
                 .takeIf { it.isNotEmpty() }
                 ?.distinctBy { it.card.identity.name }
-                ?.map { it.toCard() } ?: throw NoMoreData("No items stored in database")
+                ?.map { it.toCard() } ?: throw Exception("No items stored in database")
+
+            PagingResult(
+                itemCount = itemCount,
+                item = cards
+            )
         }
 
     override suspend fun saveCards(cards: List<Card>): Result<Unit> =
@@ -115,7 +128,7 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : Hea
                 .getCards()
                 .takeIf { it.isNotEmpty() }
                 ?.distinctBy { it.card.identity.name }
-                ?.map { it.toCard() } ?: throw NoMoreData("No items stored in database")
+                ?.map { it.toCard() } ?: throw Exception("No items stored in database")
         }
 
     override suspend fun setCardFavourite(card: Card): Result<Card> =

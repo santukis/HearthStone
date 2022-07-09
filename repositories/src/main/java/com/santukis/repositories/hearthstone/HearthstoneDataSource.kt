@@ -1,6 +1,8 @@
 package com.santukis.repositories.hearthstone
 
 import com.santukis.entities.hearthstone.*
+import com.santukis.entities.paging.PagingData
+import com.santukis.entities.paging.PagingResult
 import com.santukis.repositories.strategies.defaultError
 
 interface HearthstoneDataSource {
@@ -9,7 +11,7 @@ interface HearthstoneDataSource {
 
     suspend fun saveDeck(deck: Deck): Result<Unit> = defaultError()
 
-    suspend fun searchCards(searchCardsRequest: SearchCardsRequest): Result<List<Card>> = defaultError()
+    suspend fun searchCards(searchCardsRequest: SearchCardsRequest, pagingData: PagingData): Result<PagingResult<List<Card>>> = defaultError()
 
     suspend fun getCards(): Result<List<Card>> = defaultError()
 

@@ -8,6 +8,7 @@ import com.santukis.entities.hearthstone.*
 import com.santukis.entities.core.orDefault
 import com.santukis.entities.core.takeIfNotDefault
 import com.santukis.entities.core.takeIfNotEmpty
+import com.santukis.entities.paging.PagingData
 
 fun SearchCardsRequest.toSearchCardsRequestDTO(): SearchCardsRequestDTO =
     SearchCardsRequestDTO(
@@ -25,74 +26,24 @@ fun SearchCardsRequest.toSearchCardsRequestDTO(): SearchCardsRequestDTO =
         textFilter = filter.takeIfNotEmpty(),
         gameMode = gameMode?.identity?.slug?.takeIfNotEmpty(),
         spellSchool = spellSchool?.identity?.slug?.takeIfNotEmpty(),
-        sort = sort?.toQuery(),
-        itemCount = itemCount
+        sort = sort?.toQuery()
     )
 
-fun SearchCardsRequest.toSqliteQuery(): SupportSQLiteQuery {
+fun SearchCardsRequest.toSqliteQuery(pagingData: PagingData): SupportSQLiteQuery {
     var query = "SELECT * FROM cards"
-    val statements = mutableListOf<String>()
+    query = buildStatements(query)
 
-    set?.let {
-        statements.add("cardSetId = ${it.identity.id}")
-    }
-
-    cardClass?.let {
-        statements.add("classId = ${it.identity.id}")
-    }
-
-    cardStats?.let { stats ->
-        stats.manaCost.takeIf { cost -> cost >= 0 }?.let { statements.add("manaCost = $it") }
-        stats.attack.takeIf { attack -> attack >= 0 }?.let { statements.add("attack = $it") }
-        stats.health.takeIf { health -> health >= 0 }?.let { statements.add("health = $it") }
-    }
-
-    collectible.takeIf { it != Collectible.All }?.let { statements.add("collectible = ${it.name}") }
-
-    rarity?.let {
-        statements.add("rarityId = ${it.identity.id}")
-    }
-
-    type?.let {
-        statements.add("cardTypeId = ${it.identity.id}")
-    }
-
-    keyword?.let {
-        statements.add("id IN (SELECT cardId FROM cardsToKeywords WHERE keywordId = ${it.identity.id})")
-    }
-
-    spellSchool?.let {
-        statements.add("spellSchoolId = ${it.identity.id}")
-    }
-
-    filter.takeIfNotEmpty()?.let { statements.add("ruleText LIKE '%' || $it || '%'") }
-
-    statements.takeIf { it.isNotEmpty() }?.let {
-        query += " WHERE ".plus(it.joinToString(separator = " AND "))
-    }
-
-    query += " ORDER BY id"
+    query += " ORDER BY id LIMIT ${pagingData.pageSize} OFFSET ${pagingData.currentPage * pagingData.pageSize}"
 
     return SimpleSQLiteQuery(query)
 }
 
-fun SearchCardsRequest.toPagingKey(endpoint: String): String =
-    endpoint
-        .plus(regionality.region.value)
-        .plus(regionality.locale.value)
-        .plus(set?.identity?.slug?.takeIfNotEmpty())
-        .plus(cardClass?.identity?.slug?.takeIfNotEmpty())
-        .plus(cardStats?.manaCost?.takeIfNotDefault())
-        .plus(cardStats?.health?.takeIfNotDefault())
-        .plus(cardStats?.attack?.takeIfNotDefault())
-        .plus(collectible.name)
-        .plus(rarity?.identity?.slug?.takeIfNotEmpty())
-        .plus(type?.identity?.slug?.takeIfNotEmpty())
-        .plus(minionType?.identity?.slug?.takeIfNotEmpty())
-        .plus(keyword?.identity?.slug?.takeIfNotEmpty())
-        .plus(filter.takeIfNotEmpty())
-        .plus(gameMode?.identity?.slug?.takeIfNotEmpty())
-        .plus(spellSchool?.identity?.slug?.takeIfNotEmpty())
+fun SearchCardsRequest.toSqliteQuery(): SupportSQLiteQuery {
+    var query = "SELECT COUNT(id) FROM cards"
+    query = buildStatements(query)
+
+    return SimpleSQLiteQuery(query)
+}
 
 fun Int?.toSimplifiedIdentity(): Identity = Identity(id = this.orDefault())
 
@@ -271,3 +222,38 @@ private fun Order.toQuery(): String =
         this -> "asc"
         else -> "desc"
     }
+
+private fun SearchCardsRequest.buildStatements(initialQuery: String): String {
+    var query = initialQuery
+    val statements = mutableListOf<String>()
+
+    set?.let { statements.add("cardSetId = ${it.identity.id}") }
+
+    cardClass?.let { statements.add("classId = ${it.identity.id}") }
+
+    cardStats?.let { stats ->
+        stats.manaCost.takeIf { cost -> cost >= 0 }?.let { statements.add("manaCost = $it") }
+        stats.attack.takeIf { attack -> attack >= 0 }?.let { statements.add("attack = $it") }
+        stats.health.takeIf { health -> health >= 0 }?.let { statements.add("health = $it") }
+    }
+
+    collectible.takeIf { it != Collectible.All }?.let { statements.add("collectible = ${it.name}") }
+
+    rarity?.let { statements.add("rarityId = ${it.identity.id}") }
+
+    type?.let { statements.add("cardTypeId = ${it.identity.id}") }
+
+    keyword?.let {
+        statements.add("id IN (SELECT cardId FROM cardsToKeywords WHERE keywordId = ${it.identity.id})")
+    }
+
+    spellSchool?.let { statements.add("spellSchoolId = ${it.identity.id}") }
+
+    filter.takeIfNotEmpty()?.let { statements.add("ruleText LIKE '%' || $it || '%'") }
+
+    statements.takeIf { it.isNotEmpty() }?.let {
+        query += " WHERE ".plus(it.joinToString(separator = " AND "))
+    }
+
+    return query
+}
