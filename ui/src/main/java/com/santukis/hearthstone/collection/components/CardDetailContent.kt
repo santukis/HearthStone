@@ -4,16 +4,20 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
@@ -27,13 +31,12 @@ import com.santukis.entities.core.takeIfNotEmpty
 import com.santukis.hearthstone.core.components.HtmlText
 import com.santukis.hearthstone.theme.WhiteTransparent
 import com.santukis.viewmodels.R
-import com.santukis.viewmodels.entities.CardDetailState
-import com.santukis.viewmodels.entities.OnFavouriteClick
-import com.santukis.viewmodels.entities.UiEvent
+import com.santukis.viewmodels.entities.*
+import com.santukis.viewmodels.entities.CardFilterState.Companion.KEYWORD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun CardDetailContent(
     scaffoldState: BottomSheetScaffoldState,
@@ -43,6 +46,7 @@ fun CardDetailContent(
     onUiEvent: (UiEvent) -> Unit = {},
     onHeaderHeightChange: (Int) -> Unit = {}
 ) {
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -68,62 +72,10 @@ fun CardDetailContent(
         ) {
 
             cardDetailState.card?.let { card ->
-                Column(
-                    modifier = Modifier
-                        .onGloballyPositioned {
-                            onHeaderHeightChange(it.size.height)
-                        }
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp
-                        )
-                ) {
-                    Box {
-                        Image(
-                            painter = painterResource(R.drawable.mana),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .align(Alignment.TopStart)
-                                .padding(top = 8.dp)
-                                .size(48.dp)
-                        )
-
-                        Text(
-                            text = cardDetailState.getManaCost(),
-                            color = Color.White,
-                            modifier = Modifier
-                                .align(Alignment.TopStart)
-                                .padding(
-                                    start = 12.dp
-                                ),
-                            style = MaterialTheme.typography.h3
-                        )
-
-                        Text(
-                            text = card.identity.name,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    top = 8.dp,
-                                    start = 50.dp,
-                                    end = 50.dp
-                                ),
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.h4,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-
-                    Text(
-                        text = card.cardText.flavorText,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.body1,
-                        fontStyle = FontStyle.Italic
-                    )
-                }
+                CardDetailHeader(
+                    cardDetailState = cardDetailState,
+                    onHeaderHeightChange = onHeaderHeightChange
+                )
 
                 card.cardText.ruleText.takeIfNotEmpty()?.let { text ->
                     HtmlText(
@@ -145,7 +97,7 @@ fun CardDetailContent(
 
                 FieldText(field = card.cardType.identity.name, headerName = com.santukis.hearthstone.R.string.type)
 
-                card.rarity.identity.name.takeIfNotEmpty()?.let { rarity ->
+                cardDetailState.getRarityText().let { rarity ->
                     Text(
                         text = stringResource(id = com.santukis.hearthstone.R.string.rarity),
                         modifier = Modifier
@@ -168,7 +120,7 @@ fun CardDetailContent(
                     ) {
 
                         Text(
-                            text = rarity,
+                            text = rarity.text,
                             style = MaterialTheme.typography.subtitle1
                         )
 
@@ -213,6 +165,69 @@ fun CardDetailContent(
                                     minHeight = 350.dp
                                 )
                             )
+                        }
+                    }
+                }
+
+                cardDetailState.card?.keywords?.takeIfNotEmpty()?.let { keywords ->
+                    Text(
+                        text = stringResource(id = com.santukis.hearthstone.R.string.keywords),
+                        modifier = Modifier
+                            .padding(
+                                top = 16.dp,
+                                start = 16.dp,
+                                end = 16.dp
+                            ),
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.h5,
+                    )
+
+                    Text(
+                        text = stringResource(com.santukis.hearthstone.R.string.keyword_interaction_message),
+                        modifier = Modifier
+                            .padding(
+                                top = 8.dp,
+                                start = 16.dp,
+                                end = 16.dp
+                            ),
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.caption,
+                    )
+
+                    LazyRow(
+                        contentPadding = PaddingValues(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        items(keywords) { keyword ->
+                            Row(
+                                modifier = modifier
+                                    .padding(8.dp)
+                                    .clip(RoundedCornerShape(size = 30.dp))
+                                    .background(MaterialTheme.colors.secondary)
+                                    .combinedClickable(
+                                        onClick = { onUiEvent(OnFilterSelected(KEYWORD, keyword.asCardFilter())) },
+                                        onLongClick = {
+                                            coroutineScope.launch {
+                                                scaffoldState.snackbarHostState.showSnackbar(
+                                                    message = keyword.cardText.ruleText,
+                                                    duration = SnackbarDuration.Indefinite,
+                                                    actionLabel = "Close"
+                                                )
+                                            }
+                                        }
+                                    ),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceAround
+
+                            ) {
+
+                                Text(
+                                    modifier = Modifier.padding(8.dp),
+                                    text = keyword.getName(),
+                                    style = MaterialTheme.typography.subtitle1
+                                )
+                            }
                         }
                     }
                 }
@@ -300,6 +315,70 @@ fun CardDetailActionBar(
                 tint = MaterialTheme.colors.primary
             )
         }
+    }
+}
+
+@Composable
+fun CardDetailHeader(
+    cardDetailState: CardDetailState,
+    onHeaderHeightChange: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .onGloballyPositioned {
+                onHeaderHeightChange(it.size.height)
+            }
+            .padding(
+                start = 16.dp,
+                end = 16.dp
+            )
+    ) {
+        Box {
+            Image(
+                painter = painterResource(R.drawable.mana),
+                contentDescription = "",
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(top = 8.dp)
+                    .size(48.dp)
+            )
+
+            Text(
+                text = cardDetailState.getManaCost(),
+                color = Color.White,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(
+                        start = 12.dp
+                    ),
+                style = MaterialTheme.typography.h3
+            )
+
+            Text(
+                text = cardDetailState.getName(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = 8.dp,
+                        start = 50.dp,
+                        end = 50.dp
+                    ),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.h4,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+
+        Text(
+            text = cardDetailState.getFlavorText(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.body1,
+            fontStyle = FontStyle.Italic
+        )
     }
 }
 

@@ -16,4 +16,7 @@ data class Card(
     val childIds: List<Int> = emptyList(),
     val parentId: Int = -1,
     val isFavourite: Boolean = false
-)
+) {
+
+    fun getName(): String = identity.name
+}

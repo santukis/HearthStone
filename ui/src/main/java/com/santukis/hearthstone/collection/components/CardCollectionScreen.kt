@@ -27,6 +27,7 @@ import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import com.santukis.hearthstone.core.components.*
 import com.santukis.hearthstone.theme.WhiteTransparent
 import com.santukis.viewmodels.entities.*
+import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_CLASS
 import kotlinx.coroutines.launch
 
 
@@ -70,7 +71,8 @@ fun CardCollectionContent(
     Box(modifier = modifier) {
         val scaffoldState = rememberBottomSheetScaffoldState(
             bottomSheetState = rememberBottomSheetState(BottomSheetValue.Collapsed),
-            drawerState = rememberDrawerState(DrawerValue.Closed)
+            drawerState = rememberDrawerState(DrawerValue.Closed),
+            snackbarHostState = remember { SnackbarHostState() }
         )
 
         var sheetPeekHeight by remember { mutableStateOf(0) }
@@ -285,7 +287,7 @@ fun CardClassCollection(
                                 .clip(CircleShape)
                                 .clickable {
                                     visibleState.toggle()
-                                    onUiEvent(OnCardClassSelected(cardClass))
+                                    onUiEvent(OnFilterSelected(CARD_CLASS, cardClass.asCardFilter()))
                                 }
                         )
 

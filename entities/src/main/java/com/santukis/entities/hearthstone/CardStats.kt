@@ -18,4 +18,7 @@ data class CardStats(
      * You can include multiple values in a comma-separated list of numeric values.
      */
     val health: Int = -1
-)
+) {
+
+    fun getManaCost(): String = manaCost.toString()
+}

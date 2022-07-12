@@ -13,4 +13,6 @@
     <string name="card_set">Set</string>
     <string name="game_mode">Game Modes</string>
     <string name="card_types">Card Types</string>
+    <string name="keywords">Keywords</string>
+    <string name="keyword_interaction_message">Click to select, Long click to see keyword description</string>
 </resources>

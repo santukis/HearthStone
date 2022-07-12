@@ -12,7 +12,11 @@ data class CardDetailState(
 
     fun getRarityText(): TextUI = card?.rarity.getText()
 
-    fun getManaCost(): String = card?.cardStats?.manaCost?.toString().orEmpty()
+    fun getManaCost(): String = card?.cardStats?.getManaCost().orEmpty()
+
+    fun getName(): String = card?.getName().orEmpty()
+
+    fun getFlavorText(): String = card?.cardText?.flavorText.orEmpty()
 
     fun reset(): CardDetailState =
         copy(

@@ -49,7 +49,6 @@ class HearthstoneViewModel(
     fun onUiEvent(uiEvent: UiEvent) {
         when (uiEvent) {
             is OnCardSelected -> onCardSelected(uiEvent.cardIndex)
-            is OnCardClassSelected -> onCardClassSelected(uiEvent.cardClass)
             is OnFilterSelected -> onFilterSelected(uiEvent.key, uiEvent.filter)
             is OnFilterRemoved -> onRemoveFilterClick(uiEvent.key)
             is OnFavouriteClick -> onFavouriteClick()
@@ -68,22 +67,12 @@ class HearthstoneViewModel(
         } ?: cardDetailState.reset()
     }
 
-    private fun onCardClassSelected(cardClass: CardClass) {
-        cardDetailState = cardDetailState.reset()
-
-        cardFilterState = cardFilterState.copy(
-            activeFilters = cardFilterState.updateActiveFilters(CARD_CLASS, cardClass.asCardFilter())
-        )
-
-        cardCollectionState = cardCollectionState.reset()
-
-        loadMoreItems(shouldRefresh = true)
-    }
-
     private fun onFilterSelected(key: Int, filter: CardFilter<*>) {
         cardFilterState = cardFilterState.copy(
             activeFilters = cardFilterState.updateActiveFilters(key, filter)
         )
+
+        cardDetailState = cardDetailState.reset()
 
         cardCollectionState = cardCollectionState.reset()
 
