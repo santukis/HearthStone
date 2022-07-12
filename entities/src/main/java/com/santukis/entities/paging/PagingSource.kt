@@ -1,23 +1,32 @@
 package com.santukis.entities.paging
 
+
 class PagingSource<Key>(private val pageSize: Int) {
 
     private val pagingData: MutableMap<Key, PagingData> = mutableMapOf()
 
-    fun shouldRequestMoreData(key: Key): Boolean =
-        pagingData[key]?.shouldRequestMoreData() ?: true
+    fun shouldRequestMoreData(key: Key): Boolean = !getPagingData(key).noMoreItems
 
     fun getPagingData(key: Key): PagingData = pagingData[key] ?: getInitialPagingData()
 
-    fun <Item> updatePagingData(key: Key, data: PagingResult<Item>) {
-        getPagingData(key).let {
+    fun updatePagingData(
+        key: Key,
+        itemCount: Int? = null,
+        increaseNextPage: Boolean = false,
+        noMoreItems: Boolean? = null
+    ) {
+        getPagingData(key).let { storedPagingData ->
             pagingData[key] = PagingData(
-                itemCount = data.itemCount,
                 pageSize = pageSize,
-                currentPage = it.currentPage + 1
-            )
+                itemCount = itemCount ?: storedPagingData.itemCount,
+                nextPage = if (storedPagingData.nextPage == 1 && storedPagingData.itemCount > 0) {
+                    (storedPagingData.itemCount / pageSize + 1)
 
-            println("$key -> ${pagingData[key]}")
+                } else  {
+                   if (increaseNextPage) storedPagingData.nextPage + 1 else storedPagingData.nextPage
+                },
+                noMoreItems = noMoreItems ?: storedPagingData.noMoreItems
+            )
         }
     }
 
@@ -26,30 +35,25 @@ class PagingSource<Key>(private val pageSize: Int) {
     }
 
     private fun getInitialPagingData() = PagingData(
-        itemCount = 0,
-        pageSize = pageSize,
-        currentPage = 0
+        pageSize = pageSize
     )
 }
 
 data class PagingData(
-    val itemCount: Int,
     val pageSize: Int,
-    val currentPage: Int
-) {
-
-    private val pageCount = maxOf(itemCount / pageSize, 1)
-
-    fun shouldRequestMoreData(): Boolean = currentPage < pageCount
-
-}
+    val itemCount: Int = 0,
+    val nextPage: Int = 1,
+    val noMoreItems: Boolean = false
+)
 
 data class PagingRequest<Item>(
     val shouldRefresh: Boolean = false,
+    val itemCount: Int = 0,
     val request: Item
 )
 
 data class PagingResult<Item>(
-    val itemCount: Int = Int.MAX_VALUE,
+    val increaseNextPage: Boolean = false,
+    val noMoreItems: Boolean? = null,
     val item: Item
 )

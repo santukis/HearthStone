@@ -9,10 +9,8 @@ import com.santukis.datasources.mappers.toDeckRequestDTO
 import com.santukis.datasources.mappers.toSearchCardsRequestDTO
 import com.santukis.datasources.remote.HttpClient
 import com.santukis.datasources.remote.unwrapCall
-import com.santukis.entities.core.orDefault
 import com.santukis.entities.hearthstone.*
 import com.santukis.entities.paging.PagingData
-import com.santukis.entities.paging.PagingResult
 import com.santukis.repositories.hearthstone.HearthstoneDataSource
 
 class BattlenetHearthstoneDataSource(private val client: HttpClient) : HearthstoneDataSource {
@@ -37,7 +35,7 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
     override suspend fun searchCards(
         searchCardsRequest: SearchCardsRequest,
         pagingData: PagingData
-    ): Result<PagingResult<List<Card>>> {
+    ): Result<List<Card>> {
         val searchEndpoint = client.environment.searchCards(searchCardsRequest.regionality.region)
 
         val searchCardsRequestDTO = searchCardsRequest.toSearchCardsRequestDTO()
@@ -58,17 +56,12 @@ class BattlenetHearthstoneDataSource(private val client: HttpClient) : Hearthsto
             textFilter = searchCardsRequestDTO.textFilter,
             gameMode = searchCardsRequestDTO.gameMode,
             spellSchool = searchCardsRequestDTO.spellSchool,
-            page = maxOf(pagingData.currentPage, 1),
+            page = pagingData.nextPage,
             pageSize = pagingData.pageSize,
             sort = searchCardsRequestDTO.sort
 
-        ).unwrapCall<HearthstoneErrorDTO, CardsResponse, PagingResult<List<Card>>>(
-            onSuccess = { cardResponse ->
-                PagingResult(
-                    itemCount = cardResponse.cardCount ?: cardResponse.cards?.size.orDefault(),
-                    item = cardResponse.toCardList()
-                )
-            },
+        ).unwrapCall<HearthstoneErrorDTO, CardsResponse, List<Card>>(
+            onSuccess = { cardResponse -> cardResponse.toCardList() },
             onError = { error -> error.toException() }
         )
     }

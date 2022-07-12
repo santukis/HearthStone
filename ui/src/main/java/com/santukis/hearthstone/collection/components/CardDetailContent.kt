@@ -197,21 +197,20 @@ fun CardDetailContent(
 
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         items(cardDetailState.relatedCards.size) { index ->
                             val relatedCard = cardDetailState.relatedCards[index]
 
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(350.dp),
-                            ) {
-                                AsyncImage(
-                                    model = relatedCard.images.image,
-                                    contentDescription = "",
-                                    modifier = Modifier.fillParentMaxWidth(fraction = 0.7f)
+                            AsyncImage(
+                                model = relatedCard.images.image,
+                                contentDescription = "",
+                                modifier = Modifier.defaultMinSize(
+                                    minWidth = 200.dp,
+                                    minHeight = 350.dp
                                 )
-                            }
+                            )
                         }
                     }
                 }

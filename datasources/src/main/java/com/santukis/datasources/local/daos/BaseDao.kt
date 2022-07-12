@@ -5,7 +5,7 @@ import androidx.room.*
 @Dao
 interface BaseDao<Item> {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun saveItem(item: Item): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

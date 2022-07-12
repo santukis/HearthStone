@@ -44,8 +44,8 @@ fun CardCollectionScreen(
         viewModel.onCardSelected(cardIndex)
     }
 
-    val onEndReached: () -> Unit = {
-        viewModel.onEndReached()
+    val onEndReached: (Int) -> Unit = { lasItemPosition ->
+        viewModel.onEndReached(lasItemPosition)
     }
 
     val onFavouriteClick: () -> Unit = {
@@ -91,7 +91,7 @@ fun CardCollectionContent(
     onCardClassSelected: (CardClass) -> Unit = {},
     onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
     onRemoveFilterClick: (Int) -> Unit = {},
-    onEndReached: () -> Unit = {}
+    onEndReached: (Int) -> Unit = {}
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -165,7 +165,7 @@ fun CardCollection(
     cardCollectionState: CardCollectionState,
     modifier: Modifier = Modifier,
     onCardSelected: (Int) -> Unit = {},
-    onEndReached: () -> Unit
+    onEndReached: (Int) -> Unit
 ) {
     val listState = rememberLazyListState()
 
@@ -173,7 +173,7 @@ fun CardCollection(
 
     listState.OnEndReached(
         onEndReached = {
-            onEndReached()
+            onEndReached(it)
         }
     )
 

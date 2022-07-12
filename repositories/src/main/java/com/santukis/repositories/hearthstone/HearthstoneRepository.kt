@@ -46,7 +46,7 @@ class HearthstoneRepository(
                 override suspend fun shouldUpdateFromRemote(
                     input: Regionality,
                     localOutput: Metadata
-                ): Boolean = false
+                ): Boolean = localOutput.isEmpty()
 
                 override suspend fun saveIntoLocal(output: Metadata) {
                     localHearthstoneDataSource.saveMetadata(output)
@@ -94,11 +94,20 @@ class HearthstoneRepository(
                     pagingData: PagingData
                 ): Result<PagingResult<List<Card>>> =
                     localHearthstoneDataSource.searchCards(input, pagingData)
+                        .map { PagingResult(item = it) }
 
                 override suspend fun loadFromRemote(
                     input: SearchCardsRequest,
                     pagingData: PagingData
-                ): Result<PagingResult<List<Card>>> = remoteHearthstoneDataSource.searchCards(input, pagingData)
+                ): Result<PagingResult<List<Card>>> =
+                    remoteHearthstoneDataSource.searchCards(input, pagingData)
+                        .map {
+                            PagingResult(
+                                increaseNextPage = it.isNotEmpty(),
+                                noMoreItems = it.isEmpty(),
+                                item = it
+                            )
+                        }
 
                 override suspend fun saveIntoLocal(output: List<Card>) {
                     localHearthstoneDataSource.saveCards(output)

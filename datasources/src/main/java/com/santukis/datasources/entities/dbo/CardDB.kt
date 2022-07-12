@@ -53,13 +53,13 @@ data class CardDB(
             entity = CardDB::class,
             parentColumns = ["id"],
             childColumns = ["cardId"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.NO_ACTION
         ),
         ForeignKey(
             entity = KeywordDB::class,
             parentColumns = ["id"],
             childColumns = ["keywordId"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.NO_ACTION
         )
     ]
 )

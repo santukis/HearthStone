@@ -7,6 +7,9 @@ import androidx.room.Transaction
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.santukis.datasources.entities.dbo.CardDB
 import com.santukis.datasources.entities.dbo.CardDetailDB
+import com.santukis.datasources.mappers.toCardDB
+import com.santukis.datasources.mappers.toCardToKeywordList
+import com.santukis.entities.hearthstone.Card
 
 @Dao
 interface CardDao: BaseDao<CardDB> {
@@ -26,5 +29,4 @@ interface CardDao: BaseDao<CardDB> {
     @Transaction
     @RawQuery
     fun countSearchCards(query: SupportSQLiteQuery): Int
-
 }

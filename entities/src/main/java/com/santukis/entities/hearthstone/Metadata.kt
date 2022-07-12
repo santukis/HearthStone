@@ -10,4 +10,6 @@ data class Metadata(
     val minionTypes: List<MinionType> = emptyList(),
     val spellSchools: List<SpellSchool> = emptyList(),
     val keywords: List<Keyword> = emptyList()
-)
+) {
+    fun isEmpty(): Boolean = sets.isEmpty()
+}

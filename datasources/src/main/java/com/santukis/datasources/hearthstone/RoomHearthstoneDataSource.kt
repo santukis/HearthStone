@@ -2,9 +2,9 @@ package com.santukis.datasources.hearthstone
 
 import com.santukis.datasources.local.HearthstoneDatabase
 import com.santukis.datasources.mappers.*
+import com.santukis.entities.exceptions.NoMoreData
 import com.santukis.entities.hearthstone.*
 import com.santukis.entities.paging.PagingData
-import com.santukis.entities.paging.PagingResult
 import com.santukis.repositories.hearthstone.HearthstoneDataSource
 
 class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : HearthstoneDataSource {
@@ -78,7 +78,7 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : Hea
             database
                 .deckDao()
                 .getDeck(deckRequest.deckCode)
-                ?.toDeck() ?: throw Exception("No items stored in database")
+                ?.toDeck() ?: throw NoMoreData("No items stored in database")
         }
 
     override suspend fun saveDeck(deck: Deck): Result<Unit> =
@@ -94,30 +94,29 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : Hea
     override suspend fun searchCards(
         searchCardsRequest: SearchCardsRequest,
         pagingData: PagingData
-    ): Result<PagingResult<List<Card>>> =
+    ): Result<List<Card>> =
         kotlin.runCatching {
-            val itemCount = database
-                .cardDao()
-                .countSearchCards(searchCardsRequest.toSqliteQuery())
-
-            val cards = database
+            database
                 .cardDao()
                 .searchCards(searchCardsRequest.toSqliteQuery(pagingData))
-                .takeIf { it.isNotEmpty() }
-                ?.distinctBy { it.card.identity.name }
-                ?.map { it.toCard() } ?: throw Exception("No items stored in database")
-
-            PagingResult(
-                itemCount = itemCount,
-                item = cards
-            )
+                .map { it.toCard() }
+                .takeIf { it.isNotEmpty() } ?: throw NoMoreData("No items stored in database")
         }
 
     override suspend fun saveCards(cards: List<Card>): Result<Unit> =
         kotlin.runCatching {
             cards.forEach { card ->
                 database.cardDao().saveItem(card.toCardDB())
-                database.cardToKeywordDao().saveItems(card.keywords.toCardToKeywordList(card.identity.id))
+                val cardsToKeywordDB = card.keywords.toCardToKeywordList(card.identity.id)
+
+                cardsToKeywordDB.forEach { cardDBToKeywordDB ->
+                    try {
+                        database.cardToKeywordDao().saveItem(cardDBToKeywordDB)
+
+                    } catch (e: Exception) {
+                        println(e)
+                    }
+                }
             }
         }
 
@@ -126,9 +125,8 @@ class RoomHearthstoneDataSource(private val database: HearthstoneDatabase) : Hea
             database
                 .cardDao()
                 .getCards()
-                .takeIf { it.isNotEmpty() }
-                ?.distinctBy { it.card.identity.name }
-                ?.map { it.toCard() } ?: throw Exception("No items stored in database")
+                .map { it.toCard() }
+                .takeIf { it.isNotEmpty() } ?: throw NoMoreData("No items stored in database")
         }
 
     override suspend fun setCardFavourite(card: Card): Result<Card> =

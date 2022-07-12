@@ -9,6 +9,10 @@ abstract class LocalRemotePagingStrategy<Input, Output>(
     private val pagingSource: PagingSource<String>
 ) : RepositoryStrategy<PagingRequest<Input>, Output> {
 
+    companion object {
+        private const val MIN_STORED_DATA = 10
+    }
+
     protected abstract suspend fun loadFromLocal(input: Input, pagingData: PagingData): Result<PagingResult<Output>>
 
     protected abstract suspend fun loadFromRemote(
@@ -18,41 +22,56 @@ abstract class LocalRemotePagingStrategy<Input, Output>(
     protected abstract suspend fun saveIntoLocal(output: Output)
 
     override suspend fun execute(input: PagingRequest<Input>): Result<Output> {
-        val localKey = "local_${input.hashCode()}"
-        val remoteKey = "remote_${input.hashCode()}"
+        val key = input.request.hashCode().toString()
+
+        if (input.shouldRefresh) {
+            pagingSource.removePagingData(key)
+
+        } else {
+            pagingSource.updatePagingData(
+                key = key,
+                itemCount = input.itemCount
+            )
+        }
 
         var result: Result<PagingResult<Output>> = noMoreData()
 
-        if (input.shouldRefresh) {
-            pagingSource.removePagingData(localKey)
-            pagingSource.removePagingData(remoteKey)
-        }
 
-        if (pagingSource.shouldRequestMoreData(localKey)) {
-            result = loadFromLocal(input.request, pagingSource.getPagingData(localKey))
+        if (pagingSource.shouldRequestMoreData(key)) {
+            result = loadFromLocal(
+                input = input.request,
+                pagingData = pagingSource.getPagingData(key)
+            )
 
-            if (result.isSuccess) {
-                val pagingResult = result.getOrThrow()
-                pagingSource.updatePagingData(localKey, pagingResult)
-                pagingSource.updatePagingData(remoteKey, pagingResult.copy(itemCount = Int.MAX_VALUE))
+            if (result.isFailure || pagingSource.getPagingData(key).itemCount < MIN_STORED_DATA) {
+                result = loadFromRemote(input.request, pagingSource.getPagingData(key))
+                    .fold(
+                        onSuccess = {
+                            pagingSource.updatePagingData(
+                                key = key,
+                                increaseNextPage = it.increaseNextPage,
+                                noMoreItems = it.noMoreItems
+                            )
+
+                            saveIntoLocal(it.item)
+
+                            loadFromLocal(
+                                input = input.request,
+                                pagingData = pagingSource.getPagingData(key)
+                            )
+                        },
+                        onFailure = {
+                            pagingSource.updatePagingData(
+                                key = key,
+                                noMoreItems = true
+                            )
+                            Result.failure(it)
+                        }
+                    )
             }
-        }
-
-        if (result.isFailure && pagingSource.shouldRequestMoreData(remoteKey)) {
-            result = loadFromRemote(input.request, pagingSource.getPagingData(remoteKey))
-                .fold(
-                    onSuccess = {
-                        pagingSource.updatePagingData(remoteKey, it)
-
-                        saveIntoLocal(it.item)
-                        loadFromLocal(input.request, pagingSource.getPagingData(localKey))
-                    },
-                    onFailure = {
-                        Result.failure(it)
-                    }
-                )
         }
 
         return result.map { it.item }
     }
+
 }

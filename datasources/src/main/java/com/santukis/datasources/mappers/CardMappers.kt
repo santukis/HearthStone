@@ -33,14 +33,9 @@ fun SearchCardsRequest.toSqliteQuery(pagingData: PagingData): SupportSQLiteQuery
     var query = "SELECT * FROM cards"
     query = buildStatements(query)
 
-    query += " ORDER BY id LIMIT ${pagingData.pageSize} OFFSET ${pagingData.currentPage * pagingData.pageSize}"
+    query += " ORDER BY id LIMIT ${pagingData.pageSize} OFFSET ${pagingData.itemCount}"
 
-    return SimpleSQLiteQuery(query)
-}
-
-fun SearchCardsRequest.toSqliteQuery(): SupportSQLiteQuery {
-    var query = "SELECT COUNT(id) FROM cards"
-    query = buildStatements(query)
+    println("Query -> $query")
 
     return SimpleSQLiteQuery(query)
 }

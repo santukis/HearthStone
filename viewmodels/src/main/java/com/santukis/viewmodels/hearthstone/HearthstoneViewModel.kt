@@ -5,7 +5,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.santukis.entities.core.takeIfNotEmpty
 import com.santukis.entities.exceptions.NoMoreData
 import com.santukis.entities.hearthstone.*
 import com.santukis.entities.paging.PagingRequest
@@ -25,7 +24,7 @@ class HearthstoneViewModel(
     private val updateCardFavouriteUseCase: UseCase<Card, Result<Card>>
 ) : ViewModel() {
 
-    private var searchJob: Job? = null
+    private var relatedCardsJob: Job? = null
 
     var cardCollectionState by mutableStateOf(CardCollectionState())
         private set
@@ -61,7 +60,13 @@ class HearthstoneViewModel(
     fun onCardClassSelected(cardClass: CardClass) {
         cardDetailState = cardDetailState.reset()
 
-        onFilterSelected(CARD_CLASS, cardClass.asCardFilter())
+        cardFilterState = cardFilterState.copy(
+            activeFilters = cardFilterState.updateActiveFilters(CARD_CLASS, cardClass.asCardFilter())
+        )
+
+        cardCollectionState = cardCollectionState.reset()
+
+        loadMoreItems(shouldRefresh = true)
     }
 
     fun onFilterSelected(key: Int, filter: CardFilter<*>) {
@@ -84,8 +89,8 @@ class HearthstoneViewModel(
         loadMoreItems(shouldRefresh = true)
     }
 
-    fun onEndReached() {
-        loadMoreItems()
+    fun onEndReached(lastItemPosition: Int) {
+        loadMoreItems(lastItemPosition = lastItemPosition)
     }
 
     fun onFavouriteClick() {
@@ -108,12 +113,20 @@ class HearthstoneViewModel(
         }
     }
 
-    private fun loadMoreItems(shouldRefresh: Boolean = false) {
+    private fun loadMoreItems(
+        shouldRefresh: Boolean = false,
+        lastItemPosition: Int = 0
+    ) {
         searchCards(
-            cardRequest = buildSearchCardRequest(shouldRefresh),
+            cardRequest = buildSearchCardRequest(shouldRefresh, lastItemPosition),
             onSuccess = { cards ->
+                val updatedCards = cardCollectionState.cards
+                    .toMutableList()
+                    .apply { addAll(cards) }
+                    .distinctBy { it.identity.name }
+
                 cardCollectionState = cardCollectionState.copy(
-                    cards = cardCollectionState.cards.toMutableList().apply { addAll(cards) }
+                    cards = updatedCards
                 )
 
                 cardDetailState = cardDetailState.copy(
@@ -154,10 +167,11 @@ class HearthstoneViewModel(
     }
 
     private fun loadRelatedCards(selectedCard: Card) {
-        searchJob?.cancel(CancellationException("New Search required"))
+        relatedCardsJob?.cancel(CancellationException("New Search required"))
 
-        searchJob = searchCards(
+        relatedCardsJob = searchCards(
             PagingRequest(
+                shouldRefresh = true,
                 request = SearchCardsRequest(
                     regionality = Regionality.Europe(EuropeLocale.Spanish()),
                     keyword = selectedCard.keywords.takeIf { it.isNotEmpty() }?.random(),
@@ -190,11 +204,15 @@ class HearthstoneViewModel(
                 }
         }
 
-    private fun buildSearchCardRequest(shouldRefresh: Boolean): PagingRequest<SearchCardsRequest> {
+    private fun buildSearchCardRequest(
+        shouldRefresh: Boolean,
+        lastItemPosition: Int
+    ): PagingRequest<SearchCardsRequest> {
         searchCardsRequest = cardFilterState.buildSearchCardsRequest(searchCardsRequest)
 
         return PagingRequest(
             shouldRefresh = shouldRefresh,
+            itemCount = lastItemPosition,
             request = searchCardsRequest.copy()
         )
     }
