@@ -192,7 +192,9 @@ class HearthstoneViewModel(
                 )
             ),
             onSuccess = { cards ->
-                cardDetailState = cardDetailState.copy(relatedCards = cards.toList())
+                cardDetailState = cardDetailState.copy(
+                    relatedCards = cards.toList().distinctBy { it.identity.name }
+                )
             }
         )
     }
