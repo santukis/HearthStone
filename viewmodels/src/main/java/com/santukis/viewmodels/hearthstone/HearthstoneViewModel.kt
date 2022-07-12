@@ -46,7 +46,18 @@ class HearthstoneViewModel(
         loadMetadata()
     }
 
-    fun onCardSelected(cardIndex: Int) {
+    fun onUiEvent(uiEvent: UiEvent) {
+        when (uiEvent) {
+            is OnCardSelected -> onCardSelected(uiEvent.cardIndex)
+            is OnCardClassSelected -> onCardClassSelected(uiEvent.cardClass)
+            is OnFilterSelected -> onFilterSelected(uiEvent.key, uiEvent.filter)
+            is OnFilterRemoved -> onRemoveFilterClick(uiEvent.key)
+            is OnFavouriteClick -> onFavouriteClick()
+            is OnEndReached -> onEndReached(uiEvent.lastItemPosition)
+        }
+    }
+
+    private fun onCardSelected(cardIndex: Int) {
         cardDetailState = cardCollectionState.cards.getOrNull(cardIndex)?.let { selectedCard ->
             loadRelatedCards(selectedCard)
             cardDetailState.copy(
@@ -57,7 +68,7 @@ class HearthstoneViewModel(
         } ?: cardDetailState.reset()
     }
 
-    fun onCardClassSelected(cardClass: CardClass) {
+    private fun onCardClassSelected(cardClass: CardClass) {
         cardDetailState = cardDetailState.reset()
 
         cardFilterState = cardFilterState.copy(
@@ -69,7 +80,7 @@ class HearthstoneViewModel(
         loadMoreItems(shouldRefresh = true)
     }
 
-    fun onFilterSelected(key: Int, filter: CardFilter<*>) {
+    private fun onFilterSelected(key: Int, filter: CardFilter<*>) {
         cardFilterState = cardFilterState.copy(
             activeFilters = cardFilterState.updateActiveFilters(key, filter)
         )
@@ -79,7 +90,7 @@ class HearthstoneViewModel(
         loadMoreItems(shouldRefresh = true)
     }
 
-    fun onRemoveFilterClick(filter: Int) {
+    private fun onRemoveFilterClick(filter: Int) {
         cardFilterState = cardFilterState.copy(
             activeFilters = cardFilterState.updateActiveFilters(filter, null)
         )
@@ -89,11 +100,11 @@ class HearthstoneViewModel(
         loadMoreItems(shouldRefresh = true)
     }
 
-    fun onEndReached(lastItemPosition: Int) {
+    private fun onEndReached(lastItemPosition: Int) {
         loadMoreItems(lastItemPosition = lastItemPosition)
     }
 
-    fun onFavouriteClick() {
+    private fun onFavouriteClick() {
         viewModelScope.launch(Dispatchers.IO) {
             cardCollectionState.cards.getOrNull(cardDetailState.cardIndex)?.let { selectedCard ->
                 updateCardFavouriteUseCase(selectedCard)

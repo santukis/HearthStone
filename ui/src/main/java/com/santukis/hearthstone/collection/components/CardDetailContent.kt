@@ -28,6 +28,8 @@ import com.santukis.hearthstone.core.components.HtmlText
 import com.santukis.hearthstone.theme.WhiteTransparent
 import com.santukis.viewmodels.R
 import com.santukis.viewmodels.entities.CardDetailState
+import com.santukis.viewmodels.entities.OnFavouriteClick
+import com.santukis.viewmodels.entities.UiEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -38,7 +40,7 @@ fun CardDetailContent(
     cardDetailState: CardDetailState,
     modifier: Modifier = Modifier,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onFavouriteClick: () -> Unit = {},
+    onUiEvent: (UiEvent) -> Unit = {},
     onHeaderHeightChange: (Int) -> Unit = {}
 ) {
     Column(
@@ -52,7 +54,7 @@ fun CardDetailContent(
             scaffoldState = scaffoldState,
             cardDetailState = cardDetailState,
             coroutineScope = coroutineScope,
-            onFavouriteClick = onFavouriteClick
+            onUiEvent = onUiEvent
         )
 
         Column(
@@ -226,7 +228,7 @@ fun CardDetailActionBar(
     cardDetailState: CardDetailState,
     modifier: Modifier = Modifier,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onFavouriteClick: () -> Unit = {}
+    onUiEvent: (UiEvent) -> Unit = {}
 ) {
     Row(
         modifier = modifier
@@ -274,7 +276,7 @@ fun CardDetailActionBar(
 
         Button(
             onClick = {
-                onFavouriteClick()
+                onUiEvent(OnFavouriteClick())
             },
             shape = CircleShape,
             modifier = Modifier

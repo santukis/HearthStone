@@ -24,8 +24,7 @@ import com.santukis.hearthstone.R
 import com.santukis.hearthstone.core.components.ExpandableContainer
 import com.santukis.hearthstone.core.components.ExpandableState
 import com.santukis.hearthstone.core.components.rememberExpandableState
-import com.santukis.viewmodels.entities.CardFilter
-import com.santukis.viewmodels.entities.CardFilterState
+import com.santukis.viewmodels.entities.*
 import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_SET
 import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_TYPE
 import com.santukis.viewmodels.entities.CardFilterState.Companion.SPELL_SCHOOL
@@ -34,8 +33,7 @@ import com.santukis.viewmodels.entities.CardFilterState.Companion.SPELL_SCHOOL
 fun CardFilters(
     cardFilterState: CardFilterState,
     modifier: Modifier = Modifier,
-    onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ ->},
-    onClearFilterClick: (Int) -> Unit = {},
+    onUiEvent: (UiEvent) -> Unit = {},
     onCloseFiltersClick: () -> Unit = {}
 ) {
 
@@ -54,8 +52,7 @@ fun CardFilters(
             cardFilterRowFactory(
                 filter = entry,
                 cardFilterState = cardFilterState,
-                onFilterSelected = onFilterSelected,
-                onClearFilterClick = onClearFilterClick
+                onUiEvent = onUiEvent
             )
         }
     }
@@ -144,30 +141,29 @@ fun FilterHeader(
 fun LazyListScope.cardFilterRowFactory(
     filter: Map.Entry<Int, List<CardFilter<*>>>,
     cardFilterState: CardFilterState,
-    onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
-    onClearFilterClick: (Int) -> Unit = {}
+    onUiEvent: (UiEvent) -> Unit = {}
 ) {
     when (filter.key) {
         CARD_TYPE -> defaultExpandableRow(
             filter = filter as Map.Entry<Int, List<CardFilter<CardType>>>,
             headerName = R.string.card_types,
             cardFilterState = cardFilterState,
-            onFilterSelected = onFilterSelected,
-            onClearFilterClick = { onClearFilterClick(CARD_TYPE) }
+            onUiEvent = onUiEvent,
+            onClearFilterClick = { onUiEvent(OnFilterRemoved(CARD_TYPE)) }
         )
         CARD_SET -> defaultExpandableRow(
             filter = filter as Map.Entry<Int, List<CardFilter<CardSet>>>,
             headerName = R.string.card_set,
             cardFilterState = cardFilterState,
-            onFilterSelected = onFilterSelected,
-            onClearFilterClick = { onClearFilterClick(CARD_SET) }
+            onUiEvent = onUiEvent,
+            onClearFilterClick = { onUiEvent(OnFilterRemoved(CARD_SET)) }
         )
         SPELL_SCHOOL -> defaultExpandableRow(
             filter = filter as Map.Entry<Int, List<CardFilter<SpellSchool>>>,
             headerName = R.string.spell_school,
             cardFilterState = cardFilterState,
-            onFilterSelected = onFilterSelected,
-            onClearFilterClick = { onClearFilterClick(SPELL_SCHOOL) }
+            onUiEvent = onUiEvent,
+            onClearFilterClick = { onUiEvent(OnFilterRemoved(SPELL_SCHOOL)) }
         )
     }
 }
@@ -176,7 +172,7 @@ private fun <FilterType> LazyListScope.defaultExpandableRow(
     filter: Map.Entry<Int, List<CardFilter<FilterType>>>,
     @StringRes headerName: Int,
     cardFilterState: CardFilterState,
-    onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
+    onUiEvent: (UiEvent) -> Unit = {},
     onClearFilterClick: () -> Unit = {}
 ) {
 
@@ -203,7 +199,7 @@ private fun <FilterType> LazyListScope.defaultExpandableRow(
                                 vertical = 8.dp
                             )
                             .clickable {
-                                onFilterSelected(filter.key, filterItem)
+                                onUiEvent(OnFilterSelected(filter.key, filterItem))
                             },
                         color = cardFilterState.getFilterColor(filter.key, filterItem),
                         style = MaterialTheme.typography.subtitle1

@@ -24,6 +24,8 @@ import com.santukis.hearthstone.core.animations.alpha
 import com.santukis.hearthstone.core.components.VisibleState
 import com.santukis.hearthstone.core.components.rememberVisibleState
 import com.santukis.viewmodels.entities.CardFilterState
+import com.santukis.viewmodels.entities.OnFilterRemoved
+import com.santukis.viewmodels.entities.UiEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -35,7 +37,7 @@ fun CardCollectionTopBar(
     modifier: Modifier = Modifier,
     visibleState: VisibleState = rememberVisibleState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onRemoveFilterClick: (Int) -> Unit = {},
+    onUiEvent: (UiEvent) -> Unit = {},
 ) {
 
     BoxWithConstraints(
@@ -116,7 +118,7 @@ fun CardCollectionTopBar(
                     ActiveFilter(
                         filter = filter.second,
                         onRemoveFilterClick = {
-                            onRemoveFilterClick(filter.first)
+                            onUiEvent(OnFilterRemoved(filter.first))
                         }
                     )
                 }

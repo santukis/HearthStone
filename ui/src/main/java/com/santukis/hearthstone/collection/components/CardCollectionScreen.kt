@@ -20,7 +20,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import coil.compose.AsyncImage
-import com.santukis.entities.hearthstone.CardClass
 import com.santukis.hearthstone.core.animations.zoom
 import com.santukis.viewmodels.hearthstone.HearthstoneViewModel
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
@@ -40,28 +39,8 @@ fun CardCollectionScreen(
     val cardDetailState = viewModel.cardDetailState
     val cardFilterState = viewModel.cardFilterState
 
-    val onCardSelected: (Int) -> Unit = { cardIndex ->
-        viewModel.onCardSelected(cardIndex)
-    }
-
-    val onEndReached: (Int) -> Unit = { lasItemPosition ->
-        viewModel.onEndReached(lasItemPosition)
-    }
-
-    val onFavouriteClick: () -> Unit = {
-        viewModel.onFavouriteClick()
-    }
-
-    val onCardClassSelected: (CardClass) -> Unit = { cardClass ->
-        viewModel.onCardClassSelected(cardClass)
-    }
-
-    val onFilterSelected: (Int, CardFilter<*>) -> Unit = { key, filter ->
-        viewModel.onFilterSelected(key, filter)
-    }
-
-    val onRemoveFilterClick: (Int) -> Unit = { filter ->
-        viewModel.onRemoveFilterClick(filter)
+    val onUiEvent: (UiEvent) -> Unit = { uiEvent ->
+        viewModel.onUiEvent(uiEvent)
     }
 
     CardCollectionContent(
@@ -69,12 +48,7 @@ fun CardCollectionScreen(
         cardCollectionState = collectionState,
         cardDetailState = cardDetailState,
         cardFilterState = cardFilterState,
-        onCardSelected = onCardSelected,
-        onFavouriteClick = onFavouriteClick,
-        onCardClassSelected = onCardClassSelected,
-        onFilterSelected = onFilterSelected,
-        onRemoveFilterClick = onRemoveFilterClick,
-        onEndReached = onEndReached
+        onUiEvent = onUiEvent
     )
 }
 
@@ -86,12 +60,7 @@ fun CardCollectionContent(
     cardCollectionState: CardCollectionState,
     cardDetailState: CardDetailState,
     cardFilterState: CardFilterState,
-    onCardSelected: (Int) -> Unit = {},
-    onFavouriteClick: () -> Unit = {},
-    onCardClassSelected: (CardClass) -> Unit = {},
-    onFilterSelected: (Int, CardFilter<*>) -> Unit = { _, _ -> },
-    onRemoveFilterClick: (Int) -> Unit = {},
-    onEndReached: (Int) -> Unit = {}
+    onUiEvent: (UiEvent) -> Unit = {}
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -116,7 +85,7 @@ fun CardCollectionContent(
                     cardFilterState = cardFilterState,
                     coroutineScope = coroutineScope,
                     visibleState = cardClassListVisibleState,
-                    onRemoveFilterClick = onRemoveFilterClick
+                    onUiEvent = onUiEvent
                 )
             },
             sheetContent = {
@@ -124,7 +93,7 @@ fun CardCollectionContent(
                     scaffoldState = scaffoldState,
                     cardDetailState = cardDetailState,
                     coroutineScope = coroutineScope,
-                    onFavouriteClick = onFavouriteClick,
+                    onUiEvent = onUiEvent,
                     onHeaderHeightChange = { sheetPeekHeight = it }
                 )
             },
@@ -134,8 +103,7 @@ fun CardCollectionContent(
             drawerContent = {
                 CardFilters(
                     cardFilterState = cardFilterState,
-                    onFilterSelected = onFilterSelected,
-                    onClearFilterClick = onRemoveFilterClick,
+                    onUiEvent = onUiEvent,
                     onCloseFiltersClick = { coroutineScope.launch { scaffoldState.drawerState.close() } }
                 )
             },
@@ -145,8 +113,7 @@ fun CardCollectionContent(
 
             CardCollection(
                 cardCollectionState = cardCollectionState,
-                onCardSelected = onCardSelected,
-                onEndReached = onEndReached
+                onUiEvent = onUiEvent
             )
         }
 
@@ -154,7 +121,7 @@ fun CardCollectionContent(
             scaffoldState = scaffoldState,
             cardFilterState = cardFilterState,
             visibleState = cardClassListVisibleState,
-            onCardClassSelected = onCardClassSelected
+            onUiEvent = onUiEvent
         )
     }
 }
@@ -164,8 +131,7 @@ fun CardCollectionContent(
 fun CardCollection(
     cardCollectionState: CardCollectionState,
     modifier: Modifier = Modifier,
-    onCardSelected: (Int) -> Unit = {},
-    onEndReached: (Int) -> Unit
+    onUiEvent: (UiEvent) -> Unit = {}
 ) {
     val listState = rememberLazyListState()
 
@@ -173,13 +139,14 @@ fun CardCollection(
 
     listState.OnEndReached(
         onEndReached = {
-            onEndReached(it)
+            onUiEvent(OnEndReached(it))
         }
     )
 
     listState.ScrollListener(
         onScrollStateChanged = { scrolling ->
-            onCardSelected(if (scrolling) -1 else listState.firstVisibleItemIndex)
+            val cardIndex = if (scrolling) -1 else listState.firstVisibleItemIndex
+            onUiEvent(OnCardSelected(cardIndex))
         }
     )
 
@@ -269,7 +236,7 @@ fun CardClassCollection(
     cardFilterState: CardFilterState,
     modifier: Modifier = Modifier,
     visibleState: VisibleState = rememberVisibleState(),
-    onCardClassSelected: (CardClass) -> Unit = {}
+    onUiEvent: (UiEvent) -> Unit = {}
 ) {
 
     AnimatedVisibility(
@@ -318,7 +285,7 @@ fun CardClassCollection(
                                 .clip(CircleShape)
                                 .clickable {
                                     visibleState.toggle()
-                                    onCardClassSelected(cardClass)
+                                    onUiEvent(OnCardClassSelected(cardClass))
                                 }
                         )
 
