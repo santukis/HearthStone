@@ -24,6 +24,7 @@ import com.santukis.hearthstone.R
 import com.santukis.hearthstone.core.components.ExpandableContainer
 import com.santukis.hearthstone.core.components.ExpandableState
 import com.santukis.hearthstone.core.components.rememberExpandableState
+import com.santukis.hearthstone.theme.WhiteTransparent
 import com.santukis.viewmodels.entities.*
 import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_SET
 import com.santukis.viewmodels.entities.CardFilterState.Companion.CARD_TYPE
@@ -40,7 +41,7 @@ fun CardFilters(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(WhiteTransparent)
     ) {
         item {
             CardFiltersHeader(
@@ -106,7 +107,7 @@ fun FilterHeader(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(WhiteTransparent)
             .padding(16.dp)
     ) {
 
