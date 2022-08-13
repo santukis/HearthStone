@@ -44,30 +44,27 @@ abstract class LocalRemotePagingStrategy<Input, Output>(
             )
 
             if (result.isFailure || pagingSource.getPagingData(key).itemCount < MIN_STORED_DATA) {
-                result = loadFromRemote(input.request, pagingSource.getPagingData(key))
-                    .fold(
-                        onSuccess = {
-                            pagingSource.updatePagingData(
-                                key = key,
-                                increaseNextPage = it.increaseNextPage,
-                                noMoreItems = it.noMoreItems
-                            )
+                loadFromRemote(input.request, pagingSource.getPagingData(key))
+                    .onSuccess {
+                        pagingSource.updatePagingData(
+                            key = key,
+                            increaseNextPage = it.increaseNextPage,
+                            noMoreItems = it.noMoreItems
+                        )
 
-                            saveIntoLocal(it.item)
+                        saveIntoLocal(it.item)
+                    }
+                    .onFailure {
+                        pagingSource.updatePagingData(
+                            key = key,
+                            noMoreItems = true
+                        )
+                    }
 
-                            loadFromLocal(
-                                input = input.request,
-                                pagingData = pagingSource.getPagingData(key)
-                            )
-                        },
-                        onFailure = {
-                            pagingSource.updatePagingData(
-                                key = key,
-                                noMoreItems = true
-                            )
-                            Result.failure(it)
-                        }
-                    )
+                result = loadFromLocal(
+                    input = input.request,
+                    pagingData = pagingSource.getPagingData(key)
+                )
             }
         }
 

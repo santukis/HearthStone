@@ -52,7 +52,7 @@ class HearthstoneViewModel(
             is OnFilterSelected -> updateFilter(uiEvent.key, uiEvent.filter)
             is OnFilterRemoved -> updateFilter(uiEvent.key, null)
             is OnFavouriteClick -> onFavouriteClick()
-            is OnEndReached -> onEndReached(uiEvent.lastItemPosition)
+            is OnEndReached -> loadMoreItems(lastItemPosition = uiEvent.lastItemPosition)
         }
     }
 
@@ -77,10 +77,6 @@ class HearthstoneViewModel(
         cardCollectionState = cardCollectionState.reset()
 
         loadMoreItems(shouldRefresh = true)
-    }
-
-    private fun onEndReached(lastItemPosition: Int) {
-        loadMoreItems(lastItemPosition = lastItemPosition)
     }
 
     private fun onFavouriteClick() {

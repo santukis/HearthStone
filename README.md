@@ -17,3 +17,16 @@ client_id="**your_client_id**"
 
 client_secret="**your_client_secret**"
 
+Multifunction single screen (CardCollection, CardDetail, CardFilters)
+
+<table>
+  <tr>
+    <td><img src="/art01.jpg" width=200></td>
+    <td><img src="/art02.jpg" width=200></td>
+    <td><img src="/art03.jpg" width=200></td>
+  </tr>
+  <tr>
+    <td><img src="/art04.jpg" width=200></td>
+    <td><img src="/art05.jpg" width=200></td>
+  </tr>
+</table>
