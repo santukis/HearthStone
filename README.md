@@ -21,12 +21,12 @@ Multifunction single screen (CardCollection, CardDetail, CardFilters)
 
 <table>
   <tr>
-    <td><img src="/art01.jpg" width=200></td>
-    <td><img src="/art02.jpg" width=200></td>
-    <td><img src="/art03.jpg" width=200></td>
+    <td><img src="/art/art01.jpg" width=200></td>
+    <td><img src="/art/art02.jpg" width=200></td>
+    <td><img src="/art/art03.jpg" width=200></td>
   </tr>
   <tr>
-    <td><img src="/art04.jpg" width=200></td>
-    <td><img src="/art05.jpg" width=200></td>
+    <td><img src="/art/art04.jpg" width=200></td>
+    <td><img src="/art/art05.jpg" width=200></td>
   </tr>
 </table>
